@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My World - 게시글 상세</title>
+</head>
+<body>
+
+<h1>게시글 상세보기</h1>
+
+<h2 th:text="${board.title}">제목</h2>
+
+<p th:text="${board.content}"
+   style="white-space: pre-wrap;">내용</p>
+
+<hr>
+<a th:href="@{/board/{id}/edit(id=${board.id})}">
+    수정하기
+</a>
+    <a th:href="@{/board}">목록으로</a>
+<form th:action="@{/board/{id}/delete(id=${board.id})}"
+      method="post"
+      onsubmit="return confirm('정말 삭제하시겠습니까?');">
+
+    <button type="submit">삭제하기</button>
+
+</form>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My World - MBTI 궁합</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div id="snow-container"></div>
+
+<header class="header">
+    <a th:href="@{/}" class="logo">My World ♡</a>
+
+    <nav>
+        <a th:href="@{/}">HOME</a>
+        <a th:href="@{/mbti}">MBTI</a>
+        <a th:href="@{/board}">BOARD</a>
+    </nav>
+</header>
+
+<main class="compatibility-page">
+
+    <div class="winter-label">
+        ❄ WINTER LOVE MATCH ❄
+    </div>
+
+    <h1>우리 둘의 MBTI 궁합 ♡</h1>
+
+    <p>
+        나와 상대방의 MBTI를 선택하고<br>
+        우리만의 사랑 이야기를 알아보세요.
+    </p>
+
+    <form th:action="@{/compatibility/result}"
+          method="get"
+          class="compatibility-form">
+
+        <div class="compatibility-fields">
+
+            <div class="compatibility-field">
+                <label for="myMbti">💗 나의 MBTI</label>
+
+                <select id="myMbti" name="myMbti" required>
+                    <option value="">선택해 주세요</option>
+                    <option value="INTJ">INTJ</option>
+                    <option value="INTP">INTP</option>
+                    <option value="ENTJ">ENTJ</option>
+                    <option value="ENTP">ENTP</option>
+                    <option value="INFJ">INFJ</option>
+                    <option value="INFP">INFP</option>
+                    <option value="ENFJ">ENFJ</option>
+                    <option value="ENFP">ENFP</option>
+                    <option value="ISTJ">ISTJ</option>
+                    <option value="ISFJ">ISFJ</option>
+                    <option value="ESTJ">ESTJ</option>
+                    <option value="ESFJ">ESFJ</option>
+                    <option value="ISTP">ISTP</option>
+                    <option value="ISFP">ISFP</option>
+                    <option value="ESTP">ESTP</option>
+                    <option value="ESFP">ESFP</option>
+                </select>
+            </div>
+
+            <div class="compatibility-field">
+                <label for="partnerMbti">💕 상대방 MBTI</label>
+
+                <select id="partnerMbti" name="partnerMbti" required>
+                    <option value="">선택해 주세요</option>
+                    <option value="INTJ">INTJ</option>
+                    <option value="INTP">INTP</option>
+                    <option value="ENTJ">ENTJ</option>
+                    <option value="ENTP">ENTP</option>
+                    <option value="INFJ">INFJ</option>
+                    <option value="INFP">INFP</option>
+                    <option value="ENFJ">ENFJ</option>
+                    <option value="ENFP">ENFP</option>
+                    <option value="ISTJ">ISTJ</option>
+                    <option value="ISFJ">ISFJ</option>
+                    <option value="ESTJ">ESTJ</option>
+                    <option value="ESFJ">ESFJ</option>
+                    <option value="ISTP">ISTP</option>
+                    <option value="ISFP">ISFP</option>
+                    <option value="ESTP">ESTP</option>
+                    <option value="ESFP">ESFP</option>
+                </select>
+            </div>
+
+        </div>
+
+        <button type="submit" class="start-btn compatibility-submit">
+            우리의 궁합 확인하기 ♡
+        </button>
+
+    </form>
+
+</main>
+
+<script th:src="@{/js/snow.js}"></script>
+
+</body>
+</html>

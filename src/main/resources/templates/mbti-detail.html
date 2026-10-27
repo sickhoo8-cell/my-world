@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My World - MBTI 상세</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div id="snow-container"></div>
+
+<header class="header">
+    <a th:href="@{/}" class="logo">My World ♡</a>
+    <nav>
+        <a th:href="@{/}">HOME</a>
+        <a th:href="@{/mbti}">MBTI</a>
+        <a th:href="@{/board}">BOARD</a>
+    </nav>
+</header>
+
+<main class="mbti-detail-page">
+
+    <div class="winter-label">❄ PERSONALITY STORY ❄</div>
+
+    <h1 th:text="${mbti}">INFP</h1>
+    <h2 th:text="${nickname}">성격 별명</h2>
+
+    <div class="detail-card">
+        <h3>🌷 성격 특징</h3>
+        <p th:text="${personality}">성격 설명</p>
+    </div>
+
+    <div class="detail-card">
+        <h3>✨ 나의 장점</h3>
+        <p th:text="${strength}">장점 설명</p>
+    </div>
+
+    <div class="detail-card">
+        <h3>☁️ 조심하면 좋은 점</h3>
+        <p th:text="${weakness}">단점 설명</p>
+    </div>
+
+    <div class="detail-card">
+        <h3>💗 연애 스타일</h3>
+        <p th:text="${loveStyle}">연애 스타일 설명</p>
+    </div>
+
+    <a th:href="@{/mbti}" class="start-btn">
+        다른 MBTI 살펴보기 ♡
+    </a>
+
+    <p class="mbti-notice">
+        MBTI 설명은 재미와 자기 이해를 위한 참고 콘텐츠입니다.
+    </p>
+</main>
+
+<script th:src="@{/js/snow.js}"></script>
+
+</body>
+</html>

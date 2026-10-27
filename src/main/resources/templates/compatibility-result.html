@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My World - MBTI 궁합 결과</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div id="snow-container"></div>
+
+<header class="header">
+    <a th:href="@{/}" class="logo">My World ♡</a>
+    <nav>
+        <a th:href="@{/}">HOME</a>
+        <a th:href="@{/mbti}">MBTI</a>
+    </nav>
+</header>
+
+<main class="compatibility-page">
+
+    <div class="winter-label">
+        ❄ OUR LOVE STORY ❄
+    </div>
+
+    <h1>우리 둘의 궁합 이야기 ♡</h1>
+
+    <div class="compatibility-result-card">
+
+        <h2>
+            <span th:text="${myMbti}">INFP</span>
+            💗
+            <span th:text="${partnerMbti}">ENFJ</span>
+        </h2>
+
+        <p>두 사람의 MBTI 궁합 결과예요!</p>
+
+        <!-- 궁합 점수 목록 -->
+        <div class="score-list">
+
+            <div class="score-item"
+                 th:each="entry : ${scores}">
+
+                <div class="score-header">
+                    <strong th:text="${entry.key + ' 궁합'}">
+                        친구 궁합
+                    </strong>
+
+                    <span th:text="${entry.value + '점'}">
+                        80점
+                    </span>
+                </div>
+
+                <div class="score-bar">
+                    <div class="score-fill"
+                         th:style="'width: ' + ${entry.value} + '%'">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <p class="mbti-notice">
+            궁합 점수는 재미를 위한 자체 지표이며,
+            실제 연애나 결혼 성공 확률이 아닙니다.
+        </p>
+
+    </div>
+
+    <a th:href="@{/compatibility}" class="board-link">
+        다른 MBTI로 다시 선택하기 ♡
+    </a>
+
+</main>
+
+<script th:src="@{/js/snow.js}"></script>
+
+</body>
+</html>

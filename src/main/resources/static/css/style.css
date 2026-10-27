@@ -1,0 +1,770 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Playfair+Display:wght@500;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    font-family: 'Gowun Dodum', sans-serif;
+    color: #71546a;
+
+    background:
+            radial-gradient(circle at 15% 15%, #ffe0ee, transparent 35%),
+            radial-gradient(circle at 85% 25%, #eee0ff, transparent 35%),
+            linear-gradient(180deg, #fff1f8, #f9efff 65%, #fffafd);
+}
+
+/* 상단 메뉴 */
+
+.header {
+    position: relative;
+    z-index: 10;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 30px;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: bold;
+    color: #a65d83;
+    text-decoration: none;
+}
+
+nav {
+    display: flex;
+    gap: 28px;
+}
+
+nav a {
+    color: #71546a;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: #d98eab;
+}
+
+/* 중앙 메인 화면 */
+
+.hero {
+    position: relative;
+    z-index: 2;
+
+    min-height: 630px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 70px 20px;
+    text-align: center;
+}
+
+.winter-label {
+    color: #a65d83;
+    letter-spacing: 4px;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(65px, 11vw, 115px);
+    line-height: 1.15;
+
+    color: #aa6689;
+    margin: 0 0 25px;
+    text-shadow: 0 8px 25px white;
+}
+
+.hero h1 span {
+    color: #ef99b8;
+}
+
+.hero-subtitle {
+    font-size: 25px;
+    line-height: 1.8;
+    margin: 0 0 18px;
+}
+
+.hero-description {
+    font-size: 15px;
+    line-height: 2;
+    color: #937b8e;
+    margin-bottom: 35px;
+}
+
+/* 시작 버튼 */
+
+.start-btn {
+    display: inline-block;
+    padding: 16px 38px;
+    border-radius: 40px;
+
+    background: linear-gradient(135deg, #eaa1bd, #c78fbc);
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+
+    box-shadow: 0 8px 25px rgba(198, 119, 164, 0.25);
+    transition: transform 0.3s;
+}
+
+.start-btn:hover {
+    transform: translateY(-4px);
+}
+
+/* MBTI 및 궁합 카드 */
+
+.features {
+    position: relative;
+    z-index: 2;
+
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 24px 110px;
+    text-align: center;
+}
+
+.features h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    color: #a65d83;
+    margin-bottom: 10px;
+}
+
+.section-description {
+    color: #a0859a;
+    margin-bottom: 45px;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.77);
+    backdrop-filter: blur(12px);
+
+    border: 1px solid white;
+    border-radius: 25px;
+    padding: 45px 25px;
+
+    box-shadow: 0 12px 35px rgba(181, 139, 176, 0.12);
+    transition: transform 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+}
+
+.card-icon {
+    font-size: 44px;
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    color: #a8658b;
+    font-size: 19px;
+}
+
+.feature-card p {
+    color: #9b8996;
+    line-height: 1.9;
+    font-size: 14px;
+}
+
+.coming-soon {
+    display: inline-block;
+    margin-top: 15px;
+    color: #c486a9;
+    font-size: 13px;
+}
+
+.board-link {
+    display: inline-block;
+    margin-top: 45px;
+    color: #a65d83;
+    text-decoration: none;
+}
+
+/* 눈 내리는 효과 */
+
+#snow-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 5;
+}
+
+.snowflake {
+    position: absolute;
+    top: -20px;
+
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+
+    box-shadow: 0 0 8px rgba(255,255,255,0.9);
+    animation: snowfall linear infinite;
+}
+
+@keyframes snowfall {
+    from {
+        transform: translateY(-20px);
+    }
+
+    to {
+        transform: translateY(105vh);
+    }
+}
+
+/* 하단 */
+
+footer {
+    position: relative;
+    z-index: 2;
+    padding: 35px;
+    text-align: center;
+    color: #b096a8;
+    font-size: 12px;
+}
+
+/* 모바일 화면 */
+
+@media (max-width: 768px) {
+    .header {
+        padding: 22px 18px;
+    }
+
+    .logo {
+        font-size: 21px;
+    }
+
+    nav {
+        gap: 12px;
+    }
+
+    nav a {
+        font-size: 11px;
+    }
+
+    .hero {
+        min-height: 550px;
+    }
+
+    .hero-subtitle {
+        font-size: 20px;
+    }
+
+    .features h2 {
+        font-size: 30px;
+    }
+
+    .card-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .snowflake {
+        display: none;
+    }
+
+    .feature-card,
+    .start-btn {
+        transition: none;
+    }
+}
+    /* ==============================
+       My World 겨울 동화 배경
+    ============================== */
+
+    /* 겨울 풍경 전체 */
+    .winter-scene {
+        position: absolute;
+        top: 100px;
+        left: 0;
+        width: 100%;
+        height: 650px;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    /* 반짝이는 별 */
+    .star {
+        position: absolute;
+        color: #ffffff;
+        font-size: 28px;
+        text-shadow: 0 0 15px #ffffff;
+        animation: twinkle 3s ease-in-out infinite;
+    }
+
+    .star-1 {
+        top: 12%;
+        left: 15%;
+    }
+
+    .star-2 {
+        top: 22%;
+        right: 18%;
+        animation-delay: 1s;
+    }
+
+    .star-3 {
+        top: 38%;
+        left: 8%;
+        animation-delay: 2s;
+    }
+
+    .star-4 {
+        top: 10%;
+        right: 8%;
+        animation-delay: 0.5s;
+    }
+
+    @keyframes twinkle {
+        0%, 100% {
+            opacity: 0.3;
+            transform: scale(0.8);
+        }
+
+        50% {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+    }
+
+    /* 눈 언덕 */
+    .snow-hill {
+        position: absolute;
+        bottom: -110px;
+        width: 130%;
+        left: -15%;
+        border-radius: 50% 50% 0 0;
+    }
+
+    .hill-back {
+        height: 260px;
+        background: #f7eaff;
+        bottom: -85px;
+        transform: rotate(-3deg);
+    }
+
+    .hill-front {
+        height: 190px;
+        background: linear-gradient(
+                180deg,
+                #ffffff,
+                #fff3fa
+        );
+        transform: rotate(3deg);
+    }
+
+    /* 눈 덮인 소나무 */
+    .pine-tree {
+        position: absolute;
+        bottom: 110px;
+        width: 140px;
+        height: 240px;
+    }
+
+    .tree-left {
+        left: 7%;
+        transform: scale(0.9);
+    }
+
+    .tree-right {
+        right: 8%;
+        transform: scale(1.15);
+    }
+
+    .tree-top,
+    .tree-middle,
+    .tree-bottom {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        z-index: 2;
+    }
+
+    .tree-top {
+        top: 15px;
+        border-left: 35px solid transparent;
+        border-right: 35px solid transparent;
+        border-bottom: 85px solid #b6cbbf;
+    }
+
+    .tree-middle {
+        top: 55px;
+        border-left: 52px solid transparent;
+        border-right: 52px solid transparent;
+        border-bottom: 105px solid #a0b9af;
+    }
+
+    .tree-bottom {
+        top: 105px;
+        border-left: 70px solid transparent;
+        border-right: 70px solid transparent;
+        border-bottom: 125px solid #90aea5;
+    }
+
+    .tree-trunk {
+        position: absolute;
+        bottom: 0;
+        left: 63px;
+        width: 14px;
+        height: 55px;
+        background: #b995a6;
+        border-radius: 4px;
+    }
+
+    /* 나뭇가지 위의 눈 장식 */
+    .tree-top::after,
+    .tree-middle::after,
+    .tree-bottom::after {
+        content: "";
+        position: absolute;
+        top: 25px;
+        left: -24px;
+        width: 48px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 10px rgba(255,255,255,0.5);
+    }
+
+    /* 모바일 화면 */
+    @media (max-width: 768px) {
+
+        .winter-scene {
+            top: 100px;
+            height: 580px;
+        }
+
+        .tree-left {
+            left: -45px;
+            transform: scale(0.55);
+        }
+
+        .tree-right {
+            right: -45px;
+            transform: scale(0.55);
+        }
+
+        .snow-hill {
+            width: 160%;
+            left: -30%;
+        }
+    }
+
+    /* 움직임 최소화 설정 */
+    @media (prefers-reduced-motion: reduce) {
+        .star {
+            animation: none;
+        }
+
+
+}
+
+/* ==============================
+   MBTI 선택 페이지
+============================== */
+
+.mbti-page {
+    position: relative;
+    z-index: 2;
+
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 100px 24px 140px;
+    text-align: center;
+}
+
+.mbti-page h1 {
+    font-size: 42px;
+    color: #a65d83;
+    margin: 15px 0 20px;
+}
+
+.mbti-page p {
+    color: #937b8e;
+    font-size: 17px;
+    line-height: 1.9;
+    margin-bottom: 55px;
+}
+
+.mbti-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.mbti-card {
+    padding: 35px 15px;
+
+    border: 1px solid #f5d6e5;
+    border-radius: 22px;
+
+    background: rgba(255,255,255,0.8);
+    color: #a65d83;
+
+    font-family: inherit;
+    font-size: 24px;
+    font-weight: bold;
+
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(181,139,176,0.12);
+
+    transition: transform 0.25s, background 0.25s;
+}
+
+.mbti-card:hover {
+    transform: translateY(-6px);
+    background: #ffe4f0;
+}
+
+@media (max-width: 768px) {
+    .mbti-page {
+        padding: 65px 20px 90px;
+    }
+
+    .mbti-page h1 {
+        font-size: 30px;
+    }
+
+    .mbti-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .mbti-card {
+        padding: 25px 10px;
+        font-size: 20px;
+    }
+
+}
+
+/* MBTI 링크 버튼 */
+a.mbti-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+/* MBTI 상세 페이지 */
+.mbti-detail-page {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 70px 24px 100px;
+    text-align: center;
+}
+
+.mbti-detail-page h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 65px;
+    color: #a65d83;
+    margin: 12px 0;
+}
+
+.mbti-detail-page h2 {
+    font-size: 22px;
+    color: #b77d9f;
+    margin-bottom: 45px;
+}
+
+.detail-card {
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid #f4dbe7;
+    border-radius: 24px;
+    padding: 24px 30px;
+    margin-bottom: 20px;
+    text-align: left;
+    box-shadow: 0 10px 28px rgba(181,139,176,0.1);
+}
+
+.detail-card h3 {
+    color: #a65d83;
+    font-size: 19px;
+}
+
+.detail-card p {
+    color: #7d6877;
+    line-height: 1.9;
+}
+
+.mbti-notice {
+    font-size: 12px;
+    color: #a895a2;
+    margin-top: 35px;
+}
+
+/* ==============================
+   MBTI 궁합 페이지
+============================== */
+
+.compatibility-page {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 100px 24px;
+    text-align: center;
+    min-height: 75vh;
+}
+
+.compatibility-page h1 {
+    color: #a65d83;
+    font-size: 38px;
+    margin: 20px 0;
+}
+
+.compatibility-page > p {
+    color: #937b8e;
+    line-height: 1.9;
+    margin-bottom: 45px;
+}
+
+.compatibility-form,
+.compatibility-result-card {
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid #f3d7e6;
+    border-radius: 28px;
+    padding: 45px 30px;
+    box-shadow: 0 12px 35px rgba(181, 139, 176, 0.12);
+}
+
+.compatibility-fields {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin-bottom: 35px;
+}
+
+.compatibility-field {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    text-align: left;
+}
+
+.compatibility-field label {
+    color: #a65d83;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.compatibility-field select {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #eac6d9;
+    border-radius: 14px;
+    background: #fff7fb;
+    color: #71546a;
+    font-family: inherit;
+    font-size: 17px;
+}
+
+.compatibility-submit {
+    border: none;
+    font-family: inherit;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.compatibility-result-card h2 {
+    font-size: 32px;
+    color: #a65d83;
+}
+
+.compatibility-result-card p {
+    color: #937b8e;
+    line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+    .compatibility-page {
+        padding: 65px 20px;
+    }
+
+    .compatibility-page h1 {
+        font-size: 29px;
+    }
+
+    .compatibility-fields {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===========================
+   MBTI 궁합 점수 막대그래프
+=========================== */
+
+.score-list {
+    margin-top: 35px;
+    text-align: left;
+}
+
+.score-item {
+    margin-bottom: 25px;
+}
+
+.score-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 10px;
+    color: #a65d83;
+    font-size: 16px;
+}
+
+.score-bar {
+    width: 100%;
+    height: 14px;
+
+    background: #f6dce9;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.score-fill {
+    height: 100%;
+
+    background: linear-gradient(
+            90deg,
+            #efb5cf,
+            #c78fbc
+    );
+
+    border-radius: 20px;
+    transition: width 0.8s ease;
+}

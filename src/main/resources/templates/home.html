@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My World - Winter Love</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<!-- 눈 내리는 배경 -->
+<div id="snow-container"></div>
+
+<!-- 상단 메뉴 -->
+<header class="header">
+    <a th:href="@{/}" class="logo">My World ♡</a>
+
+    <nav>
+        <a th:href="@{/}">HOME</a>
+        <a href="#features">LOVE TEST</a>
+        <a th:href="@{/board}">BOARD</a>
+    </nav>
+</header>
+
+<!-- 메인 화면 -->
+<main>
+    <section class="hero">
+
+        <div class="winter-label">
+            ❄ WINTER LOVE STORY ❄
+        </div>
+
+        <h1>My World <span>♡</span></h1>
+
+        <p class="hero-subtitle">
+            눈 내리는 계절,<br>
+            우리의 마음이 만나는 곳
+        </p>
+
+        <p class="hero-description">
+            나의 성격부터 우리의 사랑 궁합까지<br>
+            따뜻하고 설레는 이야기를 만나보세요.
+        </p>
+
+        <a href="#features" class="start-btn">
+            사랑 이야기 시작하기 ♡
+        </a>
+    </section>
+
+    <!-- MBTI 및 궁합 메뉴 -->
+    <section id="features" class="features">
+
+        <h2>Choose Your Love Story</h2>
+        <p class="section-description">
+            오늘은 어떤 이야기가 궁금한가요?
+        </p>
+
+        <div class="card-container">
+
+            <div class="feature-card">
+                <div class="card-icon">🌷</div>
+                <h3>MBTI 성격 이야기</h3>
+                <p>
+                    16가지 성격 유형으로<br>
+                    나의 매력을 발견해요.
+                </p>
+                <a th:href="@{/mbti}" class="board-link">
+                    MBTI 선택하기 ♡
+                </a>
+            </div>
+
+            <div class="feature-card">
+                <div class="card-icon">💗</div>
+                <h3>우리의 MBTI 궁합</h3>
+                <p>
+                    친구부터 연인, 결혼까지<br>
+                    두 사람의 궁합을 알아봐요.
+                </p>
+                <a th:href="@{/compatibility}" class="board-link">
+                    MBTI 궁합 확인하기 ♡
+                </a>
+            </div>
+
+            <div class="feature-card">
+                <div class="card-icon">💌</div>
+                <h3>이름으로 보는 사랑</h3>
+                <p>
+                    두 사람의 이름으로<br>
+                    설레는 사랑 확률을 계산해요.
+                </p>
+                <span class="coming-soon">준비 중 ♡</span>
+            </div>
+
+        </div>
+
+        <a th:href="@{/board}" class="board-link">
+            연애 이야기 게시판 구경하기 →
+        </a>
+
+    </section>
+</main>
+
+<footer>
+    <p>Made with ♡ | My World</p>
+    <p>궁합 결과는 재미를 위한 콘텐츠입니다.</p>
+</footer>
+
+<script th:src="@{/js/snow.js}"></script>
+
+</body>
+</html>

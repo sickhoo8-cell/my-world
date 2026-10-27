@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My World - MBTI</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div id="snow-container"></div>
+
+<header class="header">
+    <a th:href="@{/}" class="logo">My World ♡</a>
+
+    <nav>
+        <a th:href="@{/}">HOME</a>
+        <a th:href="@{/board}">BOARD</a>
+    </nav>
+</header>
+
+<main class="mbti-page">
+
+    <div class="winter-label">❄ MY PERSONALITY ❄</div>
+
+    <h1>나의 MBTI 이야기 ♡</h1>
+
+    <p>
+        16가지 성격 유형 중<br>
+        당신의 MBTI를 선택해 주세요.
+    </p>
+
+
+    <div class="mbti-grid">
+
+        <a class="mbti-card" th:href="@{/mbti/INTJ}">INTJ</a>
+        <a class="mbti-card" th:href="@{/mbti/INTP}">INTP</a>
+        <a class="mbti-card" th:href="@{/mbti/ENTJ}">ENTJ</a>
+        <a class="mbti-card" th:href="@{/mbti/ENTP}">ENTP</a>
+
+        <a class="mbti-card" th:href="@{/mbti/INFJ}">INFJ</a>
+        <a class="mbti-card" th:href="@{/mbti/INFP}">INFP</a>
+        <a class="mbti-card" th:href="@{/mbti/ENFJ}">ENFJ</a>
+        <a class="mbti-card" th:href="@{/mbti/ENFP}">ENFP</a>
+
+        <a class="mbti-card" th:href="@{/mbti/ISTJ}">ISTJ</a>
+        <a class="mbti-card" th:href="@{/mbti/ISFJ}">ISFJ</a>
+        <a class="mbti-card" th:href="@{/mbti/ESTJ}">ESTJ</a>
+        <a class="mbti-card" th:href="@{/mbti/ESFJ}">ESFJ</a>
+
+        <a class="mbti-card" th:href="@{/mbti/ISTP}">ISTP</a>
+        <a class="mbti-card" th:href="@{/mbti/ISFP}">ISFP</a>
+        <a class="mbti-card" th:href="@{/mbti/ESTP}">ESTP</a>
+        <a class="mbti-card" th:href="@{/mbti/ESFP}">ESFP</a>
+
+    </div>
+
+
+</main>
+
+<script th:src="@{/js/snow.js}"></script>
+
+</body>
+</html>
