@@ -34,12 +34,8 @@ public class MbtiController {
             return "redirect:/mbti";
         }
 
-        model.addAttribute("mbti", info.type());
-        model.addAttribute("nickname", info.nickname());
-        model.addAttribute("personality", info.personality());
-        model.addAttribute("strength", info.strength());
-        model.addAttribute("weakness", info.weakness());
-        model.addAttribute("loveStyle", info.loveStyle());
+        // MBTI 정보를 객체 하나로 HTML에 전달
+        model.addAttribute("info", info);
 
         return "mbti-detail";
     }

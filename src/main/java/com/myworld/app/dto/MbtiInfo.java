@@ -7,6 +7,15 @@ public record MbtiInfo(
         String personality,
         String strength,
         String weakness,
-        String loveStyle
+        String loveStyle,
+
+        String crush,
+        String starting,
+        String flirting,
+        String dating,
+        String jealousy,
+        String intimacy,
+        String loveWeakness,
+        String breakup
 ) {
 }

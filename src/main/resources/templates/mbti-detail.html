@@ -6,58 +6,117 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>My World - MBTI 상세</title>
+    <title th:text="|${info.type} 연애 분석 - My World|">
+        MBTI 연애 분석 - My World
+    </title>
+
+    <!-- 기존 겨울 감성 CSS -->
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
 
+<!-- 눈 내리는 효과 -->
 <div id="snow-container"></div>
 
+<!-- 상단 메뉴 -->
 <header class="header">
     <a th:href="@{/}" class="logo">My World ♡</a>
+
     <nav>
         <a th:href="@{/}">HOME</a>
         <a th:href="@{/mbti}">MBTI</a>
+        <a th:href="@{/compatibility}">LOVE TEST</a>
         <a th:href="@{/board}">BOARD</a>
     </nav>
 </header>
 
 <main class="mbti-detail-page">
 
-    <div class="winter-label">❄ PERSONALITY STORY ❄</div>
-
-    <h1 th:text="${mbti}">INFP</h1>
-    <h2 th:text="${nickname}">성격 별명</h2>
-
-    <div class="detail-card">
-        <h3>🌷 성격 특징</h3>
-        <p th:text="${personality}">성격 설명</p>
+    <div class="winter-label">
+        ❄ MY WORLD · MBTI LOVE PROFILE ❄
     </div>
 
-    <div class="detail-card">
-        <h3>✨ 나의 장점</h3>
-        <p th:text="${strength}">장점 설명</p>
-    </div>
+    <!-- MBTI 유형 -->
+    <h1 th:text="${info.type}">INFP</h1>
 
-    <div class="detail-card">
-        <h3>☁️ 조심하면 좋은 점</h3>
-        <p th:text="${weakness}">단점 설명</p>
-    </div>
+    <h2 th:text="${info.nickname}">
+        마음속에 동화를 품은 낭만가
+    </h2>
 
-    <div class="detail-card">
-        <h3>💗 연애 스타일</h3>
-        <p th:text="${loveStyle}">연애 스타일 설명</p>
-    </div>
 
-    <a th:href="@{/mbti}" class="start-btn">
-        다른 MBTI 살펴보기 ♡
+    <!-- 새로 추가한 연애 분석 -->
+    <section class="love-analysis">
+
+        <h2>💘 솔직한 연애 분석</h2>
+
+        <p class="love-intro">
+            좋아하는 사람 앞에서는 어떤 모습일까?
+        </p>
+
+        <div class="love-analysis-grid">
+
+            <article class="love-analysis-card">
+                <h3>💌 짝사랑 스타일</h3>
+                <p th:text="${info.crush}"></p>
+            </article>
+
+            <article class="love-analysis-card">
+                <h3>🙈 연애 시작 난이도</h3>
+                <p th:text="${info.starting}"></p>
+            </article>
+
+            <article class="love-analysis-card">
+                <h3>💬 호감 표현</h3>
+                <p th:text="${info.flirting}"></p>
+            </article>
+
+            <article class="love-analysis-card">
+                <h3>💕 사귀고 난 후</h3>
+                <p th:text="${info.dating}"></p>
+            </article>
+
+            <article class="love-analysis-card">
+                <h3>😈 질투와 집착</h3>
+                <p th:text="${info.jealousy}"></p>
+            </article>
+
+            <article class="love-analysis-card">
+                <h3>🔥 스킨십과 성적 친밀감</h3>
+                <p th:text="${info.intimacy}"></p>
+            </article>
+
+            <article class="love-analysis-card">
+                <h3>🚩 연애의 치명적인 단점</h3>
+                <p th:text="${info.loveWeakness}"></p>
+            </article>
+
+            <article class="love-analysis-card">
+                <h3>💔 이별 후 모습</h3>
+                <p th:text="${info.breakup}"></p>
+            </article>
+
+        </div>
+
+        <p class="love-disclaimer">
+            MBTI 연애 분석은 재미를 위한 캐릭터 해석이며,
+            실제 성격이나 성적 욕구를 판단하는 자료가 아닙니다.
+        </p>
+
+    </section>
+
+    <a th:href="@{/mbti}" class="board-link">
+        ← 다른 MBTI 유형 알아보기
     </a>
 
-    <p class="mbti-notice">
-        MBTI 설명은 재미와 자기 이해를 위한 참고 콘텐츠입니다.
-    </p>
 </main>
 
+<footer>
+    <p>Made with ♡ | My World</p>
+    <p>나만의 겨울 연애 이야기 ❄</p>
+</footer>
+
+<!-- 눈 내리는 JavaScript -->
 <script th:src="@{/js/snow.js}"></script>
 
 </body>

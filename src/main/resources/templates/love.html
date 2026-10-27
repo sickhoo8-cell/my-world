@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>우리 사귈 확률은? | My World</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Malgun Gothic", sans-serif;
+            background: linear-gradient(160deg,
+            #eae5ff 0%, #ffe8f3 55%, #fff7fa 100%);
+            color: #814967;
+            overflow-x: hidden;
+        }
+
+        .snow {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            background-image:
+                    radial-gradient(3px 3px at 15% 20%, white 99%, transparent),
+                    radial-gradient(4px 4px at 65% 40%, white 99%, transparent),
+                    radial-gradient(3px 3px at 85% 70%, white 99%, transparent),
+                    radial-gradient(3px 3px at 40% 85%, white 99%, transparent);
+            background-size: 190px 200px;
+            animation: snowfall 14s linear infinite;
+            opacity: .8;
+        }
+
+        @keyframes snowfall {
+            from { background-position: 0 0; }
+            to { background-position: 40px 600px; }
+        }
+
+        .tree {
+            position: fixed;
+            bottom: 0;
+            width: 130px;
+            height: 260px;
+            z-index: 0;
+            opacity: .55;
+        }
+
+        .tree.left { left: 2%; }
+        .tree.right { right: 2%; transform: scale(.82); }
+
+        .tree::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 59px;
+            width: 13px;
+            height: 75px;
+            background: #9b8297;
+            border-radius: 4px;
+        }
+
+        .tree::after {
+            content: "";
+            position: absolute;
+            bottom: 45px;
+            left: 0;
+            width: 130px;
+            height: 210px;
+            background: linear-gradient(#b8c7c8, #81aaa5);
+            clip-path: polygon(
+                    50% 0%, 83% 38%, 70% 38%,
+                    95% 68%, 78% 68%, 100% 100%,
+                    0% 100%, 22% 68%, 5% 68%,
+                    30% 38%, 17% 38%
+            );
+        }
+
+        .wrapper {
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+            margin: 48px auto;
+            padding: 16px;
+        }
+
+        .card {
+            padding: 34px 28px;
+            background: rgba(255,255,255,.89);
+            border: 1px solid rgba(255,255,255,.95);
+            border-radius: 30px;
+            box-shadow: 0 18px 55px rgba(160,102,147,.17);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .eyebrow {
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: #bc85ac;
+        }
+
+        h1 {
+            margin: 15px 0 8px;
+            font-size: 29px;
+            color: #d65c9a;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #ab8a9f;
+            margin-bottom: 26px;
+        }
+
+        .inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 13px;
+        }
+
+        .input-box {
+            padding: 16px 12px;
+            background: #fff6fa;
+            border: 1px solid #f2d6e5;
+            border-radius: 18px;
+        }
+
+        .input-box:nth-child(2) {
+            background: #f9f5ff;
+            border-color: #e7d9f3;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 9px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 6px;
+            font: inherit;
+            font-size: 18px;
+            text-align: center;
+            border: 1px solid #e9c6d9;
+            border-radius: 12px;
+            outline-color: #db8eb7;
+            background: white;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 22px;
+            padding: 16px;
+            border: 0;
+            border-radius: 18px;
+            background: linear-gradient(90deg, #ee91ba, #cf96e1);
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 7px 18px #e4a6c466;
+        }
+
+        button:hover { filter: brightness(1.04); }
+
+        .steps { margin-top: 24px; }
+
+        .step {
+            padding: 20px 12px;
+            margin: 12px 0;
+            border-radius: 18px;
+            background: #fff4fa;
+            animation: appear .6s ease both;
+        }
+
+        .step h3 {
+            margin: 0 0 15px;
+            font-size: 15px;
+            color: #a75d88;
+        }
+
+        .cells {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .cell {
+            display: grid;
+            place-items: center;
+            min-width: 35px;
+            height: 40px;
+            background: #f7cbe0;
+            border-radius: 10px;
+            color: #84456a;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .cell.boy { background: #e9d7f5; }
+
+        .detail {
+            font-size: 12px;
+            color: #ac839c;
+            margin-top: 12px;
+        }
+
+        .down {
+            color: #d78aaf;
+            font-size: 23px;
+            padding: 7px;
+        }
+
+        .final {
+            background: linear-gradient(135deg, #ffe5f2, #eee1ff);
+        }
+
+        .percent {
+            margin: 10px 0;
+            font-size: 56px;
+            color: #d85c9d;
+            font-weight: 800;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 25px;
+            color: #ab789b;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .note {
+            font-size: 12px;
+            color: #b293a7;
+            margin-top: 20px;
+        }
+
+        @keyframes appear {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media(max-width: 600px) {
+            .wrapper { margin: 20px auto; }
+            .card { padding: 26px 16px; }
+            h1 { font-size: 24px; }
+            .cell { min-width: 30px; height: 36px; font-size: 16px; }
+            .tree { opacity: .2; }
+        }
+
+        @media(prefers-reduced-motion: reduce) {
+            .snow, .step { animation: none; }
+        }
+    </style>
+</head>
+
+<body>
+<div class="snow"></div>
+<div class="tree left"></div>
+<div class="tree right"></div>
+
+<main class="wrapper">
+    <section class="card">
+
+        <div class="eyebrow">❄ MY WORLD · LOVE TEST ❄</div>
+        <h1>💗 우리 사귈 확률은?</h1>
+        <p class="subtitle">이름 속에 숨어 있는 두근두근 궁합</p>
+
+        <div class="inputs">
+            <div class="input-box">
+                <label for="girl">여자 이름 🌷</label>
+                <input id="girl" maxlength="3" value="">
+            </div>
+            <div class="input-box">
+                <label for="boy">남자 이름 💜</label>
+                <input id="boy" maxlength="3" value="">
+            </div>
+        </div>
+
+        <button id="calculateBtn" type="button">
+            💕 우리의 궁합 계산하기
+        </button>
+
+        <div id="steps" class="steps" aria-live="polite"></div>
+
+        <p class="note">
+            이름 획수를 이용한 재미용 테스트입니다.<br>
+            실제 연애 가능성을 예측하지 않아요.
+        </p>
+
+        <a class="back" href="/">← My World로 돌아가기</a>
+
+    </section>
+</main>
+
+<script>
+    // 한글 자모별 획수. 복합 자모는 기본 자모 획수를 합산.
+    // 전통적 이름 궁합에는 여러 획수 규칙이 존재함.
+    const CHO = [
+        2,4,2,3,6,5,4,4,8,2,4,1,2,4,3,6,4,4,3
+    ];
+
+    const JUNG = [
+        2,3,3,4,2,3,3,4,2,4,5,
+        3,3,2,4,5,3,3,1,2,1
+    ];
+
+    const JONG = [
+        0,2,4,4,2,5,5,3,5,7,9,9,7,9,
+        9,8,4,4,6,2,4,1,3,4,3,4,4,3
+    ];
+
+    function getStroke(char) {
+        const code = char.charCodeAt(0) - 0xAC00;
+        const cho = Math.floor(code / 588);
+        const jung = Math.floor((code % 588) / 28);
+        const jong = code % 28;
+
+        return CHO[cho] + JUNG[jung] + JONG[jong];
+    }
+
+    function makeCells(values, alternate = false) {
+        const row = document.createElement("div");
+        row.className = "cells";
+
+        values.forEach((value, index) => {
+            const cell = document.createElement("span");
+            cell.className = "cell";
+            if (alternate && index % 2 === 1) {
+                cell.classList.add("boy");
+            }
+            cell.textContent = value;
+            row.appendChild(cell);
+        });
+
+        return row;
+    }
+
+    function addStep(parent, title, values, alternate, detail, final=false) {
+        const step = document.createElement("div");
+        step.className = final ? "step final" : "step";
+
+        const heading = document.createElement("h3");
+        heading.textContent = title;
+        step.appendChild(heading);
+        step.appendChild(makeCells(values, alternate));
+
+        if (detail) {
+            const p = document.createElement("p");
+            p.className = "detail";
+            p.textContent = detail;
+            step.appendChild(p);
+        }
+
+        parent.appendChild(step);
+        return step;
+    }
+
+    function addArrow(parent) {
+        const arrow = document.createElement("div");
+        arrow.className = "down";
+        arrow.textContent = "↓";
+        parent.appendChild(arrow);
+    }
+
+    function calculate() {
+        const girl = document.getElementById("girl").value.trim();
+        const boy = document.getElementById("boy").value.trim();
+        const steps = document.getElementById("steps");
+
+        if (!/^[가-힣]{3}$/.test(girl) ||
+            !/^[가-힣]{3}$/.test(boy)) {
+            alert("한글 이름을 각각 3글자로 입력해 주세요!");
+            return;
+        }
+
+        steps.replaceChildren();
+
+        const chars = [];
+        for (let i = 0; i < 3; i++) {
+            chars.push(girl[i], boy[i]);
+        }
+
+        let numbers = chars.map(getStroke);
+
+        addStep(steps, "① 이름 교차 배치", chars, true,
+            "여자 이름과 남자 이름을 한 글자씩 번갈아 배치해요.");
+
+        addArrow(steps);
+
+        addStep(steps, "② 각 글자의 획수", numbers, true,
+            "각 한글 음절의 초성 + 중성 + 종성 획수 합계예요.");
+
+        let round = 1;
+
+        while (numbers.length > 2) {
+            const next = [];
+
+            for (let i = 0; i < numbers.length - 1; i++) {
+                next.push((numbers[i] + numbers[i + 1]) % 10);
+            }
+
+            addArrow(steps);
+            addStep(steps, `③ 덧셈 ${round}단계`, next, false,
+                "이웃한 두 숫자를 더한 뒤 일의 자리만 남겨요.");
+
+            numbers = next;
+            round++;
+        }
+
+        addArrow(steps);
+
+        const finalStep = addStep(
+            steps, "💗 최종 궁합 결과", numbers, false,
+            "마지막 두 숫자를 이어 붙여요.", true
+        );
+
+        const result = document.createElement("div");
+        result.className = "percent";
+        result.textContent = `${numbers[0]}${numbers[1]}%`;
+
+        const message = document.createElement("p");
+        message.textContent = "두 사람의 이름이 만든 특별한 숫자 💕";
+
+        finalStep.appendChild(result);
+        finalStep.appendChild(message);
+
+        // 각 단계가 순서대로 나타나는 효과
+        const blocks = steps.children;
+        Array.from(blocks).forEach((block, index) => {
+            block.style.animation = `appear .5s ease ${index * .18}s both`;
+        });
+    }
+
+    document.getElementById("calculateBtn")
+        .addEventListener("click", calculate);
+</script>
+
+</body>
+</html>

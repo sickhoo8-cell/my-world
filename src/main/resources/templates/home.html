@@ -15,6 +15,37 @@
 <!-- 눈 내리는 배경 -->
 <div id="snow-container"></div>
 
+<!-- 겨울 동화 배경 -->
+<div class="winter-scene" aria-hidden="true">
+
+    <!-- 반짝이는 별 -->
+    <span class="star star-1">✦</span>
+    <span class="star star-2">✧</span>
+    <span class="star star-3">✦</span>
+    <span class="star star-4">✧</span>
+
+    <!-- 왼쪽 눈 덮인 소나무 -->
+    <div class="pine-tree tree-left">
+        <div class="tree-trunk"></div>
+        <div class="tree-bottom"></div>
+        <div class="tree-middle"></div>
+        <div class="tree-top"></div>
+    </div>
+
+    <!-- 오른쪽 눈 덮인 소나무 -->
+    <div class="pine-tree tree-right">
+        <div class="tree-trunk"></div>
+        <div class="tree-bottom"></div>
+        <div class="tree-middle"></div>
+        <div class="tree-top"></div>
+    </div>
+
+    <!-- 눈 덮인 언덕 -->
+    <div class="snow-hill hill-back"></div>
+    <div class="snow-hill hill-front"></div>
+
+</div>
+
 <!-- 상단 메뉴 -->
 <header class="header">
     <a th:href="@{/}" class="logo">My World ♡</a>
@@ -92,7 +123,9 @@
                     두 사람의 이름으로<br>
                     설레는 사랑 확률을 계산해요.
                 </p>
-                <span class="coming-soon">준비 중 ♡</span>
+                <a th:href="@{/love}" class="board-link">
+                    이름 궁합 테스트하기 ♡
+                </a>
             </div>
 
         </div>
