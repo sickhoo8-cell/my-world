@@ -31,7 +31,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px 22px;
+            padding: 40px 90px;
         }
 
         .login-layout {
@@ -41,12 +41,68 @@
             max-width: 1080px;
             min-height: 610px;
             overflow: hidden;
-
             background: #fff;
             border: 1px solid #e8d7f0;
             border-radius: 30px;
-            box-shadow:
-                    0 22px 65px rgba(105,70,135,0.15);
+            box-shadow: 0 22px 65px
+            rgba(105,70,135,0.15);
+        }
+
+        /* 왼쪽, 오른쪽 페이지 이동 화살표 */
+
+        .page-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+
+            width: 68px;
+            min-height: 86px;
+            padding: 10px 5px;
+
+            border: 1px solid #e4d4ef;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.88);
+
+            color: #8361a0;
+            text-decoration: none;
+            box-shadow: 0 8px 24px
+            rgba(103,72,130,0.13);
+
+            transition: background 0.2s,
+            box-shadow 0.2s;
+        }
+
+        .page-arrow:hover {
+            background: #e8d8f4;
+            box-shadow: 0 10px 26px
+            rgba(103,72,130,0.20);
+        }
+
+        .page-arrow .arrow-symbol {
+            font-size: 30px;
+            line-height: 1;
+        }
+
+        .page-arrow small {
+            font-size: 9px;
+            font-weight: bold;
+            text-align: center;
+            letter-spacing: 0.3px;
+        }
+
+        .page-arrow-left {
+            left: 15px;
+        }
+
+        .page-arrow-right {
+            right: 15px;
         }
 
         /* 페른 사진 네 장 */
@@ -77,10 +133,10 @@
             position: absolute;
             overflow: hidden;
             padding: 7px;
-            background: white;
+            background: #fff;
             border-radius: 14px;
-            box-shadow:
-                    0 12px 28px rgba(65,40,90,0.20);
+            box-shadow: 0 12px 28px
+            rgba(65,40,90,0.20);
             transition: transform 0.25s ease;
         }
 
@@ -92,7 +148,6 @@
             border-radius: 8px;
         }
 
-        /* fern1.png: 메인 클로즈업 */
         .main-photo {
             z-index: 2;
             top: 105px;
@@ -102,7 +157,6 @@
             transform: rotate(-5deg);
         }
 
-        /* fern3.png: 눈 내리는 밤 */
         .night-photo {
             z-index: 3;
             top: 75px;
@@ -112,7 +166,6 @@
             transform: rotate(8deg);
         }
 
-        /* fern2.png: 뒷모습 */
         .back-photo {
             z-index: 4;
             right: 6%;
@@ -122,7 +175,6 @@
             transform: rotate(5deg);
         }
 
-        /* fern.png: 페른과 슈타르크 */
         .couple-photo {
             z-index: 5;
             left: 6%;
@@ -133,13 +185,15 @@
         }
 
         .main-photo:hover {
-            transform: rotate(-2deg) translateY(-6px);
+            transform: rotate(-2deg)
+            translateY(-6px);
         }
 
         .night-photo:hover,
         .back-photo:hover,
         .couple-photo:hover {
-            transform: rotate(0deg) translateY(-6px);
+            transform: rotate(0deg)
+            translateY(-6px);
         }
 
         .gallery-bottom {
@@ -151,7 +205,7 @@
             letter-spacing: 2px;
         }
 
-        /* 오른쪽 로그인 화면 */
+        /* 로그인 영역 */
 
         .form-panel {
             padding: 65px 48px;
@@ -163,9 +217,9 @@
         .home-link {
             align-self: flex-start;
             margin-bottom: 42px;
-            text-decoration: none;
             color: #9780a8;
             font-size: 13px;
+            text-decoration: none;
         }
 
         .small-title {
@@ -214,8 +268,8 @@
 
         input:focus {
             border-color: #a88bc6;
-            box-shadow:
-                    0 0 0 4px rgba(167,137,196,0.12);
+            box-shadow: 0 0 0 4px
+            rgba(167,137,196,0.12);
         }
 
         input::placeholder {
@@ -273,7 +327,7 @@
 
         @media (max-width: 800px) {
             .page {
-                padding: 18px;
+                padding: 85px 18px;
             }
 
             .login-layout {
@@ -312,10 +366,37 @@
             .home-link {
                 margin-bottom: 28px;
             }
+
+            .page-arrow {
+                top: 12px;
+                transform: none;
+                width: 88px;
+                min-height: 53px;
+                flex-direction: row;
+                gap: 5px;
+                border-radius: 13px;
+            }
+
+            .page-arrow-left {
+                left: 12px;
+            }
+
+            .page-arrow-right {
+                right: 12px;
+            }
+
+            .page-arrow .arrow-symbol {
+                font-size: 22px;
+            }
+
+            .page-arrow small {
+                font-size: 9px;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .photo {
+            .photo,
+            .page-arrow {
                 transition: none;
             }
         }
@@ -324,52 +405,78 @@
 
 <body>
 
-<main class="page">
+<!-- 왼쪽 : 기존 겨울 마이월드 -->
+<a class="page-arrow page-arrow-left"
+   th:href="@{/home}"
+   href="/home"
+   aria-label="마이월드 홈페이지로 이동"
+   title="마이월드">
+    <span class="arrow-symbol">❮</span>
+    <small>MY WORLD</small>
+</a>
 
+<!-- 오른쪽 : 로또 -->
+<a class="page-arrow page-arrow-right"
+   th:href="@{/lotto}"
+   href="/lotto"
+   aria-label="로또 추첨 페이지로 이동"
+   title="로또">
+    <small>LOTTO</small>
+    <span class="arrow-symbol">❯</span>
+</a>
+
+<main class="page">
     <div class="login-layout">
 
-        <!-- 네가 고른 페른 이미지 4장 -->
+        <!-- 기존 페른 사진 4장 -->
         <section class="fern-gallery">
 
-            <span class="gallery-label">MY WORLD ♡</span>
+            <span class="gallery-label">
+                MY WORLD ♡
+            </span>
 
             <div class="photo main-photo">
                 <img th:src="@{/img/fern1.png}"
                      src="/img/fern1.png"
-                     alt="페른 사진">
+                     alt="페른 메인 사진">
             </div>
 
             <div class="photo night-photo">
                 <img th:src="@{/img/fern3.png}"
                      src="/img/fern3.png"
-                     alt="페른 사진">
+                     alt="페른 밤 사진">
             </div>
 
             <div class="photo back-photo">
                 <img th:src="@{/img/fern2.png}"
                      src="/img/fern2.png"
-                     alt="페른 사진">
+                     alt="페른 뒷모습 사진">
             </div>
 
             <div class="photo couple-photo">
                 <img th:src="@{/img/fern.png}"
                      src="/img/fern.png"
-                     alt="페른 사진">
+                     alt="페른과 슈타르크 사진">
             </div>
 
-            <span class="gallery-bottom">FERN COLLECTION</span>
+            <span class="gallery-bottom">
+                FERN COLLECTION
+            </span>
 
         </section>
 
-        <!-- 로그인 입력창 -->
+        <!-- 오른쪽 로그인 폼 -->
         <section class="form-panel">
 
             <a class="home-link"
-               th:href="@{/}" href="/">
-                ← 홈으로 돌아가기
+               th:href="@{/home}"
+               href="/home">
+                ← 마이월드 둘러보기
             </a>
 
-            <p class="small-title">MY WORLD · MEMBER</p>
+            <p class="small-title">
+                MY WORLD · MEMBER
+            </p>
 
             <h1>로그인 ♡</h1>
 
@@ -377,14 +484,23 @@
                 아이디와 비밀번호를 입력해 주세요.
             </p>
 
+            <!-- 로그인 오류 -->
             <div class="message error"
                  th:if="${error}"
                  th:text="${error}">
             </div>
 
+            <!-- 로그아웃 성공 -->
             <div class="message success"
                  th:if="${param.logout}">
                 로그아웃되었습니다.
+            </div>
+
+            <!-- 회원가입 성공 -->
+            <div class="message success"
+                 th:if="${param.signupSuccess}">
+                🎉 회원가입이 완료되었습니다!
+                로그인해 주세요. 💜
             </div>
 
             <form th:action="@{/login}"
@@ -392,7 +508,9 @@
                   method="post">
 
                 <div class="form-group">
-                    <label for="username">아이디</label>
+                    <label for="username">
+                        아이디
+                    </label>
 
                     <input type="text"
                            id="username"
@@ -403,7 +521,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="password">비밀번호</label>
+                    <label for="password">
+                        비밀번호
+                    </label>
 
                     <input type="password"
                            id="password"
@@ -413,22 +533,23 @@
                            required>
                 </div>
 
-                <button type="submit" class="login-button">
+                <button type="submit"
+                        class="login-button">
                     로그인하기
                 </button>
             </form>
 
             <p class="signup-guide">
                 아직 회원이 아니신가요?
-                <a th:href="@{/signup}" href="/signup">
+
+                <a th:href="@{/signup}"
+                   href="/signup">
                     회원가입
                 </a>
             </p>
 
         </section>
-
     </div>
-
 </main>
 
 </body>

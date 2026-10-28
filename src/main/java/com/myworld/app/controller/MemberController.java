@@ -32,6 +32,7 @@ public class MemberController {
         return "signup";
     }
 
+
     // 회원가입 처리
     @PostMapping("/signup")
     public String signup(
@@ -39,22 +40,34 @@ public class MemberController {
             Model model
     ) {
         try {
+            // 회원가입 정보 검증 및 DB 저장
             memberService.signup(dto);
-            return "redirect:/signup?success";
+
+            // 회원가입 성공 시 로그인 화면으로 이동
+            return "redirect:/login?signupSuccess=true";
+
         } catch (IllegalArgumentException e) {
+
             model.addAttribute("error", e.getMessage());
+
         } catch (DataIntegrityViolationException e) {
+
             model.addAttribute(
                     "error",
                     "아이디 또는 닉네임이 이미 사용 중입니다."
             );
         }
 
+        // 회원가입 실패 시 입력했던 정보 유지
+        // 비밀번호는 보안상 다시 입력하도록 처리
         MemberSignupDTO safeForm = new MemberSignupDTO();
+
         safeForm.setUsername(dto.getUsername());
         safeForm.setNickname(dto.getNickname());
+        safeForm.setRegion(dto.getRegion());
 
         model.addAttribute("signupForm", safeForm);
+
         return "signup";
     }
 
@@ -95,7 +108,7 @@ public class MemberController {
             // 세션 만료: 30분
             session.setMaxInactiveInterval(30 * 60);
 
-            return "redirect:/";
+            return "redirect:/workspace";
 
         } catch (IllegalArgumentException e) {
             model.addAttribute(

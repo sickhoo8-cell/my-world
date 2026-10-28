@@ -2,18 +2,20 @@
 package com.myworld.app.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
 
+    // 사이트 첫 접속 -> 로그인 화면
     @GetMapping("/")
-    public String home(Model model) {
+    public String index() {
+        return "redirect:/login";
+    }
 
-        model.addAttribute("title", "My World");
-        model.addAttribute("message", "나의 첫 번째 Spring Boot 웹사이트!");
-
+    // 기존 겨울 마이월드 홈페이지
+    @GetMapping("/home")
+    public String home() {
         return "home";
     }
 }
