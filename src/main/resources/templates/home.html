@@ -1,21 +1,69 @@
 
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
     <title>My World - Winter Love</title>
 
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- 기존 홈페이지 CSS -->
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}"
+          href="/css/style.css">
 </head>
+
 <body>
 
-<!-- 눈 내리는 배경 -->
+<!-- ========================================
+     왼쪽 화살표 : 로그인 또는 그룹웨어
+======================================== -->
+<a class="home-nav-arrow home-nav-left"
+   th:href="@{/entry}"
+   href="/entry"
+   aria-label="그룹웨어로 이동"
+   title="그룹웨어로 이동">
+
+    <span>❮</span>
+    <small>WORKSPACE</small>
+
+</a>
+
+
+<!-- ========================================
+     오른쪽 화살표 : 로또
+======================================== -->
+<div class="lucky-navigation">
+
+    <span class="lucky-nav-text">
+        🎱 로또 추첨하러 가기!
+    </span>
+
+    <a class="lucky-next-arrow"
+       th:href="@{/lotto}"
+       href="/lotto"
+       aria-label="로또 추첨하러 가기"
+       title="로또로 이동">
+
+        &#10095;
+
+    </a>
+
+</div>
+
+
+<!-- ========================================
+     눈 내리는 배경
+======================================== -->
 <div id="snow-container"></div>
 
-<!-- 겨울 동화 배경 -->
+
+<!-- ========================================
+     겨울 동화 배경
+======================================== -->
 <div class="winter-scene" aria-hidden="true">
 
     <!-- 반짝이는 별 -->
@@ -24,21 +72,28 @@
     <span class="star star-3">✦</span>
     <span class="star star-4">✧</span>
 
+
     <!-- 왼쪽 눈 덮인 소나무 -->
     <div class="pine-tree tree-left">
+
         <div class="tree-trunk"></div>
         <div class="tree-bottom"></div>
         <div class="tree-middle"></div>
         <div class="tree-top"></div>
+
     </div>
+
 
     <!-- 오른쪽 눈 덮인 소나무 -->
     <div class="pine-tree tree-right">
+
         <div class="tree-trunk"></div>
         <div class="tree-bottom"></div>
         <div class="tree-middle"></div>
         <div class="tree-top"></div>
+
     </div>
+
 
     <!-- 눈 덮인 언덕 -->
     <div class="snow-hill hill-back"></div>
@@ -46,26 +101,54 @@
 
 </div>
 
-<!-- 상단 메뉴 -->
+
+<!-- ========================================
+     상단 메뉴
+======================================== -->
 <header class="header">
-    <a th:href="@{/}" class="logo">My World ♡</a>
+
+    <a th:href="@{/}"
+       href="/"
+       class="logo">
+        My World ♡
+    </a>
 
     <nav>
-        <a th:href="@{/}">HOME</a>
-        <a href="#features">LOVE TEST</a>
-        <a th:href="@{/board}">BOARD</a>
+
+        <a th:href="@{/}"
+           href="/">
+            HOME
+        </a>
+
+        <a href="#features">
+            LOVE TEST
+        </a>
+
+        <a th:href="@{/board}"
+           href="/board">
+            BOARD
+        </a>
+
     </nav>
+
 </header>
 
-<!-- 메인 화면 -->
+
+<!-- ========================================
+     메인 화면
+======================================== -->
 <main>
+
+    <!-- 메인 환영 화면 -->
     <section class="hero">
 
         <div class="winter-label">
             ❄ WINTER LOVE STORY ❄
         </div>
 
-        <h1>My World <span>♡</span></h1>
+        <h1>
+            My World <span>♡</span>
+        </h1>
 
         <p class="hero-subtitle">
             눈 내리는 계절,<br>
@@ -77,72 +160,116 @@
             따뜻하고 설레는 이야기를 만나보세요.
         </p>
 
-        <a href="#features" class="start-btn">
+        <a href="#features"
+           class="start-btn">
             사랑 이야기 시작하기 ♡
         </a>
+
     </section>
 
-    <!-- MBTI 및 궁합 메뉴 -->
-    <section id="features" class="features">
+
+    <!-- ====================================
+         MBTI 및 궁합 메뉴
+    ==================================== -->
+    <section id="features"
+             class="features">
 
         <h2>Choose Your Love Story</h2>
+
         <p class="section-description">
             오늘은 어떤 이야기가 궁금한가요?
         </p>
 
+
         <div class="card-container">
 
+            <!-- MBTI 성격 이야기 -->
             <div class="feature-card">
+
                 <div class="card-icon">🌷</div>
+
                 <h3>MBTI 성격 이야기</h3>
+
                 <p>
                     16가지 성격 유형으로<br>
                     나의 매력을 발견해요.
                 </p>
-                <a th:href="@{/mbti}" class="board-link">
+
+                <a th:href="@{/mbti}"
+                   href="/mbti"
+                   class="board-link">
                     MBTI 선택하기 ♡
                 </a>
+
             </div>
 
+
+            <!-- MBTI 궁합 -->
             <div class="feature-card">
+
                 <div class="card-icon">💗</div>
+
                 <h3>우리의 MBTI 궁합</h3>
+
                 <p>
                     친구부터 연인, 결혼까지<br>
                     두 사람의 궁합을 알아봐요.
                 </p>
-                <a th:href="@{/compatibility}" class="board-link">
+
+                <a th:href="@{/compatibility}"
+                   href="/compatibility"
+                   class="board-link">
                     MBTI 궁합 확인하기 ♡
                 </a>
+
             </div>
 
+
+            <!-- 이름 궁합 -->
             <div class="feature-card">
+
                 <div class="card-icon">💌</div>
+
                 <h3>이름으로 보는 사랑</h3>
+
                 <p>
                     두 사람의 이름으로<br>
                     설레는 사랑 확률을 계산해요.
                 </p>
-                <a th:href="@{/love}" class="board-link">
+
+                <a th:href="@{/love}"
+                   href="/love"
+                   class="board-link">
                     이름 궁합 테스트하기 ♡
                 </a>
+
             </div>
 
         </div>
 
-        <a th:href="@{/board}" class="board-link">
-            연애 이야기 게시판 구경하기 →
-        </a>
-
     </section>
+
 </main>
 
+
+<!-- ========================================
+     하단 푸터
+======================================== -->
 <footer>
+
     <p>Made with ♡ | My World</p>
-    <p>궁합 결과는 재미를 위한 콘텐츠입니다.</p>
+
+    <p>
+        궁합 결과는 재미를 위한 콘텐츠입니다.
+    </p>
+
 </footer>
 
-<script th:src="@{/js/snow.js}"></script>
+
+<!-- 기존 눈 내리는 효과 JavaScript -->
+<script th:src="@{/js/snow.js}"
+        src="/js/snow.js">
+</script>
 
 </body>
 </html>

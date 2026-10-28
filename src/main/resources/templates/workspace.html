@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Workspace | My World</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/workspace.css}"
+          href="/css/workspace.css">
+
+    <script th:src="@{/js/weather.js}"
+            src="/js/weather.js" defer></script>
+
+    <script th:src="@{/js/workspace-clock.js}"
+            src="/js/workspace-clock.js" defer></script>
+</head>
+
+<body>
+<div class="workspace-layout">
+
+    <!-- 왼쪽 사이드바 -->
+    <aside class="sidebar">
+        <a class="sidebar-brand" th:href="@{/}" href="/">
+            MY WORLD ♡
+        </a>
+
+        <div class="sidebar-photo">
+            <img th:src="@{/img/2.png}"
+                 src="/img/2.png"
+                 alt="프리렌 이미지">
+        </div>
+
+        <p class="sidebar-caption">MY WORKSPACE</p>
+
+        <nav class="sidebar-menu">
+            <a class="active"
+               th:href="@{/workspace}" href="/workspace">
+                ♡ 대시보드
+            </a>
+
+            <a th:href="@{/board}" href="/board">
+                ▤ 기존 게시판
+            </a>
+
+            <a th:href="@{/}" href="/">
+                ⌂ 홈페이지
+            </a>
+        </nav>
+
+        <form class="logout-form"
+              th:action="@{/logout}" action="/logout"
+              method="post">
+            <button type="submit">로그아웃</button>
+        </form>
+    </aside>
+
+    <!-- 메인 화면 -->
+    <main class="workspace-main">
+
+        <!-- 페른 환영 배너 -->
+        <section class="welcome-banner">
+            <div class="welcome-copy">
+                <span class="eyebrow">
+                    MY WORLD · WORKSPACE
+                </span>
+
+                <h1>
+                    안녕하세요,
+                    <span th:text="${nickname}">회원</span>님 ♡
+                </h1>
+
+                <p>
+                    오늘의 일정과 메모를 확인해 보세요.
+                </p>
+            </div>
+
+            <img class="welcome-character"
+                 th:src="@{/img/1.png}"
+                 src="/img/1.png"
+                 alt="페른 이미지">
+
+            <span class="welcome-stamp">
+                ♡ FERN ♡
+            </span>
+        </section>
+
+        <!-- 크기가 다른 카드 대시보드 -->
+        <div class="dashboard-grid">
+
+            <!-- 일정 : 큰 카드 -->
+            <section class="widget calendar-widget">
+                <div class="widget-title">
+                    <h2>📅 이번 주 일정</h2>
+                    <span>CALENDAR</span>
+                </div>
+
+                <div class="week-days">
+                    <div>월</div>
+                    <div>화</div>
+                    <div>수</div>
+                    <div>목</div>
+                    <div>금</div>
+                    <div>토</div>
+                    <div>일</div>
+                </div>
+
+                <div id="weekDates" class="week-dates">
+                </div>
+
+                <div class="empty-calendar">
+                    아직 등록된 일정이 없습니다.
+                </div>
+
+                <p class="widget-note">
+                    일정 등록 기능은 다음 단계에서 추가할 예정입니다.
+                </p>
+
+                <img class="calendar-sticker"
+                     th:src="@{/img/3.png}"
+                     src="/img/3.png"
+                     alt="프리렌 포토카드">
+            </section>
+
+            <!-- 실시간 시계 : 작은 카드 -->
+            <section class="widget clock-widget">
+                <div class="widget-title">
+                    <h2>🕒 실시간 시계</h2>
+                </div>
+
+                <div id="liveClock" class="clock-time">
+                    --:--:--
+                </div>
+
+                <div id="liveDate" class="clock-date">
+                    날짜 불러오는 중...
+                </div>
+
+                <span class="clock-stamp">✦ KST ✦</span>
+            </section>
+
+            <!-- 메모 : 큰 카드 -->
+            <section class="widget memo-widget">
+                <div class="widget-title">
+                    <h2>📝 나의 메모장</h2>
+                    <span>MY NOTES</span>
+                </div>
+
+                <div class="memo-preview">
+                    <span class="memo-pin">📌</span>
+                    <h3>내 메모</h3>
+                    <p>
+                        생각나는 아이디어나 중요한 내용을
+                        기록할 수 있는 공간입니다.
+                    </p>
+                </div>
+
+                <p class="widget-note">
+                    다음 단계에서 회원별 메모 저장 기능을 연결합니다.
+                </p>
+            </section>
+
+            <!-- 기존 날씨 API : 작은 카드 -->
+            <section class="widget weather-widget"
+                     id="weatherCard"
+                     th:attr="data-region=${region}"
+                     data-region="서울특별시">
+
+                <div class="widget-title">
+                    <h2>🌤️ 내 지역 날씨</h2>
+                </div>
+
+                <p class="weather-location">
+                    📍 <span th:text="${region}">서울특별시</span>
+                </p>
+
+                <div class="weather-main">
+                    <span id="weatherIcon"
+                          class="weather-icon">🌤️</span>
+
+                    <div>
+                        <div id="weatherTemp"
+                             class="weather-temp">--°C</div>
+
+                        <div id="weatherDescription">
+                            날씨 불러오는 중...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weather-details">
+                    <div>
+                        💧 습도
+                        <strong id="weatherHumidity">--%</strong>
+                    </div>
+
+                    <div>
+                        🍃 풍속
+                        <strong id="weatherWind">-- km/h</strong>
+                    </div>
+                </div>
+
+                <p id="weatherUpdated"
+                   class="weather-updated"></p>
+
+                <small class="weather-credit">
+                    Weather data by Open-Meteo
+                </small>
+            </section>
+
+            <!-- 할 일 : 중간 카드 -->
+            <section class="widget todo-widget">
+                <div class="widget-title">
+                    <h2>✅ 오늘의 할 일</h2>
+                    <span>TO-DO</span>
+                </div>
+
+                <p class="widget-empty">
+                    아직 등록된 할 일이 없습니다.
+                </p>
+
+                <p class="widget-note">
+                    할 일 등록과 완료 체크 기능을 추가할 예정입니다.
+                </p>
+            </section>
+
+            <!-- 채팅 : 넓은 카드 -->
+            <section class="widget chat-widget">
+                <div class="chat-copy">
+                    <div class="widget-title">
+                        <h2>💬 우리들의 채팅방</h2>
+                    </div>
+
+                    <p>
+                        로그인한 회원들과 자유롭게 대화할 수 있는 공간
+                    </p>
+
+                    <span class="coming-soon">
+                        실시간 채팅 기능 준비 중
+                    </span>
+                </div>
+
+                <img class="chat-decoration"
+                     th:src="@{/img/4.png}"
+                     src="/img/4.png"
+                     alt="페른 일러스트">
+            </section>
+
+        </div>
+
+        <!-- 5.png 풍경 포토카드 -->
+        <section class="bottom-photo">
+            <img th:src="@{/img/5.png}"
+                 src="/img/5.png"
+                 alt="프리렌 일행 풍경">
+
+            <div>
+                <span>MY WORLD</span>
+                <p>나만의 작은 작업 공간 ♡</p>
+            </div>
+        </section>
+
+        <footer class="workspace-footer">
+            MY WORLD · PERSONAL WORKSPACE
+        </footer>
+
+    </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,567 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>회원가입 | My World</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Malgun Gothic", "Segoe UI", sans-serif;
+            color: #534461;
+
+            background:
+                    radial-gradient(circle at 12% 15%, #ffffff 0, transparent 27%),
+                    radial-gradient(circle at 90% 85%, #e2c9f7 0, transparent 34%),
+                    linear-gradient(135deg, #f1e7fa, #fdf7ff, #e9ddf6);
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 45px 25px;
+        }
+
+        .signup-layout {
+            width: 100%;
+            max-width: 1170px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            overflow: hidden;
+
+            background: rgba(255,255,255,0.85);
+            border: 1px solid #e7d6f1;
+            border-radius: 30px;
+
+            box-shadow:
+                    0 24px 75px rgba(111,72,147,0.15);
+        }
+
+        /* 왼쪽 사진 갤러리 */
+
+        .fern-gallery {
+            position: relative;
+            min-height: 690px;
+            overflow: hidden;
+
+            background:
+                    radial-gradient(circle at 30% 30%, #fcf2ff, transparent 45%),
+                    linear-gradient(145deg, #e9d7f5, #c8b3e2);
+        }
+
+        .fern-gallery::before {
+            content: "";
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.29);
+            top: 110px;
+            left: -120px;
+        }
+
+        .fern-gallery::after {
+            content: "♡";
+            position: absolute;
+            right: 25px;
+            top: 15px;
+            font-size: 72px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .gallery-title {
+            position: absolute;
+            z-index: 7;
+            top: 29px;
+            left: 32px;
+
+            color: #795b9c;
+            letter-spacing: 3px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .photo-card {
+            position: absolute;
+            overflow: hidden;
+            padding: 7px 7px 24px;
+            background: #fff;
+            border: 1px solid #eee4f4;
+            border-radius: 12px;
+            box-shadow: 0 12px 28px rgba(67,42,92,0.18);
+
+            transition: transform 0.3s ease;
+        }
+
+        .photo-card img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        /* fern.png : 얼굴 메인 이미지 */
+        .photo-main {
+            z-index: 3;
+            width: 58%;
+            height: 470px;
+            left: 8%;
+            top: 105px;
+            transform: rotate(-5deg);
+        }
+
+        .photo-main img {
+            object-position: center top;
+        }
+
+        .photo-main:hover {
+            transform: rotate(-2deg) translateY(-8px);
+        }
+
+        /* fern1.png : 어두운 밤하늘 사진 */
+        .photo-night {
+            z-index: 4;
+            width: 36%;
+            height: 230px;
+            right: 5%;
+            top: 80px;
+            transform: rotate(8deg);
+        }
+
+        .photo-night:hover {
+            transform: rotate(4deg) translateY(-8px);
+        }
+
+        /* fern2.png : 뒷모습 사진 */
+        .photo-back {
+            z-index: 5;
+            width: 37%;
+            height: 290px;
+            right: 5%;
+            bottom: 43px;
+            transform: rotate(5deg);
+        }
+
+        .photo-back img {
+            object-position: center center;
+        }
+
+        .photo-back:hover {
+            transform: rotate(1deg) translateY(-8px);
+        }
+
+        /* fern3.png : 두 사람 사진 */
+        .photo-couple {
+            z-index: 6;
+            width: 37%;
+            height: 215px;
+            left: 5%;
+            bottom: 19px;
+            transform: rotate(-8deg);
+        }
+
+        .photo-couple:hover {
+            transform: rotate(-3deg) translateY(-8px);
+        }
+
+        .gallery-bottom {
+            position: absolute;
+            right: 35px;
+            bottom: 13px;
+            color: #886c9e;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        /* 오른쪽 회원가입 폼 */
+
+        .form-panel {
+            padding: 57px 52px;
+            background: rgba(255,255,255,0.93);
+        }
+
+        .home-link {
+            color: #937bac;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .home-link:hover {
+            text-decoration: underline;
+        }
+
+        .small-title {
+            margin: 38px 0 8px;
+            color: #a58ab9;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: 34px;
+            color: #705389;
+        }
+
+        .subtitle {
+            margin: 0 0 32px;
+            font-size: 14px;
+            line-height: 1.7;
+            color: #a094ab;
+        }
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 15px;
+            background: #fcfaff;
+            border: 1px solid #e5d8ed;
+            border-radius: 12px;
+            color: #51435e;
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input::placeholder {
+            color: #b4a7bf;
+        }
+
+        input:focus {
+            border-color: #ac88c8;
+            box-shadow: 0 0 0 4px rgba(183,144,210,0.13);
+        }
+
+        .hint {
+            margin: 7px 0 0;
+            color: #a598af;
+            font-size: 11px;
+        }
+
+        .signup-button {
+            display: block;
+            width: 100%;
+            margin-top: 26px;
+            padding: 16px;
+            border: none;
+            border-radius: 13px;
+
+            background: linear-gradient(135deg, #b99ad4, #8563aa);
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+
+            box-shadow: 0 8px 20px rgba(125,86,159,0.2);
+        }
+
+        .signup-button:hover {
+            background: linear-gradient(135deg, #ab88ca, #76549b);
+        }
+
+        .message {
+            padding: 13px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .error {
+            color: #b84c67;
+            background: #fff0f3;
+        }
+
+        .success {
+            color: #39845a;
+            background: #ecf9f0;
+        }
+
+        .footer-text {
+            margin-top: 25px;
+            text-align: center;
+            color: #aa9bb5;
+            font-size: 12px;
+        }
+
+        /* 모바일 */
+
+        @media (max-width: 850px) {
+            .page {
+                padding: 18px;
+            }
+
+            .signup-layout {
+                max-width: 550px;
+                grid-template-columns: 1fr;
+            }
+
+            .fern-gallery {
+                min-height: 380px;
+            }
+
+            .gallery-title {
+                top: 18px;
+                left: 20px;
+            }
+
+            .photo-main {
+                height: 285px;
+                top: 60px;
+                left: 7%;
+            }
+
+            .photo-night {
+                height: 145px;
+                top: 53px;
+            }
+
+            .photo-back {
+                height: 165px;
+                bottom: 15px;
+            }
+
+            .photo-couple {
+                height: 125px;
+                bottom: 8px;
+            }
+
+            .form-panel {
+                padding: 35px 26px;
+            }
+
+            .small-title {
+                margin-top: 28px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .photo-card {
+                transition: none;
+            }
+        }
+
+        /* 페른 테마 지역 선택창 */
+
+        .form-group select {
+            width: 100%;
+            padding: 14px 15px;
+
+            border: 1px solid #e5d8ed;
+            border-radius: 12px;
+
+            background: #fcfaff;
+            color: #59446d;
+
+            font-family: inherit;
+            font-size: 14px;
+
+            cursor: pointer;
+            outline: none;
+        }
+
+        .form-group select:focus {
+            border-color: #ac88c8;
+            box-shadow: 0 0 0 4px rgba(183,144,210,0.13);
+        }
+
+    </style>
+</head>
+
+<body>
+<main class="page">
+    <div class="signup-layout">
+
+        <!-- 페른 사진 갤러리 -->
+        <section class="fern-gallery" aria-label="페른 이미지 갤러리">
+
+            <span class="gallery-title">MY WORLD ♡</span>
+
+            <!-- 메인 사진 -->
+            <div class="photo-card photo-main">
+                <img th:src="@{/img/fern.png}"
+                     src="/img/fern.png"
+                     alt="페른 얼굴 일러스트">
+            </div>
+
+            <!-- 밤하늘 사진 -->
+            <div class="photo-card photo-night">
+                <img th:src="@{/img/fern1.png}"
+                     src="/img/fern1.png"
+                     alt="밤하늘 아래의 페른">
+            </div>
+
+            <!-- 뒷모습 사진 -->
+            <div class="photo-card photo-back">
+                <img th:src="@{/img/fern2.png}"
+                     src="/img/fern2.png"
+                     alt="페른 뒷모습 일러스트">
+            </div>
+
+            <!-- 두 사람 사진 -->
+            <div class="photo-card photo-couple">
+                <img th:src="@{/img/fern3.png}"
+                     src="/img/fern3.png"
+                     alt="페른과 슈타르크 일러스트">
+            </div>
+
+            <span class="gallery-bottom">FERN COLLECTION</span>
+
+        </section>
+
+        <!-- 회원가입 폼 -->
+        <section class="form-panel">
+
+            <a class="home-link"
+               th:href="@{/}" href="/">
+                ← 홈으로 돌아가기
+            </a>
+
+            <p class="small-title">MY WORLD · MEMBER</p>
+
+            <h1>회원가입</h1>
+
+            <p class="subtitle">
+                My World에 오신 것을 환영합니다.
+            </p>
+
+            <!-- 가입 성공 -->
+            <div class="message success"
+                 th:if="${param.success}">
+                회원가입이 완료되었습니다.
+            </div>
+
+            <!-- 가입 오류 -->
+            <div class="message error"
+                 th:if="${error}"
+                 th:text="${error}">
+                오류 메시지
+            </div>
+
+            <form th:action="@{/signup}"
+                  th:object="${signupForm}"
+                  method="post">
+
+                <div class="form-group">
+                    <label for="username">아이디</label>
+                    <input type="text"
+                           id="username"
+                           th:field="*{username}"
+                           placeholder="아이디를 입력하세요"
+                           minlength="4"
+                           maxlength="20"
+                           pattern="[A-Za-z0-9]{4,20}"
+                           autocomplete="username"
+                           required>
+                    <p class="hint">영문과 숫자 4~20자</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="nickname">닉네임</label>
+                    <input type="text"
+                           id="nickname"
+                           th:field="*{nickname}"
+                           placeholder="닉네임을 입력하세요"
+                           maxlength="30"
+                           required>
+                </div>
+
+                <!-- 지역 선택 -->
+                <div class="form-group">
+                    <label for="region">지역 선택</label>
+
+                    <select id="region"
+                            th:field="*{region}"
+                            required>
+
+                        <option value="">지역을 선택해 주세요</option>
+
+                        <option value="서울특별시">서울특별시</option>
+                        <option value="경기도 고양시">경기도 고양시</option>
+                        <option value="충청남도 서산시">충청남도 서산시</option>
+                        <option value="경기도 수원시">경기도 수원시</option>
+                        <option value="경기도 화성시">경기도 화성시</option>
+                        <option value="충청남도 천안시">충청남도 천안시</option>
+                        <option value="대전광역시">대전광역시</option>
+                        <option value="인천광역시">인천광역시</option>
+                        <option value="부산광역시">부산광역시</option>
+                        <option value="대구광역시">대구광역시</option>
+                        <option value="광주광역시">광주광역시</option>
+                        <option value="울산광역시">울산광역시</option>
+                        <option value="세종특별자치시">세종특별자치시</option>
+                        <option value="제주특별자치도 제주시">제주시</option>
+
+                    </select>
+
+                    <p class="hint">
+                        선택한 지역의 날씨가 Workspace에 표시됩니다.
+                    </p>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label for="password">비밀번호</label>
+                    <input type="password"
+                           id="password"
+                           th:field="*{password}"
+                           placeholder="비밀번호를 입력하세요"
+                           minlength="8"
+                           maxlength="72"
+                           autocomplete="new-password"
+                           required>
+                    <p class="hint">8자 이상 입력해 주세요.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="passwordConfirm">
+                        비밀번호 확인
+                    </label>
+                    <input type="password"
+                           id="passwordConfirm"
+                           th:field="*{passwordConfirm}"
+                           placeholder="비밀번호를 다시 입력하세요"
+                           minlength="8"
+                           maxlength="72"
+                           autocomplete="new-password"
+                           required>
+                </div>
+
+                <button type="submit" class="signup-button">
+                    회원가입하기
+                </button>
+
+            </form>
+
+            <p class="footer-text">
+                MY WORLD · MEMBER REGISTRATION
+            </p>
+
+        </section>
+    </div>
+</main>
+</body>
+</html>

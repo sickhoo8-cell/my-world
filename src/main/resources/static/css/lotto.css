@@ -1,0 +1,551 @@
+
+/* Lucky World 전용 디자인 */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", "Malgun Gothic", sans-serif;
+    color: #292621;
+    background: #f7f1e4;
+}
+
+.lucky-page {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background:
+            radial-gradient(circle at 15% 20%, #fff8d1 0, transparent 30%),
+            radial-gradient(circle at 90% 80%, #d7edff 0, transparent 35%),
+            #f7f1e4;
+    animation: slideIn 0.55s ease both;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(45px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.lucky-header {
+    max-width: 1100px;
+    margin: auto;
+    padding: 26px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    display: inline-block;
+    padding: 12px 19px;
+    background: #ffd54a;
+    border: 3px solid #302b28;
+    border-radius: 10px;
+    box-shadow: 5px 5px 0 #302b28;
+    text-decoration: none;
+    color: #302b28;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.page-label {
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.back-arrow {
+    position: fixed;
+    z-index: 20;
+    top: 50%;
+    left: 18px;
+    transform: translateY(-50%);
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 60px;
+    background: white;
+    border: 3px solid #302b28;
+    border-radius: 12px;
+    box-shadow: 4px 4px 0 #302b28;
+    color: #302b28;
+    text-decoration: none;
+    font-size: 25px;
+}
+
+.back-arrow:hover {
+    background: #ffe17b;
+}
+
+.lucky-main {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 15px 65px 65px;
+    text-align: center;
+}
+
+.decor-bricks {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 15px auto 22px;
+}
+
+.decor-brick {
+    width: 43px;
+    height: 26px;
+    position: relative;
+    border: 2px solid #302b28;
+    border-radius: 4px;
+    box-shadow: 3px 4px 0 #302b28;
+}
+
+.decor-brick::before,
+.decor-brick::after {
+    content: "";
+    position: absolute;
+    top: -9px;
+    width: 13px;
+    height: 7px;
+    background: inherit;
+    border: 2px solid #302b28;
+    border-bottom: 0;
+    border-radius: 4px 4px 0 0;
+}
+
+.decor-brick::before {
+    left: 5px;
+}
+
+.decor-brick::after {
+    right: 5px;
+}
+
+.yellow {
+    background: #ffd64b;
+}
+
+.red {
+    background: #f47b74;
+}
+
+.blue {
+    background: #80c5f1;
+}
+
+.green {
+    background: #93d49a;
+}
+
+.eyebrow {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: #e07e48;
+}
+
+h1 {
+    margin: 10px 0;
+    font-size: clamp(32px, 6vw, 55px);
+    font-weight: 1000;
+    letter-spacing: 1px;
+}
+
+.intro {
+    color: #74695b;
+    margin-bottom: 28px;
+    line-height: 1.7;
+}
+
+/* 추첨기 */
+
+.lotto-machine {
+    width: min(100%, 370px);
+    margin: 0 auto 34px;
+    position: relative;
+}
+
+.machine-title {
+    position: relative;
+    z-index: 2;
+    width: 78%;
+    margin: auto auto -10px;
+    padding: 13px 15px;
+    background: #ffda4d;
+    border: 4px solid #302b28;
+    border-radius: 14px;
+    box-shadow: 0 5px 0 #c89728;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 1000;
+    letter-spacing: 2px;
+}
+
+.machine-light {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #302b28;
+}
+
+.ball-chamber {
+    width: 100%;
+    height: 290px;
+    overflow: hidden;
+    position: relative;
+    border: 6px solid #302b28;
+    border-radius: 45% 45% 22% 22%;
+    background: rgba(192, 232, 249, 0.55);
+    box-shadow:
+            inset 13px 12px 0 rgba(255,255,255,0.48),
+            inset -12px -8px 0 rgba(50,124,166,0.12),
+            7px 9px 0 rgba(48,43,40,0.15);
+}
+
+.floating-balls {
+    position: absolute;
+    inset: 0;
+}
+
+.chamber-shine {
+    pointer-events: none;
+    position: absolute;
+    top: 25px;
+    left: 35px;
+    width: 32px;
+    height: 130px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.27);
+    transform: rotate(18deg);
+}
+
+/* 추첨기 안의 45개 공 */
+
+.lotto-ball {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid #302b28;
+    box-shadow:
+            inset -4px -5px 0 rgba(0,0,0,0.13),
+            inset 4px 4px 0 rgba(255,255,255,0.38);
+    font-size: 12px;
+    font-weight: 900;
+    color: #292621;
+    transform: translate(-50%, -50%);
+}
+
+.ball-chamber.is-spinning .lotto-ball {
+    animation: bounceBall var(--speed) ease-in-out infinite alternate;
+}
+
+@keyframes bounceBall {
+    from {
+        transform:
+                translate(-50%, -50%)
+                translate(-14px, 19px)
+                rotate(-40deg);
+    }
+    to {
+        transform:
+                translate(-50%, -50%)
+                translate(15px, -21px)
+                rotate(55deg);
+    }
+}
+
+.machine-neck {
+    width: 90px;
+    height: 30px;
+    margin: -2px auto 0;
+    background: #f47b74;
+    border: 4px solid #302b28;
+    border-top: 0;
+}
+
+.machine-base {
+    width: 100%;
+    min-height: 96px;
+    padding: 14px 10px;
+    background: #f47b74;
+    border: 5px solid #302b28;
+    border-radius: 14px;
+    box-shadow: 7px 9px 0 #302b28;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 8px;
+}
+
+.machine-status {
+    padding: 12px;
+    background: #fff7df;
+    border: 3px solid #302b28;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.base-studs {
+    display: grid;
+    grid-template-columns: repeat(2, 13px);
+    gap: 6px;
+}
+
+.base-studs span {
+    width: 13px;
+    height: 13px;
+    background: #ffb7ac;
+    border: 2px solid #302b28;
+    border-radius: 50%;
+}
+
+/* 추첨 결과 */
+
+.result-panel {
+    padding: 24px 18px;
+    background: #fffefa;
+    border: 3px solid #302b28;
+    border-radius: 18px;
+    box-shadow: 6px 6px 0 #302b28;
+}
+
+.result-panel h2 {
+    margin: 0 0 22px;
+    font-size: 21px;
+}
+
+.result-balls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.result-ball {
+    width: 54px;
+    height: 54px;
+    display: grid;
+    place-items: center;
+    border: 3px solid #302b28;
+    border-radius: 12px;
+    box-shadow: 3px 4px 0 #302b28;
+    font-size: 21px;
+    font-weight: 900;
+    color: #302b28;
+}
+
+.result-ball.empty {
+    background: #e9e4db;
+    color: #aca396;
+}
+
+.result-ball.revealed {
+    animation: popIn 0.35s ease-out both;
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-18px) scale(0.6);
+    }
+    70% {
+        transform: translateY(3px) scale(1.08);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.plus-sign {
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.bonus-guide {
+    margin: 20px 0 0;
+    font-size: 13px;
+    color: #796f63;
+}
+
+.draw-button {
+    margin-top: 28px;
+    padding: 18px 55px;
+    background: #ffd64b;
+    border: 4px solid #302b28;
+    border-radius: 14px;
+    box-shadow: 6px 7px 0 #302b28;
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.draw-button:hover:not(:disabled) {
+    transform: translateY(-3px);
+}
+
+.draw-button:active:not(:disabled) {
+    transform: translate(4px, 4px);
+    box-shadow: 2px 3px 0 #302b28;
+}
+
+.draw-button:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+.draw-message {
+    min-height: 24px;
+    margin-top: 21px;
+    font-weight: 700;
+    color: #74665b;
+}
+
+.disclaimer {
+    margin-top: 25px;
+    font-size: 12px;
+    color: #8e8477;
+    line-height: 1.8;
+}
+
+.lucky-footer {
+    text-align: center;
+    padding: 0 20px 30px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #887e71;
+}
+
+/* 번호별 공 색상 */
+
+.ball-yellow {
+    background: #ffda4d;
+}
+
+.ball-blue {
+    background: #7fc5f0;
+}
+
+.ball-red {
+    background: #f58c86;
+}
+
+.ball-gray {
+    background: #b9bfca;
+}
+
+.ball-green {
+    background: #91d39d;
+}
+
+/* 모바일 대응 */
+
+@media (max-width: 600px) {
+    .lucky-header {
+        padding: 20px;
+    }
+
+    .page-label {
+        font-size: 10px;
+    }
+
+    .lucky-main {
+        padding: 15px 22px 55px;
+    }
+
+    .back-arrow {
+        position: absolute;
+        top: 105px;
+        left: 12px;
+        transform: none;
+        width: 36px;
+        height: 44px;
+        font-size: 18px;
+    }
+
+    .ball-chamber {
+        height: 255px;
+    }
+
+    .result-ball {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .result-balls {
+        gap: 7px;
+    }
+
+    .draw-button {
+        width: 100%;
+        padding: 17px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lucky-page,
+    .ball-chamber.is-spinning .lotto-ball,
+    .result-ball.revealed {
+        animation: none;
+    }
+}
+
+/* 오른쪽 화살표 : 그룹웨어로 이동 */
+
+.next-arrow {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 58px;
+    height: 70px;
+
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #8563a5;
+
+    font-size: 29px;
+    text-decoration: none;
+
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.12);
+    z-index: 1000;
+}
+
+.next-arrow:hover {
+    background: #e7d6f4;
+    color: #654384;
+}
+
+@media (max-width: 760px) {
+    .next-arrow {
+        right: 8px;
+        width: 42px;
+        height: 56px;
+        font-size: 23px;
+    }
+}

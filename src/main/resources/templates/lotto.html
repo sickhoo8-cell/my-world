@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Lucky World | My World</title>
+
+    <!-- 로또 CSS -->
+    <link rel="stylesheet"
+          th:href="@{/css/lotto.css}"
+          href="/css/lotto.css">
+
+    <!-- 로또 추첨 JavaScript -->
+    <script th:src="@{/js/lotto.js}"
+            src="/js/lotto.js"
+            defer></script>
+</head>
+
+<body>
+<div class="lucky-page">
+
+    <!-- 왼쪽 화살표 : 마이월드 홈페이지 -->
+    <a class="back-arrow"
+       th:href="@{/}"
+       href="/"
+       aria-label="마이월드 홈페이지로 돌아가기"
+       title="마이월드로 이동">
+        &#10094;
+    </a>
+
+    <!-- 오른쪽 화살표 : 로그인 또는 그룹웨어 -->
+    <a class="next-arrow"
+       th:href="@{/entry}"
+       href="/entry"
+       aria-label="로그인 또는 그룹웨어로 이동"
+       title="그룹웨어로 이동">
+        &#10095;
+    </a>
+
+    <!-- 상단 헤더 -->
+    <header class="lucky-header">
+
+        <a class="brand"
+           th:href="@{/}"
+           href="/">
+            MY WORLD
+        </a>
+
+        <span class="page-label">
+            LUCKY WORLD · 02
+        </span>
+
+    </header>
+
+    <main class="lucky-main">
+
+        <!-- 장식용 레고 블록 -->
+        <div class="decor-bricks"
+             aria-hidden="true">
+
+            <span class="decor-brick yellow"></span>
+            <span class="decor-brick red"></span>
+            <span class="decor-brick blue"></span>
+            <span class="decor-brick green"></span>
+
+        </div>
+
+        <p class="eyebrow">
+            BUILD YOUR LUCK!
+        </p>
+
+        <h1>🍀 LUCKY BLOCK</h1>
+
+        <p class="intro">
+            알록달록한 공들이 행운의 번호를 골라줄 거야!
+        </p>
+
+        <!-- 로또 추첨기 -->
+        <section class="lotto-machine"
+                 aria-label="로또 번호 추첨기">
+
+            <div class="machine-title">
+
+                <span class="machine-light"></span>
+
+                LOTTO 6/45
+
+                <span class="machine-light"></span>
+
+            </div>
+
+            <!-- 투명한 공 추첨 공간 -->
+            <div id="ballChamber"
+                 class="ball-chamber">
+
+                <div id="floatingBalls"
+                     class="floating-balls">
+                </div>
+
+                <span class="chamber-shine"></span>
+
+            </div>
+
+            <!-- 공이 나오는 통로 -->
+            <div class="machine-neck"></div>
+
+            <!-- 추첨기 하단 -->
+            <div class="machine-base">
+
+                <div class="base-studs">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="machine-status"
+                     id="machineStatus">
+                    READY TO PLAY!
+                </div>
+
+                <div class="base-studs">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- 추첨 결과 -->
+        <section class="result-panel">
+
+            <h2>✨ 오늘의 행운 번호</h2>
+
+            <div class="result-balls"
+                 id="resultBalls"
+                 aria-live="polite">
+
+                <div class="result-ball empty">?</div>
+                <div class="result-ball empty">?</div>
+                <div class="result-ball empty">?</div>
+                <div class="result-ball empty">?</div>
+                <div class="result-ball empty">?</div>
+                <div class="result-ball empty">?</div>
+
+                <span class="plus-sign">+</span>
+
+                <div class="result-ball empty bonus">?</div>
+
+            </div>
+
+            <p class="bonus-guide">
+                마지막 공은 보너스 번호야!
+            </p>
+
+        </section>
+
+        <!-- 추첨 시작 버튼 -->
+        <button type="button"
+                id="drawButton"
+                class="draw-button">
+            🎱 추첨 시작!
+        </button>
+
+        <!-- 추첨 안내 문구 -->
+        <p id="drawMessage"
+           class="draw-message"
+           aria-live="polite">
+            버튼을 누르고 행운의 번호를 만나봐!
+        </p>
+
+        <!-- 안내 -->
+        <p class="disclaimer">
+            이 번호는 무작위로 생성되며
+            실제 로또 당첨을 예측하지 않아.
+        </p>
+
+    </main>
+
+    <!-- 하단 푸터 -->
+    <footer class="lucky-footer">
+        MADE WITH 💛 · MY WORLD
+    </footer>
+
+</div>
+</body>
+</html>

@@ -841,3 +841,168 @@ a.mbti-card {
     }
 }
 
+/* Lucky World 이동 버튼 */
+
+.lucky-next-arrow {
+    position: fixed;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #c9a4cf;
+    border-radius: 14px;
+
+    color: #a16fae;
+    text-decoration: none;
+    font-size: 27px;
+    font-weight: bold;
+
+    box-shadow: 0 5px 18px rgba(150, 100, 160, 0.18);
+    z-index: 100;
+
+    transition: background 0.2s, color 0.2s;
+}
+
+.lucky-next-arrow:hover {
+    background: #f9dbff;
+    color: #784b8b;
+}
+
+@media (max-width: 600px) {
+    .lucky-next-arrow {
+        right: 8px;
+        width: 38px;
+        height: 50px;
+        font-size: 21px;
+    }
+}
+
+/* 로또 이동 버튼과 말풍선 */
+
+.lucky-navigation {
+    position: fixed;
+    top: 50%;
+    right: 18px;
+    transform: translateY(-50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    z-index: 100;
+}
+
+.lucky-nav-text {
+    padding: 10px 14px;
+    background: #fff5c9;
+    color: #76563b;
+
+    border: 2px solid #e9c989;
+    border-radius: 16px;
+
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+
+    box-shadow: 0 4px 12px rgba(140, 105, 65, 0.14);
+
+    animation: luckyFloat 2s ease-in-out infinite;
+}
+
+/* 기존 화살표 위치를 부모 기준으로 변경 */
+.lucky-navigation .lucky-next-arrow {
+    position: static;
+    transform: none;
+}
+
+@keyframes luckyFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@media (max-width: 600px) {
+    .lucky-navigation {
+        right: 8px;
+    }
+
+    .lucky-nav-text {
+        font-size: 10px;
+        padding: 8px 10px;
+    }
+}
+
+/* 마이월드 왼쪽 그룹웨어 이동 버튼 */
+
+.home-nav-left {
+    position: fixed;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    width: 75px;
+    height: 86px;
+
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #e1d4ed;
+    color: #8a69a5;
+
+    box-shadow: 0 8px 25px rgba(108, 75, 140, 0.12);
+    text-decoration: none;
+    z-index: 100;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.home-nav-left span {
+    font-size: 32px;
+    line-height: 1;
+}
+
+.home-nav-left small {
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.home-nav-left:hover {
+    background: #e6d7f2;
+    box-shadow: 0 10px 28px rgba(108, 75, 140, 0.18);
+}
+
+@media (max-width: 760px) {
+    .home-nav-left {
+        left: 8px;
+        width: 48px;
+        height: 60px;
+        border-radius: 14px;
+    }
+
+    .home-nav-left span {
+        font-size: 23px;
+    }
+
+    .home-nav-left small {
+        font-size: 7px;
+    }
+}
+
+

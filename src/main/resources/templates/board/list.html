@@ -1,30 +1,34 @@
-<!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>My World - 게시판</title>
-</head>
-<body>
-<h1>My World 게시판</h1>
 
-<a th:href="@{/board/write}">글쓰기</a>
+<!-- 로그인 회원 정보 -->
+<div class="board-member-box">
 
-<hr>
+    <!-- 로그인한 경우 -->
+    <div th:if="${loginMemberId != null}" class="member-logged-in">
 
-<div th:if="${#lists.isEmpty(boards)}">
-    아직 작성된 게시글이 없습니다.
+        <span class="member-welcome">
+            💜 <strong th:text="${loginNickname}">닉네임</strong>님,
+            환영합니다!
+        </span>
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="member-logout-btn">
+                로그아웃
+            </button>
+        </form>
+
+    </div>
+
+    <!-- 로그인하지 않은 경우 -->
+    <div th:unless="${loginMemberId != null}"
+         class="member-guest">
+
+        <span>게시판에 오신 것을 환영합니다.</span>
+
+        <div class="member-links">
+            <a th:href="@{/login}">로그인</a>
+            <a th:href="@{/signup}">회원가입</a>
+        </div>
+
+    </div>
+
 </div>
-
-<div th:each="board : ${boards}">
-    <h3>
-        <a th:href="@{/board/{id}(id=${board.id})}"
-           th:text="${board.title}">
-            제목
-        </a>
-    </h3>
-    <p th:text="${board.content}"
-       style="white-space: pre-wrap;">내용</p>
-    <hr>
-</div>
-</body>
-</html>

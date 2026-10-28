@@ -1,0 +1,816 @@
+
+/* ==================================
+   MY WORLD - FERN WORKSPACE
+================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: #5f4d70;
+    background: #f4edf9;
+    font-family: "Malgun Gothic", "Segoe UI", sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+.workspace-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* 사이드바 */
+
+.sidebar {
+    position: sticky;
+    top: 0;
+    width: 235px;
+    height: 100vh;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 29px 19px;
+    background: #e5d5f0;
+    border-right: 1px solid #dbc5ea;
+}
+
+.sidebar-brand {
+    text-align: center;
+    color: #795598;
+    font-size: 21px;
+    font-weight: 900;
+}
+
+.sidebar-photo {
+    width: 120px;
+    height: 120px;
+    margin: 29px auto 12px;
+    padding: 6px;
+    overflow: hidden;
+    background: #fff;
+    border: 4px solid #fff;
+    border-radius: 23px;
+    transform: rotate(-5deg);
+    box-shadow: 0 9px 22px rgba(93, 60, 125, .16);
+}
+
+.sidebar-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sidebar-caption {
+    margin: 5px 0 30px;
+    text-align: center;
+    color: #a084b4;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar-menu a {
+    padding: 14px;
+    border-radius: 12px;
+    color: #765a8d;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.sidebar-menu a:hover,
+.sidebar-menu a.active {
+    background: #fffaff;
+    color: #76549a;
+    box-shadow: 0 4px 14px rgba(110, 75, 145, .09);
+}
+
+.logout-form {
+    margin-top: auto;
+}
+
+.logout-form button {
+    width: 100%;
+    padding: 12px;
+    background: #c5add7;
+    color: #fff;
+    border: 0;
+    border-radius: 11px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.logout-form button:hover {
+    background: #a184bb;
+}
+
+/* 메인 */
+
+.workspace-main {
+    width: 100%;
+    min-width: 0;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 32px;
+}
+
+.welcome-banner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 225px;
+    margin-bottom: 24px;
+    padding: 30px 39px;
+    overflow: hidden;
+    isolation: isolate;
+
+    border: 1px solid #dfc9ec;
+    border-radius: 25px;
+    background:
+            radial-gradient(circle at 70% 45%,
+            rgba(255,255,255,.65), transparent 38%),
+            linear-gradient(120deg, #e7d6f1, #d4bce6);
+}
+
+.welcome-copy {
+    position: relative;
+    z-index: 3;
+    max-width: 65%;
+}
+
+.eyebrow {
+    color: #9372ac;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.welcome-banner h1 {
+    margin: 15px 0 12px;
+    color: #684887;
+    font-size: clamp(23px, 3vw, 35px);
+}
+
+.welcome-banner p {
+    color: #9174a5;
+    font-size: 14px;
+}
+
+.welcome-character {
+    position: absolute;
+    z-index: 1;
+    right: 8%;
+    bottom: -70px;
+    width: 240px;
+    max-height: 320px;
+    object-fit: cover;
+    object-position: top;
+    border: 8px solid rgba(255,255,255,.72);
+    border-radius: 22px;
+    transform: rotate(7deg);
+    box-shadow: 0 12px 26px rgba(100,67,133,.13);
+}
+
+.welcome-stamp {
+    position: absolute;
+    z-index: 4;
+    right: 18px;
+    top: 22px;
+    padding: 9px 13px;
+    border: 2px dashed #ac8bc0;
+    border-radius: 50%;
+    color: #936daf;
+    font-size: 11px;
+    font-weight: bold;
+    transform: rotate(12deg);
+}
+
+/* 불규칙한 크기의 카드 */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 21px;
+    align-items: stretch;
+}
+
+.widget {
+    position: relative;
+    min-width: 0;
+    padding: 24px;
+    overflow: hidden;
+    background: rgba(255,255,255,.94);
+    border: 1px solid #e6d8ee;
+    border-radius: 22px;
+    box-shadow: 0 7px 25px rgba(105,75,135,.07);
+}
+
+.widget-title {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.widget-title h2 {
+    margin: 0;
+    color: #71538c;
+    font-size: 18px;
+}
+
+.widget-title span {
+    color: #b59ec3;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+/* 일정: 가로 2칸 */
+
+.calendar-widget {
+    grid-column: span 2;
+    min-height: 290px;
+    padding-right: 130px;
+}
+
+.week-days,
+.week-dates {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 7px;
+    text-align: center;
+}
+
+.week-days div {
+    color: #a48ab5;
+    font-size: 12px;
+    padding: 8px 0;
+}
+
+.week-dates div {
+    padding: 13px 0;
+    color: #806394;
+    background: #f6effa;
+    border-radius: 10px;
+    font-size: 13px;
+}
+
+.week-dates div.today {
+    color: white;
+    background: #a884c4;
+    font-weight: bold;
+}
+
+.empty-calendar {
+    margin-top: 20px;
+    padding: 13px;
+    border-radius: 11px;
+    background: #faf5fd;
+    color: #a18bae;
+    font-size: 13px;
+}
+
+.widget-note {
+    position: relative;
+    z-index: 2;
+    color: #aa98b7;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.calendar-sticker {
+    position: absolute;
+    right: 13px;
+    bottom: 22px;
+    width: 100px;
+    height: 125px;
+    padding: 5px;
+    background: white;
+    border-radius: 11px;
+    object-fit: cover;
+    transform: rotate(9deg);
+    box-shadow: 0 8px 19px rgba(94,59,127,.16);
+}
+
+/* 시계: 세로 1칸 */
+
+.clock-widget {
+    min-height: 290px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(150deg, #e7d8f2, #d9c6ea);
+    text-align: center;
+}
+
+.clock-time {
+    color: #674a83;
+    font-size: clamp(27px, 3vw, 40px);
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 1px;
+}
+
+.clock-date {
+    margin-top: 12px;
+    color: #8c70a2;
+    font-size: 13px;
+}
+
+.clock-stamp {
+    margin-top: 25px;
+    padding: 8px 16px;
+    border: 1px dashed #b293c7;
+    border-radius: 30px;
+    color: #8d6fa4;
+    font-size: 11px;
+}
+
+/* 메모: 가로 2칸 */
+
+.memo-widget {
+    grid-column: span 2;
+    min-height: 290px;
+}
+
+.memo-preview {
+    position: relative;
+    max-width: 470px;
+    min-height: 155px;
+    padding: 24px;
+    background: #fff0c8;
+    border-radius: 7px;
+    transform: rotate(-1deg);
+    box-shadow: 4px 7px 15px rgba(137,110,68,.11);
+}
+
+.memo-preview h3 {
+    margin: 0 0 13px;
+    color: #87714e;
+}
+
+.memo-preview p {
+    color: #9d8767;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.memo-pin {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+}
+
+/* 날씨: 세로 1칸 */
+
+.weather-widget {
+    min-height: 290px;
+    background: #fcfaff;
+}
+
+.weather-location {
+    margin: 0;
+    color: #967cad;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.weather-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+    margin: 18px 0;
+}
+
+.weather-icon {
+    font-size: 43px;
+}
+
+.weather-temp {
+    font-size: 33px;
+    font-weight: 900;
+    color: #72518d;
+}
+
+#weatherDescription {
+    font-size: 12px;
+    color: #9b83ae;
+}
+
+.weather-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.weather-details div {
+    padding: 11px;
+    border-radius: 10px;
+    background: #f1e8f8;
+    color: #947daa;
+    font-size: 11px;
+}
+
+.weather-details strong {
+    display: block;
+    margin-top: 6px;
+    color: #795a97;
+    font-size: 16px;
+}
+
+.weather-updated,
+.weather-credit {
+    display: block;
+    margin-top: 12px;
+    color: #a998b5;
+    font-size: 10px;
+}
+
+/* 할 일: 가로 전체 */
+
+.todo-widget {
+    grid-column: span 3;
+    min-height: 155px;
+}
+
+.widget-empty {
+    padding: 17px;
+    border-radius: 11px;
+    background: #f9f4fc;
+    color: #aa94b8;
+    font-size: 13px;
+}
+
+/* 채팅: 가로 전체 */
+
+.chat-widget {
+    grid-column: span 3;
+    display: flex;
+    align-items: center;
+    min-height: 175px;
+    background: linear-gradient(115deg, #fffaff, #e9dcf4);
+}
+
+.chat-copy {
+    position: relative;
+    z-index: 2;
+}
+
+.chat-copy p {
+    color: #9079a2;
+    font-size: 13px;
+}
+
+.coming-soon {
+    display: inline-block;
+    margin-top: 13px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: #d9c3ea;
+    color: #71518a;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.chat-decoration {
+    position: absolute;
+    right: 28px;
+    top: 12px;
+    width: 125px;
+    height: 145px;
+    object-fit: cover;
+    border: 6px solid white;
+    border-radius: 15px;
+    transform: rotate(8deg);
+}
+
+/* 마지막 풍경 사진 */
+
+.bottom-photo {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin-top: 24px;
+    padding: 15px;
+    border: 1px solid #e5d6ed;
+    border-radius: 20px;
+    background: #fffaff;
+}
+
+.bottom-photo img {
+    width: 145px;
+    height: 95px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.bottom-photo span {
+    color: #ad93bf;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.bottom-photo p {
+    color: #816398;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.workspace-footer {
+    padding: 25px;
+    text-align: center;
+    color: #ae9db9;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+/* 태블릿 */
+
+@media (max-width: 1100px) {
+    .sidebar {
+        width: 190px;
+    }
+
+    .workspace-main {
+        padding: 23px;
+    }
+
+    .calendar-widget {
+        padding-right: 24px;
+    }
+
+    .calendar-sticker {
+        display: none;
+    }
+}
+
+/* 모바일 */
+
+@media (max-width: 760px) {
+    .workspace-layout {
+        display: block;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        padding: 18px;
+    }
+
+    .sidebar-photo,
+    .sidebar-caption {
+        display: none;
+    }
+
+    .sidebar-menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-top: 18px;
+    }
+
+    .sidebar-menu a {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .logout-form {
+        margin-top: 12px;
+    }
+
+    .workspace-main {
+        padding: 15px;
+    }
+
+    .welcome-banner {
+        min-height: 185px;
+        padding: 23px;
+    }
+
+    .welcome-copy {
+        max-width: 75%;
+    }
+
+    .welcome-character {
+        right: -15px;
+        bottom: -35px;
+        width: 125px;
+        height: 155px;
+    }
+
+    .welcome-stamp {
+        display: none;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .calendar-widget,
+    .clock-widget,
+    .memo-widget,
+    .weather-widget,
+    .todo-widget,
+    .chat-widget {
+        grid-column: span 1;
+    }
+
+    .widget {
+        padding: 20px;
+    }
+
+    .clock-widget {
+        min-height: 180px;
+    }
+
+    .chat-decoration {
+        width: 75px;
+        height: 100px;
+        right: 8px;
+    }
+
+    .chat-copy {
+        max-width: 75%;
+    }
+
+    .bottom-photo img {
+        width: 100px;
+        height: 80px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ========================================
+   페른 사진 확대 및 배치 개선
+   기존 CSS 맨 아래에 추가
+======================================== */
+
+/* 1.png : 상단 환영 배너 메인 사진 확대 */
+.welcome-banner {
+    min-height: 330px;
+    padding: 40px 45px;
+}
+
+.welcome-copy {
+    max-width: 54%;
+}
+
+.welcome-character {
+    right: 5%;
+    bottom: -35px;
+
+    width: 320px;
+    height: 290px;
+    max-height: none;
+
+    object-fit: cover;
+    object-position: center 28%;
+
+    border: 8px solid white;
+    border-radius: 22px;
+    transform: rotate(5deg);
+}
+
+/* 2.png : 왼쪽 사이드바 사진 확대 */
+.sidebar-photo {
+    width: 165px;
+    height: 200px;
+    margin-top: 35px;
+    border-radius: 18px;
+}
+
+.sidebar-photo img {
+    object-fit: cover;
+    object-position: center 22%;
+}
+
+/* 3.png : 달력 옆 사진 확대 */
+.calendar-widget {
+    min-height: 350px;
+    padding-right: 175px;
+}
+
+.calendar-sticker {
+    display: block;
+    width: 145px;
+    height: 190px;
+    right: 15px;
+    bottom: 35px;
+    object-fit: cover;
+    object-position: center 20%;
+}
+
+/* 4.png : 채팅방 사진 확대 */
+.chat-widget {
+    min-height: 260px;
+    padding-right: 230px;
+}
+
+.chat-decoration {
+    width: 195px;
+    height: 225px;
+    top: 18px;
+    right: 25px;
+
+    object-fit: cover;
+    object-position: center;
+}
+
+/* 5.png : 하단 풍경 사진 확대 */
+.bottom-photo {
+    min-height: 200px;
+    padding: 18px;
+    gap: 28px;
+}
+
+.bottom-photo img {
+    width: 260px;
+    height: 165px;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* 태블릿 */
+@media (max-width: 1100px) {
+    .calendar-widget {
+        padding-right: 25px;
+    }
+
+    .calendar-sticker {
+        display: none;
+    }
+
+    .welcome-character {
+        width: 235px;
+        height: 250px;
+    }
+
+    .chat-decoration {
+        width: 155px;
+        height: 195px;
+    }
+}
+
+/* 모바일 */
+@media (max-width: 760px) {
+    .welcome-banner {
+        min-height: 230px;
+        padding: 22px;
+    }
+
+    .welcome-copy {
+        max-width: 65%;
+    }
+
+    .welcome-character {
+        right: -10px;
+        bottom: -15px;
+        width: 130px;
+        height: 190px;
+    }
+
+    .calendar-widget {
+        min-height: 270px;
+        padding-right: 20px;
+    }
+
+    .chat-widget {
+        min-height: 210px;
+        padding-right: 110px;
+    }
+
+    .chat-decoration {
+        width: 100px;
+        height: 140px;
+        right: 10px;
+        top: 30px;
+    }
+
+    .bottom-photo img {
+        width: 145px;
+        height: 115px;
+    }
+}
+
