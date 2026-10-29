@@ -9,44 +9,56 @@
 
     <title>Lucky World | My World</title>
 
-    <!-- 로또 CSS -->
+    <!-- 기존 로또 디자인 -->
     <link rel="stylesheet"
           th:href="@{/css/lotto.css}"
           href="/css/lotto.css">
 
-    <!-- 로또 추첨 JavaScript -->
+    <!-- 공통 양방향 화살표 -->
+    <link rel="stylesheet"
+          th:href="@{/css/page-arrows.css}"
+          href="/css/page-arrows.css">
+
+    <!-- 기존 로또 추첨 기능 -->
     <script th:src="@{/js/lotto.js}"
             src="/js/lotto.js"
             defer></script>
 </head>
 
 <body>
+
 <div class="lucky-page">
 
-    <!-- 왼쪽 화살표 : 마이월드 홈페이지 -->
-    <a class="back-arrow"
-       th:href="@{/}"
-       href="/"
-       aria-label="마이월드 홈페이지로 돌아가기"
-       title="마이월드로 이동">
-        &#10094;
+    <!-- 왼쪽 : 로그인 화면 -->
+    <a class="page-nav-arrow page-nav-left"
+       th:href="@{/login}"
+       href="/login"
+       aria-label="로그인 화면으로 이동"
+       title="로그인">
+
+        <span class="arrow-symbol">❮</span>
+        <small>WORKSPACE</small>
+
     </a>
 
-    <!-- 오른쪽 화살표 : 로그인 또는 그룹웨어 -->
-    <a class="next-arrow"
-       th:href="@{/entry}"
-       href="/entry"
-       aria-label="로그인 또는 그룹웨어로 이동"
-       title="그룹웨어로 이동">
-        &#10095;
+    <!-- 오른쪽 : 그룹웨어 -->
+    <a class="page-nav-arrow page-nav-right"
+       th:href="@{/home}"
+       href="/home"
+       aria-label="그룹웨어로 이동"
+       title="그룹웨어">
+
+        <span class="arrow-symbol">❯</span>
+        <small>MBTI</small>
+
     </a>
 
     <!-- 상단 헤더 -->
     <header class="lucky-header">
 
         <a class="brand"
-           th:href="@{/}"
-           href="/">
+           th:href="@{/home}"
+           href="/home">
             MY WORLD
         </a>
 
@@ -108,7 +120,6 @@
             <!-- 공이 나오는 통로 -->
             <div class="machine-neck"></div>
 
-            <!-- 추첨기 하단 -->
             <div class="machine-base">
 
                 <div class="base-studs">
@@ -162,21 +173,19 @@
 
         </section>
 
-        <!-- 추첨 시작 버튼 -->
+        <!-- 추첨 버튼 -->
         <button type="button"
                 id="drawButton"
                 class="draw-button">
             🎱 추첨 시작!
         </button>
 
-        <!-- 추첨 안내 문구 -->
         <p id="drawMessage"
            class="draw-message"
            aria-live="polite">
             버튼을 누르고 행운의 번호를 만나봐!
         </p>
 
-        <!-- 안내 -->
         <p class="disclaimer">
             이 번호는 무작위로 생성되며
             실제 로또 당첨을 예측하지 않아.
@@ -184,11 +193,11 @@
 
     </main>
 
-    <!-- 하단 푸터 -->
     <footer class="lucky-footer">
         MADE WITH 💛 · MY WORLD
     </footer>
 
 </div>
+
 </body>
 </html>

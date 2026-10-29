@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,23 +9,120 @@
 
     <title>My Workspace | My World</title>
 
+    <!-- 기존 Workspace CSS 유지 -->
     <link rel="stylesheet"
           th:href="@{/css/workspace.css}"
           href="/css/workspace.css">
 
+    <!-- 기존 날씨 기능 유지 -->
     <script th:src="@{/js/weather.js}"
             src="/js/weather.js" defer></script>
 
+    <!-- 기존 실시간 시계 기능 유지 -->
     <script th:src="@{/js/workspace-clock.js}"
             src="/js/workspace-clock.js" defer></script>
+
+    <!-- 양방향 화살표 스타일 -->
+    <style>
+        .workspace-page-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+
+            width: 54px;
+            height: 82px;
+
+            background: rgba(255, 255, 255, 0.94);
+            border: 1px solid #dfceed;
+            border-radius: 16px;
+
+            color: #82619e;
+            text-decoration: none;
+
+            box-shadow: 0 7px 22px
+            rgba(103, 72, 130, 0.14);
+
+            transition:
+                    background 0.2s,
+                    box-shadow 0.2s;
+        }
+
+        .workspace-page-arrow:hover {
+            background: #e8d8f4;
+            box-shadow: 0 9px 25px
+            rgba(103, 72, 130, 0.22);
+        }
+
+        .workspace-page-arrow .arrow-symbol {
+            font-size: 29px;
+            line-height: 1;
+        }
+
+        .workspace-page-arrow small {
+            font-size: 9px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .workspace-arrow-left {
+            left: 245px;
+        }
+
+        .workspace-arrow-right {
+            right: 12px;
+        }
+
+        @media (max-width: 1100px) {
+            .workspace-arrow-left {
+                left: 197px;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .workspace-page-arrow {
+                top: auto;
+                bottom: 15px;
+                transform: none;
+
+                width: 55px;
+                height: 60px;
+                border-radius: 14px;
+            }
+
+            .workspace-arrow-left {
+                left: 10px;
+            }
+
+            .workspace-arrow-right {
+                right: 10px;
+            }
+
+            .workspace-page-arrow .arrow-symbol {
+                font-size: 23px;
+            }
+        }
+    </style>
 </head>
 
 <body>
+
 <div class="workspace-layout">
 
-    <!-- 왼쪽 사이드바 -->
+    <!-- ===================================
+         왼쪽 사이드바
+    =================================== -->
     <aside class="sidebar">
-        <a class="sidebar-brand" th:href="@{/}" href="/">
+
+        <a class="sidebar-brand"
+           th:href="@{/home}"
+           href="/home">
             MY WORLD ♡
         </a>
 
@@ -34,36 +132,83 @@
                  alt="프리렌 이미지">
         </div>
 
-        <p class="sidebar-caption">MY WORKSPACE</p>
+        <p class="sidebar-caption">
+            MY WORKSPACE
+        </p>
 
         <nav class="sidebar-menu">
+
             <a class="active"
-               th:href="@{/workspace}" href="/workspace">
+               th:href="@{/workspace}"
+               href="/workspace">
                 ♡ 대시보드
             </a>
 
-            <a th:href="@{/board}" href="/board">
-                ▤ 기존 게시판
+            <a th:href="@{/home}"
+               href="/home">
+                🏠 MBTI 확인
             </a>
 
-            <a th:href="@{/}" href="/">
-                ⌂ 홈페이지
+            <a th:href="@{/lotto}"
+               href="/lotto">
+                🎱 로또 추첨
             </a>
+
+            <a th:href="@{/board}"
+               href="/board">
+                📋 기존 게시판
+            </a>
+
         </nav>
 
+        <!-- 기존 수동 로그아웃 -->
         <form class="logout-form"
-              th:action="@{/logout}" action="/logout"
+              th:action="@{/logout}"
+              action="/logout"
               method="post">
-            <button type="submit">로그아웃</button>
+
+            <button type="submit">
+                🚪 로그아웃
+            </button>
+
         </form>
+
     </aside>
 
-    <!-- 메인 화면 -->
+    <!-- ===================================
+         메인 대시보드
+    =================================== -->
     <main class="workspace-main">
+
+        <!-- 왼쪽 화살표 : 마이월드 홈 -->
+        <a class="workspace-page-arrow workspace-arrow-left"
+           th:href="@{/home}"
+           href="/home"
+           aria-label="마이월드 홈으로 이동"
+           title="마이월드 홈">
+
+            <span class="arrow-symbol">❮</span>
+            <small>MBTI</small>
+
+        </a>
+
+        <!-- 오른쪽 화살표 : 로또 -->
+        <a class="workspace-page-arrow workspace-arrow-right"
+           th:href="@{/lotto}"
+           href="/lotto"
+           aria-label="로또 페이지로 이동"
+           title="로또 추첨">
+
+            <span class="arrow-symbol">❯</span>
+            <small>LOTTO</small>
+
+        </a>
 
         <!-- 페른 환영 배너 -->
         <section class="welcome-banner">
+
             <div class="welcome-copy">
+
                 <span class="eyebrow">
                     MY WORLD · WORKSPACE
                 </span>
@@ -76,6 +221,7 @@
                 <p>
                     오늘의 일정과 메모를 확인해 보세요.
                 </p>
+
             </div>
 
             <img class="welcome-character"
@@ -86,13 +232,17 @@
             <span class="welcome-stamp">
                 ♡ FERN ♡
             </span>
+
         </section>
 
-        <!-- 크기가 다른 카드 대시보드 -->
+        <!-- ===================================
+             대시보드 카드
+        =================================== -->
         <div class="dashboard-grid">
 
-            <!-- 일정 : 큰 카드 -->
+            <!-- 주간 달력 -->
             <section class="widget calendar-widget">
+
                 <div class="widget-title">
                     <h2>📅 이번 주 일정</h2>
                     <span>CALENDAR</span>
@@ -108,7 +258,8 @@
                     <div>일</div>
                 </div>
 
-                <div id="weekDates" class="week-dates">
+                <div id="weekDates"
+                     class="week-dates">
                 </div>
 
                 <div class="empty-calendar">
@@ -116,54 +267,71 @@
                 </div>
 
                 <p class="widget-note">
-                    일정 등록 기능은 다음 단계에서 추가할 예정입니다.
+                    일정 등록 기능은 다음 단계에서
+                    추가할 예정입니다.
                 </p>
 
                 <img class="calendar-sticker"
                      th:src="@{/img/3.png}"
                      src="/img/3.png"
                      alt="프리렌 포토카드">
+
             </section>
 
-            <!-- 실시간 시계 : 작은 카드 -->
+            <!-- 실시간 시계 -->
             <section class="widget clock-widget">
+
                 <div class="widget-title">
                     <h2>🕒 실시간 시계</h2>
                 </div>
 
-                <div id="liveClock" class="clock-time">
+                <div id="liveClock"
+                     class="clock-time">
                     --:--:--
                 </div>
 
-                <div id="liveDate" class="clock-date">
+                <div id="liveDate"
+                     class="clock-date">
                     날짜 불러오는 중...
                 </div>
 
-                <span class="clock-stamp">✦ KST ✦</span>
+                <span class="clock-stamp">
+                    ✦ KST ✦
+                </span>
+
             </section>
 
-            <!-- 메모 : 큰 카드 -->
+            <!-- 메모장 -->
             <section class="widget memo-widget">
+
                 <div class="widget-title">
                     <h2>📝 나의 메모장</h2>
                     <span>MY NOTES</span>
                 </div>
 
                 <div class="memo-preview">
-                    <span class="memo-pin">📌</span>
+
+                    <span class="memo-pin">
+                        📌
+                    </span>
+
                     <h3>내 메모</h3>
+
                     <p>
                         생각나는 아이디어나 중요한 내용을
                         기록할 수 있는 공간입니다.
                     </p>
+
                 </div>
 
                 <p class="widget-note">
-                    다음 단계에서 회원별 메모 저장 기능을 연결합니다.
+                    회원별 메모 저장 기능을
+                    연결할 예정입니다.
                 </p>
+
             </section>
 
-            <!-- 기존 날씨 API : 작은 카드 -->
+            <!-- 지역별 날씨 -->
             <section class="widget weather-widget"
                      id="weatherCard"
                      th:attr="data-region=${region}"
@@ -174,45 +342,65 @@
                 </div>
 
                 <p class="weather-location">
-                    📍 <span th:text="${region}">서울특별시</span>
+                    📍
+                    <span th:text="${region}">
+                        서울특별시
+                    </span>
                 </p>
 
                 <div class="weather-main">
+
                     <span id="weatherIcon"
-                          class="weather-icon">🌤️</span>
+                          class="weather-icon">
+                        🌤️
+                    </span>
 
                     <div>
+
                         <div id="weatherTemp"
-                             class="weather-temp">--°C</div>
+                             class="weather-temp">
+                            --°C
+                        </div>
 
                         <div id="weatherDescription">
                             날씨 불러오는 중...
                         </div>
+
                     </div>
+
                 </div>
 
                 <div class="weather-details">
+
                     <div>
                         💧 습도
-                        <strong id="weatherHumidity">--%</strong>
+                        <strong id="weatherHumidity">
+                            --%
+                        </strong>
                     </div>
 
                     <div>
                         🍃 풍속
-                        <strong id="weatherWind">-- km/h</strong>
+                        <strong id="weatherWind">
+                            -- km/h
+                        </strong>
                     </div>
+
                 </div>
 
                 <p id="weatherUpdated"
-                   class="weather-updated"></p>
+                   class="weather-updated">
+                </p>
 
                 <small class="weather-credit">
                     Weather data by Open-Meteo
                 </small>
+
             </section>
 
-            <!-- 할 일 : 중간 카드 -->
+            <!-- 할 일 -->
             <section class="widget todo-widget">
+
                 <div class="widget-title">
                     <h2>✅ 오늘의 할 일</h2>
                     <span>TO-DO</span>
@@ -223,44 +411,52 @@
                 </p>
 
                 <p class="widget-note">
-                    할 일 등록과 완료 체크 기능을 추가할 예정입니다.
+                    할 일 등록과 완료 체크 기능을
+                    추가할 예정입니다.
                 </p>
+
             </section>
 
-            <!-- 채팅 : 넓은 카드 -->
+            <!-- 채팅방 -->
             <section class="widget chat-widget">
+
                 <div class="chat-copy">
+
                     <div class="widget-title">
                         <h2>💬 우리들의 채팅방</h2>
                     </div>
 
                     <p>
-                        로그인한 회원들과 자유롭게 대화할 수 있는 공간
+                        로그인한 회원들과 자유롭게
+                        대화할 수 있는 공간
                     </p>
 
                     <span class="coming-soon">
                         실시간 채팅 기능 준비 중
                     </span>
+
                 </div>
 
-                <img class="chat-decoration"
-                     th:src="@{/img/4.png}"
-                     src="/img/4.png"
-                     alt="페른 일러스트">
+                <!-- 4.png 전체 배경은 기존 CSS에서 유지 -->
+
             </section>
 
         </div>
 
-        <!-- 5.png 풍경 포토카드 -->
+        <!-- 하단 풍경 사진 -->
         <section class="bottom-photo">
+
             <img th:src="@{/img/5.png}"
                  src="/img/5.png"
                  alt="프리렌 일행 풍경">
 
             <div>
                 <span>MY WORLD</span>
-                <p>나만의 작은 작업 공간 ♡</p>
+                <p>
+                    나만의 작은 작업 공간 ♡
+                </p>
             </div>
+
         </section>
 
         <footer class="workspace-footer">
@@ -268,6 +464,8 @@
         </footer>
 
     </main>
+
 </div>
+
 </body>
 </html>

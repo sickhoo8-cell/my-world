@@ -73,15 +73,18 @@ public class MemberController {
 
     // 로그인 페이지
     @GetMapping("/login")
-    public String loginPage(
-            Model model,
-            HttpSession session
+    public String loginForm(
+            HttpSession session,
+            Model model
     ) {
+        // 이미 로그인된 회원은 그룹웨어로 이동
         if (session.getAttribute("loginMemberId") != null) {
-            return "redirect:/board";
+            return "redirect:/workspace";
         }
 
+        // 로그인하지 않은 회원은 로그인 화면 표시
         model.addAttribute("loginForm", new MemberLoginDTO());
+
         return "login";
     }
 

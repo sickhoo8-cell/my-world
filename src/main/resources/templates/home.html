@@ -4,66 +4,56 @@
 
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
     <title>My World - Winter Love</title>
 
-    <!-- 기존 홈페이지 CSS -->
+    <!-- 기존 겨울 홈페이지 디자인 -->
     <link rel="stylesheet"
           th:href="@{/css/style.css}"
           href="/css/style.css">
+
+    <!-- 공통 양방향 화살표 디자인 -->
+    <link rel="stylesheet"
+          th:href="@{/css/page-arrows.css}"
+          href="/css/page-arrows.css">
 </head>
 
 <body>
 
-<!-- ========================================
-     왼쪽 화살표 : 로그인 또는 그룹웨어
-======================================== -->
-<a class="home-nav-arrow home-nav-left"
-   th:href="@{/entry}"
-   href="/entry"
+<!-- ===================================
+     왼쪽 : 그룹웨어
+=================================== -->
+<a class="page-nav-arrow page-nav-left"
+   th:href="@{/lotto}"
+   href="/lotto"
    aria-label="그룹웨어로 이동"
    title="그룹웨어로 이동">
 
-    <span>❮</span>
-    <small>WORKSPACE</small>
+    <span class="arrow-symbol">❮</span>
+    <small>LOTTO</small>
 
 </a>
 
+<!-- ===================================
+     오른쪽 : 로그인
+=================================== -->
+<a class="page-nav-arrow page-nav-right"
+   th:href="@{/login}"
+   href="/login"
+   aria-label="로그인 화면으로 이동"
+   title="WORKSPACE">
 
-<!-- ========================================
-     오른쪽 화살표 : 로또
-======================================== -->
-<div class="lucky-navigation">
+    <span class="arrow-symbol">❯</span>
+    <small>LOGIN</small>
 
-    <span class="lucky-nav-text">
-        🎱 로또 추첨하러 가기!
-    </span>
+</a>
 
-    <a class="lucky-next-arrow"
-       th:href="@{/lotto}"
-       href="/lotto"
-       aria-label="로또 추첨하러 가기"
-       title="로또로 이동">
-
-        &#10095;
-
-    </a>
-
-</div>
-
-
-<!-- ========================================
-     눈 내리는 배경
-======================================== -->
+<!-- 눈 내리는 배경 -->
 <div id="snow-container"></div>
 
-
-<!-- ========================================
-     겨울 동화 배경
-======================================== -->
+<!-- 겨울 동화 배경 -->
 <div class="winter-scene" aria-hidden="true">
 
     <!-- 반짝이는 별 -->
@@ -71,7 +61,6 @@
     <span class="star star-2">✧</span>
     <span class="star star-3">✦</span>
     <span class="star star-4">✧</span>
-
 
     <!-- 왼쪽 눈 덮인 소나무 -->
     <div class="pine-tree tree-left">
@@ -83,7 +72,6 @@
 
     </div>
 
-
     <!-- 오른쪽 눈 덮인 소나무 -->
     <div class="pine-tree tree-right">
 
@@ -94,29 +82,27 @@
 
     </div>
 
-
     <!-- 눈 덮인 언덕 -->
     <div class="snow-hill hill-back"></div>
     <div class="snow-hill hill-front"></div>
 
 </div>
 
-
-<!-- ========================================
+<!-- ===================================
      상단 메뉴
-======================================== -->
+=================================== -->
 <header class="header">
 
-    <a th:href="@{/}"
-       href="/"
+    <a th:href="@{/home}"
+       href="/home"
        class="logo">
         My World ♡
     </a>
 
     <nav>
 
-        <a th:href="@{/}"
-           href="/">
+        <a th:href="@{/home}"
+           href="/home">
             HOME
         </a>
 
@@ -133,13 +119,11 @@
 
 </header>
 
-
-<!-- ========================================
+<!-- ===================================
      메인 화면
-======================================== -->
+=================================== -->
 <main>
 
-    <!-- 메인 환영 화면 -->
     <section class="hero">
 
         <div class="winter-label">
@@ -167,10 +151,7 @@
 
     </section>
 
-
-    <!-- ====================================
-         MBTI 및 궁합 메뉴
-    ==================================== -->
+    <!-- MBTI 및 궁합 메뉴 -->
     <section id="features"
              class="features">
 
@@ -179,7 +160,6 @@
         <p class="section-description">
             오늘은 어떤 이야기가 궁금한가요?
         </p>
-
 
         <div class="card-container">
 
@@ -203,7 +183,6 @@
 
             </div>
 
-
             <!-- MBTI 궁합 -->
             <div class="feature-card">
 
@@ -223,7 +202,6 @@
                 </a>
 
             </div>
-
 
             <!-- 이름 궁합 -->
             <div class="feature-card">
@@ -251,10 +229,7 @@
 
 </main>
 
-
-<!-- ========================================
-     하단 푸터
-======================================== -->
+<!-- 푸터 -->
 <footer>
 
     <p>Made with ♡ | My World</p>
@@ -265,11 +240,9 @@
 
 </footer>
 
-
-<!-- 기존 눈 내리는 효과 JavaScript -->
+<!-- 기존 눈 내리는 효과 -->
 <script th:src="@{/js/snow.js}"
-        src="/js/snow.js">
-</script>
+        src="/js/snow.js"></script>
 
 </body>
 </html>
