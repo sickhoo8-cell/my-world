@@ -27,31 +27,40 @@
 
 <body>
 
+<!-- ========================================
+     공통 페이지 이동 화살표
+     lucky-page 바깥으로 이동
+======================================== -->
+
+<!-- 왼쪽 : 로그인 화면 -->
+<a class="page-nav-arrow page-nav-left"
+   th:href="@{/login}"
+   href="/login"
+   aria-label="로그인 화면으로 이동"
+   title="로그인">
+
+    <span class="arrow-symbol">❮</span>
+    <small>WORKSPACE</small>
+
+</a>
+
+<!-- 오른쪽 : 홈 화면 -->
+<a class="page-nav-arrow page-nav-right"
+   th:href="@{/home}"
+   href="/home"
+   aria-label="홈 화면으로 이동"
+   title="홈">
+
+    <span class="arrow-symbol">❯</span>
+    <small>MBTI</small>
+
+</a>
+
+<!-- ========================================
+     로또 페이지
+======================================== -->
+
 <div class="lucky-page">
-
-    <!-- 왼쪽 : 로그인 화면 -->
-    <a class="page-nav-arrow page-nav-left"
-       th:href="@{/login}"
-       href="/login"
-       aria-label="로그인 화면으로 이동"
-       title="로그인">
-
-        <span class="arrow-symbol">❮</span>
-        <small>WORKSPACE</small>
-
-    </a>
-
-    <!-- 오른쪽 : 그룹웨어 -->
-    <a class="page-nav-arrow page-nav-right"
-       th:href="@{/home}"
-       href="/home"
-       aria-label="그룹웨어로 이동"
-       title="그룹웨어">
-
-        <span class="arrow-symbol">❯</span>
-        <small>MBTI</small>
-
-    </a>
 
     <!-- 상단 헤더 -->
     <header class="lucky-header">
