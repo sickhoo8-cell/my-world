@@ -22,8 +22,14 @@
     <script th:src="@{/js/workspace-clock.js}"
             src="/js/workspace-clock.js" defer></script>
 
-    <!-- 양방향 화살표 스타일 -->
+    <!-- 새로운 회원별 메모 기능 -->
+    <script th:src="@{/js/memo.js}"
+            src="/js/memo.js" defer></script>
+
     <style>
+        /* ===================================
+           기존 양방향 화살표 유지
+        =================================== */
         .workspace-page-arrow {
             position: fixed;
             top: 50%;
@@ -106,6 +112,226 @@
 
             .workspace-page-arrow .arrow-symbol {
                 font-size: 23px;
+            }
+        }
+
+        /* ===================================
+           새로운 메모장 전용 스타일
+        =================================== */
+        .memo-widget {
+            min-width: 0;
+        }
+
+        .memo-editor {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            padding: 15px;
+            margin-top: 14px;
+
+            background: #fffafd;
+            border: 1px solid #eadcf2;
+            border-radius: 16px;
+        }
+
+        .memo-input,
+        .memo-textarea {
+            box-sizing: border-box;
+            display: block;
+            width: 100%;
+
+            border: 1px solid #e5d6ee;
+            border-radius: 10px;
+            outline: none;
+
+            background: #fff;
+            color: #463750;
+
+            font: inherit;
+            font-size: 13px;
+        }
+
+        .memo-input {
+            padding: 12px 13px;
+        }
+
+        .memo-textarea {
+            min-height: 105px;
+            padding: 12px 13px;
+            resize: vertical;
+            line-height: 1.7;
+        }
+
+        .memo-input:focus,
+        .memo-textarea:focus {
+            border-color: #ab84ca;
+            box-shadow: 0 0 0 3px
+            rgba(171, 132, 202, 0.12);
+        }
+
+        .memo-editor-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .memo-save-button,
+        .memo-cancel-button,
+        .memo-edit-button,
+        .memo-delete-button {
+            cursor: pointer;
+            font: inherit;
+            font-size: 12px;
+            font-weight: bold;
+
+            border-radius: 10px;
+            padding: 9px 13px;
+
+            transition: background 0.2s;
+        }
+
+        .memo-save-button {
+            color: #fff;
+            background: #9974b8;
+            border: 1px solid #9974b8;
+        }
+
+        .memo-save-button:hover {
+            background: #805d9e;
+        }
+
+        .memo-save-button:disabled {
+            opacity: 0.55;
+            cursor: wait;
+        }
+
+        .memo-cancel-button {
+            color: #745988;
+            background: #f3eaf8;
+            border: 1px solid #e5d5ee;
+        }
+
+        .memo-cancel-button[hidden] {
+            display: none;
+        }
+
+        .memo-status {
+            min-height: 18px;
+            margin: 8px 2px;
+
+            color: #7f6196;
+            font-size: 12px;
+        }
+
+        .memo-status.memo-error {
+            color: #b84b62;
+        }
+
+        .memo-list-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin: 17px 0 10px;
+            gap: 10px;
+        }
+
+        .memo-list-heading h3 {
+            margin: 0;
+            font-size: 14px;
+            color: #604973;
+        }
+
+        .memo-list-heading span {
+            color: #937ca4;
+            font-size: 11px;
+        }
+
+        .memo-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 3px;
+        }
+
+        .saved-memo {
+            padding: 13px;
+            border-radius: 14px;
+            border: 1px solid #eadff0;
+            background: #fdf8ff;
+        }
+
+        .saved-memo-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 5px;
+        }
+
+        .saved-memo-title {
+            margin: 0;
+            color: #694b82;
+            font-size: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .saved-memo-date {
+            color: #a08bab;
+            font-size: 10px;
+        }
+
+        .saved-memo-content {
+            margin: 9px 0 12px;
+
+            color: #5e5364;
+            font-size: 12px;
+            line-height: 1.75;
+
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .saved-memo-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 6px;
+        }
+
+        .memo-edit-button {
+            background: #f0e5f7;
+            color: #785a91;
+            border: 1px solid #e6d7ee;
+        }
+
+        .memo-delete-button {
+            background: #fff1f3;
+            color: #bb6077;
+            border: 1px solid #f4d9df;
+        }
+
+        .memo-empty {
+            margin: 0;
+            padding: 18px 12px;
+
+            text-align: center;
+            color: #9d8ba9;
+
+            background: #fbf7fd;
+            border: 1px dashed #ddcce9;
+            border-radius: 13px;
+
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 760px) {
+            .memo-editor {
+                padding: 12px;
             }
         }
     </style>
@@ -301,7 +527,9 @@
 
             </section>
 
-            <!-- 메모장 -->
+            <!-- ===================================
+                 새로운 회원별 메모장
+            =================================== -->
             <section class="widget memo-widget">
 
                 <div class="widget-title">
@@ -309,24 +537,87 @@
                     <span>MY NOTES</span>
                 </div>
 
-                <div class="memo-preview">
+                <!-- 메모 작성 및 수정 -->
+                <form id="memoForm"
+                      class="memo-editor">
 
-                    <span class="memo-pin">
-                        📌
+                    <input type="hidden"
+                           id="memoId">
+
+                    <label for="memoTitle">
+                        <strong>메모 제목</strong>
+                    </label>
+
+                    <input
+                            type="text"
+                            id="memoTitle"
+                            class="memo-input"
+                            placeholder="예: 오늘의 아이디어"
+                            maxlength="100"
+                            autocomplete="off"
+                            required>
+
+                    <label for="memoContent">
+                        <strong>메모 내용</strong>
+                    </label>
+
+                    <textarea
+                            id="memoContent"
+                            class="memo-textarea"
+                            placeholder="기억하고 싶은 내용을 적어보세요 ♡"
+                            maxlength="2000"
+                            required></textarea>
+
+                    <div class="memo-editor-actions">
+
+                        <button
+                                type="submit"
+                                id="memoSaveButton"
+                                class="memo-save-button">
+                            ♡ 메모 저장
+                        </button>
+
+                        <button
+                                type="button"
+                                id="memoCancelButton"
+                                class="memo-cancel-button"
+                                hidden>
+                            취소
+                        </button>
+
+                    </div>
+
+                </form>
+
+                <!-- 저장 결과 또는 오류 -->
+                <p id="memoStatus"
+                   class="memo-status"
+                   role="status"
+                   aria-live="polite">
+                </p>
+
+                <!-- 저장된 메모 목록 -->
+                <div class="memo-list-heading">
+
+                    <h3>📌 저장된 메모</h3>
+
+                    <span id="memoCount">
+                        0개의 메모
                     </span>
 
-                    <h3>내 메모</h3>
+                </div>
 
-                    <p>
-                        생각나는 아이디어나 중요한 내용을
-                        기록할 수 있는 공간입니다.
+                <div id="memoList"
+                     class="memo-list">
+
+                    <p class="memo-empty">
+                        메모를 불러오는 중...
                     </p>
 
                 </div>
 
                 <p class="widget-note">
-                    회원별 메모 저장 기능을
-                    연결할 예정입니다.
+                    로그인한 본인의 메모만 저장되고 표시됩니다.
                 </p>
 
             </section>
