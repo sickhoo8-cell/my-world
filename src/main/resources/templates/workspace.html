@@ -1,190 +1,134 @@
 
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Workspace | My World</title>
 
-    <!-- 기존 Workspace CSS -->
-    <link rel="stylesheet"
-          th:href="@{/css/workspace.css}"
-          href="/css/workspace.css">
+    <!-- 기존 디자인, 기능 유지 -->
+    <link rel="stylesheet" th:href="@{/css/workspace.css}" href="/css/workspace.css">
+    <link rel="stylesheet" th:href="@{/css/todo.css}" href="/css/todo.css">
+    <link rel="stylesheet" th:href="@{/css/schedule.css}" href="/css/schedule.css">
 
-    <!-- To-do 전용 CSS -->
-    <link rel="stylesheet"
-          th:href="@{/css/todo.css}"
-          href="/css/todo.css">
-
-    <!-- 기존 날씨 -->
-    <script th:src="@{/js/weather.js}"
-            src="/js/weather.js" defer></script>
-
-    <!-- 기존 실시간 시계 -->
-    <script th:src="@{/js/workspace-clock.js}"
-            src="/js/workspace-clock.js" defer></script>
-
-    <!-- 기존 회원별 메모장 -->
-    <script th:src="@{/js/memo.js}"
-            src="/js/memo.js" defer></script>
-
-    <!-- 새 회원별 To-do -->
-    <script th:src="@{/js/todo.js}"
-            src="/js/todo.js" defer></script>
+    <script th:src="@{/js/weather.js}" src="/js/weather.js" defer></script>
+    <script th:src="@{/js/workspace-clock.js}" src="/js/workspace-clock.js" defer></script>
+    <script th:src="@{/js/memo.js}" src="/js/memo.js" defer></script>
+    <script th:src="@{/js/todo.js}" src="/js/todo.js" defer></script>
+    <script th:src="@{/js/schedule.js}" src="/js/schedule.js" defer></script>
 
     <style>
-        /* ===================================
-           기존 양방향 화살표
-        =================================== */
+        /* 기존 Workspace 화살표 디자인 유지 */
         .workspace-page-arrow {
             position: fixed;
             top: 50%;
             transform: translateY(-50%);
             z-index: 1000;
-
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 6px;
-
             width: 54px;
             height: 82px;
-
-            background: rgba(255, 255, 255, 0.94);
+            background: rgba(255,255,255,.94);
             border: 1px solid #dfceed;
             border-radius: 16px;
-
             color: #82619e;
             text-decoration: none;
-
-            box-shadow: 0 7px 22px
-            rgba(103, 72, 130, 0.14);
-
-            transition:
-                    background 0.2s,
-                    box-shadow 0.2s;
+            box-shadow: 0 7px 22px rgba(103,72,130,.14);
+            transition: background .2s, box-shadow .2s;
         }
-
         .workspace-page-arrow:hover {
             background: #e8d8f4;
-            box-shadow: 0 9px 25px
-            rgba(103, 72, 130, 0.22);
+            box-shadow: 0 9px 25px rgba(103,72,130,.22);
         }
-
         .workspace-page-arrow .arrow-symbol {
             font-size: 29px;
             line-height: 1;
         }
-
         .workspace-page-arrow small {
             font-size: 9px;
             font-weight: bold;
             text-align: center;
         }
-
         .workspace-arrow-left {
             left: 245px;
         }
-
         .workspace-arrow-right {
             right: 12px;
         }
-
         @media (max-width: 1100px) {
             .workspace-arrow-left {
                 left: 197px;
             }
         }
-
         @media (max-width: 760px) {
             .workspace-page-arrow {
                 top: auto;
                 bottom: 15px;
                 transform: none;
-
                 width: 55px;
                 height: 60px;
                 border-radius: 14px;
             }
-
             .workspace-arrow-left {
                 left: 10px;
             }
-
             .workspace-arrow-right {
                 right: 10px;
             }
-
             .workspace-page-arrow .arrow-symbol {
                 font-size: 23px;
             }
         }
 
-        /* ===================================
-           기존 메모장 디자인 유지
-        =================================== */
+        /* 기존 메모장 스타일 유지 */
         .memo-widget {
             min-width: 0;
         }
-
         .memo-editor {
             display: flex;
             flex-direction: column;
             gap: 10px;
-
             padding: 15px;
             margin-top: 14px;
-
             background: #fffafd;
             border: 1px solid #eadcf2;
             border-radius: 16px;
         }
-
         .memo-input,
         .memo-textarea {
             box-sizing: border-box;
             display: block;
             width: 100%;
-
             border: 1px solid #e5d6ee;
             border-radius: 10px;
             outline: none;
-
             background: #fff;
             color: #463750;
-
             font: inherit;
             font-size: 13px;
         }
-
         .memo-input {
             padding: 12px 13px;
         }
-
         .memo-textarea {
             min-height: 105px;
             padding: 12px 13px;
             resize: vertical;
             line-height: 1.7;
         }
-
         .memo-input:focus,
         .memo-textarea:focus {
             border-color: #ab84ca;
-            box-shadow: 0 0 0 3px
-            rgba(171, 132, 202, 0.12);
+            box-shadow: 0 0 0 3px rgba(171,132,202,.12);
         }
-
         .memo-editor-actions {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
         }
-
         .memo-save-button,
         .memo-cancel-button,
         .memo-edit-button,
@@ -193,87 +137,69 @@
             font: inherit;
             font-size: 12px;
             font-weight: bold;
-
             border-radius: 10px;
             padding: 9px 13px;
-
-            transition: background 0.2s;
+            transition: background .2s;
         }
-
         .memo-save-button {
             color: #fff;
             background: #9974b8;
             border: 1px solid #9974b8;
         }
-
         .memo-save-button:hover {
             background: #805d9e;
         }
-
         .memo-save-button:disabled {
-            opacity: 0.55;
+            opacity: .55;
             cursor: wait;
         }
-
         .memo-cancel-button {
             color: #745988;
             background: #f3eaf8;
             border: 1px solid #e5d5ee;
         }
-
         .memo-cancel-button[hidden] {
             display: none;
         }
-
         .memo-status {
             min-height: 18px;
             margin: 8px 2px;
-
             color: #7f6196;
             font-size: 12px;
         }
-
         .memo-status.memo-error {
             color: #b84b62;
         }
-
         .memo-list-heading {
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             margin: 17px 0 10px;
             gap: 10px;
         }
-
         .memo-list-heading h3 {
             margin: 0;
             font-size: 14px;
             color: #604973;
         }
-
         .memo-list-heading span {
             color: #937ca4;
             font-size: 11px;
         }
-
         .memo-list {
             display: flex;
             flex-direction: column;
             gap: 10px;
-
             max-height: 350px;
             overflow-y: auto;
             padding-right: 3px;
         }
-
         .saved-memo {
             padding: 13px;
             border-radius: 14px;
             border: 1px solid #eadff0;
             background: #fdf8ff;
         }
-
         .saved-memo-header {
             display: flex;
             flex-wrap: wrap;
@@ -281,63 +207,50 @@
             justify-content: space-between;
             gap: 5px;
         }
-
         .saved-memo-title {
             margin: 0;
             color: #694b82;
             font-size: 14px;
             overflow-wrap: anywhere;
         }
-
         .saved-memo-date {
             color: #a08bab;
             font-size: 10px;
         }
-
         .saved-memo-content {
             margin: 9px 0 12px;
-
             color: #5e5364;
             font-size: 12px;
             line-height: 1.75;
-
             white-space: pre-wrap;
             overflow-wrap: anywhere;
         }
-
         .saved-memo-actions {
             display: flex;
             justify-content: flex-end;
             gap: 6px;
         }
-
         .memo-edit-button {
             background: #f0e5f7;
             color: #785a91;
             border: 1px solid #e6d7ee;
         }
-
         .memo-delete-button {
             background: #fff1f3;
             color: #bb6077;
             border: 1px solid #f4d9df;
         }
-
         .memo-empty {
             margin: 0;
             padding: 18px 12px;
-
             text-align: center;
             color: #9d8ba9;
-
             background: #fbf7fd;
             border: 1px dashed #ddcce9;
             border-radius: 13px;
-
             font-size: 12px;
             line-height: 1.7;
         }
-
         @media (max-width: 760px) {
             .memo-editor {
                 padding: 12px;
@@ -347,14 +260,10 @@
 </head>
 
 <body>
-
 <div class="workspace-layout">
 
-    <!-- ===================================
-         왼쪽 사이드바
-    =================================== -->
+    <!-- 기존 사이드바 -->
     <aside class="sidebar">
-
         <a class="sidebar-brand"
            th:href="@{/home}"
            href="/home">
@@ -372,80 +281,52 @@
         </p>
 
         <nav class="sidebar-menu">
-
             <a class="active"
                th:href="@{/workspace}"
-               href="/workspace">
-                ♡ 대시보드
-            </a>
+               href="/workspace">♡ 대시보드</a>
 
             <a th:href="@{/home}"
-               href="/home">
-                🏠 MBTI 확인
-            </a>
+               href="/home">🏠 MBTI 확인</a>
 
             <a th:href="@{/lotto}"
-               href="/lotto">
-                🎱 로또 추첨
-            </a>
+               href="/lotto">🎱 로또 추첨</a>
 
             <a th:href="@{/board}"
-               href="/board">
-                📋 기존 게시판
-            </a>
-
+               href="/board">📋 기존 게시판</a>
         </nav>
 
-        <!-- 기존 로그아웃 -->
         <form class="logout-form"
               th:action="@{/logout}"
               action="/logout"
               method="post">
-
-            <button type="submit">
-                🚪 로그아웃
-            </button>
-
+            <button type="submit">🚪 로그아웃</button>
         </form>
-
     </aside>
 
-    <!-- ===================================
-         메인 대시보드
-    =================================== -->
     <main class="workspace-main">
 
-        <!-- 마이월드 홈으로 이동 -->
+        <!-- 기존 페이지 화살표 -->
         <a class="workspace-page-arrow workspace-arrow-left"
            th:href="@{/home}"
            href="/home"
            aria-label="마이월드 홈으로 이동"
            title="마이월드 홈">
-
             <span class="arrow-symbol">❮</span>
             <small>MBTI</small>
-
         </a>
 
-        <!-- 로또로 이동 -->
         <a class="workspace-page-arrow workspace-arrow-right"
            th:href="@{/lotto}"
            href="/lotto"
            aria-label="로또 페이지로 이동"
            title="로또 추첨">
-
             <span class="arrow-symbol">❯</span>
             <small>LOTTO</small>
-
         </a>
 
-        <!-- ===================================
-             기존 환영 배너
-        =================================== -->
+        <!-- 기존 환영 배너 -->
         <section class="welcome-banner">
-
             <div class="welcome-copy">
-
                 <span class="eyebrow">
                     MY WORLD · WORKSPACE
                 </span>
@@ -458,7 +339,6 @@
                 <p>
                     오늘의 일정과 메모를 확인해 보세요.
                 </p>
-
             </div>
 
             <img class="welcome-character"
@@ -469,55 +349,149 @@
             <span class="welcome-stamp">
                 ♡ FERN ♡
             </span>
-
         </section>
 
-        <!-- ===================================
-             대시보드 카드
-        =================================== -->
+        <!-- 대시보드 카드 -->
         <div class="dashboard-grid">
 
-            <!-- 기존 주간 달력 -->
-            <section class="widget calendar-widget">
+            <!-- 회원별 일정 관리 -->
+            <section class="widget calendar-widget schedule-widget">
 
                 <div class="widget-title">
                     <h2>📅 이번 주 일정</h2>
                     <span>CALENDAR</span>
                 </div>
 
-                <div class="week-days">
-                    <div>월</div>
-                    <div>화</div>
-                    <div>수</div>
-                    <div>목</div>
-                    <div>금</div>
-                    <div>토</div>
-                    <div>일</div>
+                <div class="schedule-navigation">
+                    <span id="scheduleWeekHeading">
+                        이번 주
+                    </span>
+
+                    <button type="button"
+                            id="schedulePrev"
+                            aria-label="지난 주">
+                        ❮
+                    </button>
+
+                    <button type="button"
+                            id="scheduleToday">
+                        오늘
+                    </button>
+
+                    <button type="button"
+                            id="scheduleNext"
+                            aria-label="다음 주">
+                        ❯
+                    </button>
                 </div>
 
-                <div id="weekDates"
-                     class="week-dates">
+                <div class="schedule-days-label"
+                     aria-hidden="true">
+                    <span>월</span>
+                    <span>화</span>
+                    <span>수</span>
+                    <span>목</span>
+                    <span>금</span>
+                    <span>토</span>
+                    <span>일</span>
                 </div>
 
-                <div class="empty-calendar">
-                    아직 등록된 일정이 없습니다.
+                <div id="scheduleWeekDates"
+                     class="schedule-dates"
+                     aria-label="주간 날짜 선택">
+                </div>
+
+                <!-- 기존 시계 JS 호환용 -->
+                <div id="weekDates" hidden></div>
+
+                <form id="scheduleForm"
+                      class="schedule-editor">
+
+                    <input type="hidden" id="scheduleId">
+
+                    <div>
+                        <label for="scheduleTitle">
+                            일정 제목
+                        </label>
+                        <input id="scheduleTitle"
+                               type="text"
+                               maxlength="120"
+                               placeholder="예: 자격증 시험 공부"
+                               required>
+                    </div>
+
+                    <div class="schedule-form-row">
+                        <div>
+                            <label for="scheduleDate">
+                                날짜
+                            </label>
+                            <input id="scheduleDate"
+                                   type="date"
+                                   required>
+                        </div>
+
+                        <div>
+                            <label for="scheduleTime">
+                                시간 (선택)
+                            </label>
+                            <input id="scheduleTime"
+                                   type="time">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="scheduleDescription">
+                            메모 (선택)
+                        </label>
+                        <textarea id="scheduleDescription"
+                                  maxlength="1000"
+                                  placeholder="장소나 준비할 내용을 적어보세요 ♡"></textarea>
+                    </div>
+
+                    <div class="schedule-form-actions">
+                        <button id="scheduleSave"
+                                type="submit">
+                            ♡ 일정 저장
+                        </button>
+
+                        <button id="scheduleCancel"
+                                type="button"
+                                hidden>
+                            취소
+                        </button>
+                    </div>
+                </form>
+
+                <p id="scheduleStatus"
+                   class="schedule-status"
+                   role="status"
+                   aria-live="polite">
+                </p>
+
+                <h3 id="scheduleSelectedDate"
+                    class="schedule-selected-heading">
+                    선택한 날짜 일정
+                </h3>
+
+                <div id="scheduleList"
+                     class="schedule-list">
+                    <p class="schedule-empty">
+                        일정을 불러오는 중...
+                    </p>
                 </div>
 
                 <p class="widget-note">
-                    일정 등록 기능은 다음 단계에서
-                    추가할 예정입니다.
+                    로그인한 본인의 일정만 저장됩니다.
                 </p>
 
                 <img class="calendar-sticker"
                      th:src="@{/img/3.png}"
                      src="/img/3.png"
                      alt="프리렌 포토카드">
-
             </section>
 
             <!-- 기존 실시간 시계 -->
             <section class="widget clock-widget">
-
                 <div class="widget-title">
                     <h2>🕒 실시간 시계</h2>
                 </div>
@@ -535,14 +509,10 @@
                 <span class="clock-stamp">
                     ✦ KST ✦
                 </span>
-
             </section>
 
-            <!-- ===================================
-                 기존 회원별 메모장
-            =================================== -->
+            <!-- 기존 회원별 메모장 -->
             <section class="widget memo-widget">
-
                 <div class="widget-title">
                     <h2>📝 나의 메모장</h2>
                     <span>MY NOTES</span>
@@ -550,53 +520,44 @@
 
                 <form id="memoForm"
                       class="memo-editor">
-
-                    <input type="hidden"
-                           id="memoId">
+                    <input type="hidden" id="memoId">
 
                     <label for="memoTitle">
                         <strong>메모 제목</strong>
                     </label>
 
-                    <input
-                            type="text"
-                            id="memoTitle"
-                            class="memo-input"
-                            placeholder="예: 오늘의 아이디어"
-                            maxlength="100"
-                            autocomplete="off"
-                            required>
+                    <input id="memoTitle"
+                           type="text"
+                           class="memo-input"
+                           placeholder="예: 오늘의 아이디어"
+                           maxlength="100"
+                           autocomplete="off"
+                           required>
 
                     <label for="memoContent">
                         <strong>메모 내용</strong>
                     </label>
 
-                    <textarea
-                            id="memoContent"
-                            class="memo-textarea"
-                            placeholder="기억하고 싶은 내용을 적어보세요 ♡"
-                            maxlength="2000"
-                            required></textarea>
+                    <textarea id="memoContent"
+                              class="memo-textarea"
+                              placeholder="기억하고 싶은 내용을 적어보세요 ♡"
+                              maxlength="2000"
+                              required></textarea>
 
                     <div class="memo-editor-actions">
-
-                        <button
-                                type="submit"
+                        <button type="submit"
                                 id="memoSaveButton"
                                 class="memo-save-button">
                             ♡ 메모 저장
                         </button>
 
-                        <button
-                                type="button"
+                        <button type="button"
                                 id="memoCancelButton"
                                 class="memo-cancel-button"
                                 hidden>
                             취소
                         </button>
-
                     </div>
-
                 </form>
 
                 <p id="memoStatus"
@@ -606,33 +567,23 @@
                 </p>
 
                 <div class="memo-list-heading">
-
                     <h3>📌 저장된 메모</h3>
-
-                    <span id="memoCount">
-                        0개의 메모
-                    </span>
-
+                    <span id="memoCount">0개의 메모</span>
                 </div>
 
                 <div id="memoList"
                      class="memo-list">
-
                     <p class="memo-empty">
                         메모를 불러오는 중...
                     </p>
-
                 </div>
 
                 <p class="widget-note">
                     로그인한 본인의 메모만 저장되고 표시됩니다.
                 </p>
-
             </section>
 
-            <!-- ===================================
-                 기존 지역별 날씨
-            =================================== -->
+            <!-- 기존 지역별 날씨 -->
             <section class="widget weather-widget"
                      id="weatherCard"
                      th:attr="data-region=${region}"
@@ -650,14 +601,12 @@
                 </p>
 
                 <div class="weather-main">
-
                     <span id="weatherIcon"
                           class="weather-icon">
                         🌤️
                     </span>
 
                     <div>
-
                         <div id="weatherTemp"
                              class="weather-temp">
                             --°C
@@ -666,13 +615,10 @@
                         <div id="weatherDescription">
                             날씨 불러오는 중...
                         </div>
-
                     </div>
-
                 </div>
 
                 <div class="weather-details">
-
                     <div>
                         💧 습도
                         <strong id="weatherHumidity">
@@ -686,7 +632,6 @@
                             -- km/h
                         </strong>
                     </div>
-
                 </div>
 
                 <p id="weatherUpdated"
@@ -696,111 +641,77 @@
                 <small class="weather-credit">
                     Weather data by Open-Meteo
                 </small>
-
             </section>
 
-            <!-- ===================================
-                 새로운 회원별 To-do List
-            =================================== -->
+            <!-- 기존 To-do List -->
             <section class="widget todo-widget">
-
                 <div class="widget-title">
                     <h2>✅ 오늘의 할 일</h2>
                     <span>TO-DO</span>
                 </div>
 
-                <!-- 할 일 입력 및 수정 -->
                 <form id="todoForm"
                       class="todo-form">
 
-                    <input type="hidden"
-                           id="todoId">
+                    <input type="hidden" id="todoId">
 
                     <div>
-                        <label for="todoTitle">
-                            할 일
-                        </label>
-
-                        <input
-                                type="text"
-                                id="todoTitle"
-                                class="todo-input"
-                                placeholder="예: 리눅스마스터 공부하기"
-                                maxlength="150"
-                                autocomplete="off"
-                                required>
+                        <label for="todoTitle">할 일</label>
+                        <input type="text"
+                               id="todoTitle"
+                               class="todo-input"
+                               placeholder="예: 리눅스마스터 공부하기"
+                               maxlength="150"
+                               autocomplete="off"
+                               required>
                     </div>
 
                     <div class="todo-form-row">
-
                         <div>
                             <label for="todoDueDate">
                                 마감일 (선택)
                             </label>
-
-                            <input
-                                    type="date"
-                                    id="todoDueDate"
-                                    class="todo-date">
+                            <input type="date"
+                                   id="todoDueDate"
+                                   class="todo-date">
                         </div>
 
                         <div>
                             <label for="todoPriority">
                                 중요도
                             </label>
-
                             <select id="todoPriority"
                                     class="todo-select">
-
-                                <option value="LOW">
-                                    낮음
-                                </option>
-
-                                <option value="NORMAL"
-                                        selected>
-                                    보통
-                                </option>
-
-                                <option value="HIGH">
-                                    높음
-                                </option>
-
+                                <option value="LOW">낮음</option>
+                                <option value="NORMAL" selected>보통</option>
+                                <option value="HIGH">높음</option>
                             </select>
                         </div>
-
                     </div>
 
                     <div class="todo-form-buttons">
-
-                        <button
-                                type="submit"
+                        <button type="submit"
                                 id="todoSaveButton"
                                 class="todo-save-button">
                             ♡ 할 일 추가
                         </button>
 
-                        <button
-                                type="button"
+                        <button type="button"
                                 id="todoCancelButton"
                                 class="todo-cancel-button"
                                 hidden>
                             취소
                         </button>
-
                     </div>
-
                 </form>
 
-                <!-- 상태 메시지 -->
                 <p id="todoStatus"
                    class="todo-status"
                    role="status"
                    aria-live="polite">
                 </p>
 
-                <!-- 개수 및 필터 -->
                 <div class="todo-toolbar">
-
                     <span id="todoCounter"
                           class="todo-counter">
                         0/0개 완료
@@ -809,44 +720,27 @@
                     <select id="todoFilter"
                             class="todo-filter"
                             aria-label="할 일 필터">
-
-                        <option value="all">
-                            전체 보기
-                        </option>
-
-                        <option value="active">
-                            미완료
-                        </option>
-
-                        <option value="completed">
-                            완료
-                        </option>
-
+                        <option value="all">전체 보기</option>
+                        <option value="active">미완료</option>
+                        <option value="completed">완료</option>
                     </select>
-
                 </div>
 
-                <!-- 저장된 할 일 목록 -->
                 <div id="todoList"
                      class="todo-list">
-
                     <p class="todo-empty">
                         할 일을 불러오는 중...
                     </p>
-
                 </div>
 
                 <p class="widget-note">
                     나의 할 일은 계정별로 저장됩니다.
                 </p>
-
             </section>
 
             <!-- 기존 채팅방 -->
             <section class="widget chat-widget">
-
                 <div class="chat-copy">
-
                     <div class="widget-title">
                         <h2>💬 우리들의 채팅방</h2>
                     </div>
@@ -859,29 +753,21 @@
                     <span class="coming-soon">
                         실시간 채팅 기능 준비 중
                     </span>
-
                 </div>
-
-                <!-- 기존 CSS의 4.png 배경 유지 -->
-
             </section>
 
         </div>
 
         <!-- 기존 하단 풍경 -->
         <section class="bottom-photo">
-
             <img th:src="@{/img/5.png}"
                  src="/img/5.png"
                  alt="프리렌 일행 풍경">
 
             <div>
                 <span>MY WORLD</span>
-                <p>
-                    나만의 작은 작업 공간 ♡
-                </p>
+                <p>나만의 작은 작업 공간 ♡</p>
             </div>
-
         </section>
 
         <footer class="workspace-footer">
@@ -889,8 +775,6 @@
         </footer>
 
     </main>
-
 </div>
-
 </body>
 </html>
