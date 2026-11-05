@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -10,6 +11,36 @@
     <title>로그인 | My World</title>
 
     <style>
+        /* ==========================================
+           MY WORLD | LOGIN
+           DARK MODERN PURPLE
+           Workspace Color System
+        ========================================== */
+
+        :root {
+            color-scheme: dark;
+
+            --bg: #101118;
+            --sidebar-bg: #171821;
+
+            --card: #1e202b;
+            --card-inner: #272a37;
+            --card-hover: #303344;
+
+            --input-bg: #171923;
+
+            --border: #373a4b;
+            --border-active: #8364ed;
+
+            --primary: #825cf0;
+            --primary-hover: #9878fa;
+            --primary-soft: #352c50;
+
+            --text: #f4f3f8;
+            --text-secondary: #c5c3d2;
+            --text-muted: #a5a3b7;
+        }
+
         * {
             box-sizing: border-box;
         }
@@ -17,72 +48,105 @@
         body {
             margin: 0;
             min-height: 100vh;
-            font-family: "Malgun Gothic", sans-serif;
-            color: #554663;
+
+            font-family:
+                    "Pretendard",
+                    "Malgun Gothic",
+                    sans-serif;
+
+            color: var(--text);
+
             background:
-                    radial-gradient(circle at 15% 15%,
-                    #fff, transparent 30%),
-                    linear-gradient(135deg,
-                    #eee1f8, #fcf6ff, #e7d9f4);
+                    radial-gradient(
+                            circle at 15% 15%,
+                            #28203b,
+                            transparent 35%
+                    ),
+                    linear-gradient(
+                            135deg,
+                            #101118,
+                            #181724,
+                            #101118
+                    );
         }
+
+        /* ==========================================
+           전체 페이지
+        ========================================== */
 
         .page {
             min-height: 100vh;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             padding: 40px 90px;
         }
 
         .login-layout {
             display: grid;
             grid-template-columns: 1.1fr 0.9fr;
+
             width: 100%;
             max-width: 1080px;
             min-height: 610px;
+
             overflow: hidden;
-            background: #fff;
-            border: 1px solid #e8d7f0;
+
+            background: var(--card);
+
+            border: 1px solid var(--border);
             border-radius: 30px;
-            box-shadow: 0 22px 65px
-            rgba(105,70,135,0.15);
+
+            box-shadow:
+                    0 22px 65px rgba(0, 0, 0, 0.35);
         }
 
-        /* 왼쪽, 오른쪽 페이지 이동 화살표 */
+        /* ==========================================
+           페이지 이동 화살표
+        ========================================== */
 
         .page-arrow {
             position: fixed;
+
             top: 50%;
             transform: translateY(-50%);
+
             z-index: 1000;
 
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+
             gap: 8px;
 
             width: 68px;
             min-height: 86px;
             padding: 10px 5px;
 
-            border: 1px solid #e4d4ef;
+            border: 1px solid #50456c;
             border-radius: 20px;
-            background: rgba(255,255,255,0.88);
 
-            color: #8361a0;
+            background: rgba(30, 32, 43, 0.96);
+
+            color: #d5c5ff;
             text-decoration: none;
-            box-shadow: 0 8px 24px
-            rgba(103,72,130,0.13);
 
-            transition: background 0.2s,
-            box-shadow 0.2s;
+            box-shadow:
+                    0 8px 24px rgba(0, 0, 0, 0.25);
+
+            transition:
+                    background 0.2s,
+                    box-shadow 0.2s;
         }
 
         .page-arrow:hover {
-            background: #e8d8f4;
-            box-shadow: 0 10px 26px
-            rgba(103,72,130,0.20);
+            background: var(--primary-soft);
+
+            box-shadow:
+                    0 10px 26px rgba(0, 0, 0, 0.35);
         }
 
         .page-arrow .arrow-symbol {
@@ -93,6 +157,7 @@
         .page-arrow small {
             font-size: 9px;
             font-weight: bold;
+
             text-align: center;
             letter-spacing: 0.3px;
         }
@@ -105,25 +170,40 @@
             right: 15px;
         }
 
-        /* 페른 사진 네 장 */
+        /* ==========================================
+           페른 사진 갤러리
+           기존 사진 위치 그대로 유지
+        ========================================== */
 
         .fern-gallery {
             position: relative;
+
             min-height: 610px;
             overflow: hidden;
+
             background:
-                    radial-gradient(circle at 35% 35%,
-                    #fff2ff, transparent 48%),
-                    linear-gradient(145deg,
-                    #ead9f8, #c6b0df);
+                    radial-gradient(
+                            circle at 35% 35%,
+                            #43345d,
+                            transparent 48%
+                    ),
+                    linear-gradient(
+                            145deg,
+                            #302544,
+                            #201e30
+                    );
         }
 
         .gallery-label {
             position: absolute;
+
             top: 28px;
             left: 28px;
+
             z-index: 10;
-            color: #755694;
+
+            color: #d3c3ff;
+
             font-size: 14px;
             font-weight: bold;
             letter-spacing: 3px;
@@ -131,100 +211,141 @@
 
         .photo {
             position: absolute;
+
             overflow: hidden;
             padding: 7px;
-            background: #fff;
+
+            background: #353044;
+
+            border: 1px solid #615078;
             border-radius: 14px;
-            box-shadow: 0 12px 28px
-            rgba(65,40,90,0.20);
+
+            box-shadow:
+                    0 12px 28px rgba(0, 0, 0, 0.32);
+
             transition: transform 0.25s ease;
         }
 
         .photo img {
             display: block;
+
             width: 100%;
             height: 100%;
+
             object-fit: cover;
             border-radius: 8px;
         }
 
         .main-photo {
             z-index: 2;
+
             top: 105px;
             left: 8%;
+
             width: 58%;
             height: 385px;
+
             transform: rotate(-5deg);
         }
 
         .night-photo {
             z-index: 3;
+
             top: 75px;
             right: 6%;
+
             width: 35%;
             height: 195px;
+
             transform: rotate(8deg);
         }
 
         .back-photo {
             z-index: 4;
+
             right: 6%;
             bottom: 36px;
+
             width: 37%;
             height: 260px;
+
             transform: rotate(5deg);
         }
 
         .couple-photo {
             z-index: 5;
+
             left: 6%;
             bottom: 23px;
+
             width: 38%;
             height: 170px;
+
             transform: rotate(-8deg);
         }
 
         .main-photo:hover {
-            transform: rotate(-2deg)
-            translateY(-6px);
+            transform:
+                    rotate(-2deg)
+                    translateY(-6px);
         }
 
         .night-photo:hover,
         .back-photo:hover,
         .couple-photo:hover {
-            transform: rotate(0deg)
-            translateY(-6px);
+            transform:
+                    rotate(0deg)
+                    translateY(-6px);
         }
 
         .gallery-bottom {
             position: absolute;
+
             right: 25px;
             bottom: 10px;
+
             font-size: 11px;
-            color: #806995;
+            color: #c3b3db;
+
             letter-spacing: 2px;
         }
 
-        /* 로그인 영역 */
+        /* ==========================================
+           로그인 폼
+        ========================================== */
 
         .form-panel {
             padding: 65px 48px;
+
             display: flex;
             flex-direction: column;
             justify-content: center;
+
+            background: var(--card);
         }
 
         .home-link {
             align-self: flex-start;
+
             margin-bottom: 42px;
-            color: #9780a8;
+
+            color: var(--text-muted);
+
             font-size: 13px;
             text-decoration: none;
+
+            transition: color 0.2s;
+        }
+
+        .home-link:hover {
+            color: #c6b3ff;
         }
 
         .small-title {
             margin: 0 0 8px;
-            color: #a388b9;
+
+            color: #bca5ff;
+
             font-size: 12px;
             letter-spacing: 3px;
             font-weight: bold;
@@ -232,13 +353,18 @@
 
         h1 {
             margin: 0 0 12px;
-            color: #71558e;
+
+            color: var(--text);
+
             font-size: 36px;
+            font-weight: 900;
         }
 
         .subtitle {
             margin: 0 0 35px;
-            color: #9d90a7;
+
+            color: var(--text-secondary);
+
             font-size: 14px;
             line-height: 1.6;
         }
@@ -250,80 +376,149 @@
         label {
             display: block;
             margin-bottom: 9px;
+
+            color: var(--text-secondary);
+
             font-weight: bold;
             font-size: 14px;
         }
 
         input {
             display: block;
+
             width: 100%;
             padding: 15px;
-            border: 1px solid #e4d9ee;
+
+            border: 1px solid #45495f;
             border-radius: 12px;
-            background: #fcfaff;
-            color: #51415f;
+
+            background: var(--input-bg);
+            color: var(--text);
+
             font-size: 15px;
             outline: none;
+
+            transition:
+                    border-color 0.2s,
+                    box-shadow 0.2s;
         }
 
         input:focus {
-            border-color: #a88bc6;
-            box-shadow: 0 0 0 4px
-            rgba(167,137,196,0.12);
+            border-color: var(--border-active);
+
+            box-shadow:
+                    0 0 0 4px rgba(130, 92, 240, 0.17);
         }
 
         input::placeholder {
-            color: #b4a8bd;
+            color: var(--text-muted);
         }
+
+        /* ==========================================
+           로그인 버튼
+        ========================================== */
 
         .login-button {
             width: 100%;
+
             padding: 16px;
             margin-top: 14px;
+
             border: none;
             border-radius: 13px;
+
             background: linear-gradient(
-                    135deg, #bc9bda, #8867ab);
+                    135deg,
+                    #825cf0,
+                    #6744c7
+            );
+
             color: white;
+
             font-size: 16px;
             font-weight: bold;
+
             cursor: pointer;
+
+            transition:
+                    background 0.2s,
+                    box-shadow 0.2s;
         }
 
         .login-button:hover {
-            background: #795797;
+            background: var(--primary-hover);
+
+            box-shadow:
+                    0 6px 20px rgba(130, 92, 240, 0.25);
         }
+
+        .login-button:focus-visible,
+        input:focus-visible,
+        a:focus-visible {
+            outline: 2px solid #b6a1ff;
+            outline-offset: 3px;
+        }
+
+        /* ==========================================
+           회원가입 안내
+        ========================================== */
 
         .signup-guide {
             margin-top: 25px;
+
             text-align: center;
+
             font-size: 13px;
-            color: #9688a2;
+            color: var(--text-secondary);
         }
 
         .signup-guide a {
-            color: #7959a1;
+            color: #c6b3ff;
+
             font-weight: bold;
             text-decoration: none;
         }
 
+        .signup-guide a:hover {
+            color: #e1d8ff;
+            text-decoration: underline;
+        }
+
+        /* ==========================================
+           로그인 메시지
+           오류 / 로그아웃 완료
+        ========================================== */
+
         .message {
             padding: 13px;
+
             border-radius: 11px;
             margin-bottom: 22px;
+
             font-size: 13px;
             line-height: 1.6;
+
+            border: 1px solid transparent;
         }
 
         .error {
-            background: #fff0f3;
-            color: #b64d65;
+            background: #422b3b;
+            border-color: #764459;
+
+            color: #ffc0cb;
         }
 
         .success {
-            background: #ebf8ef;
-            color: #357e51;
+            background: #342b4c;
+            border-color: #67508f;
+
+            color: #d5c6ff;
         }
+
+        /* ==========================================
+           태블릿 / 모바일
+           기존 반응형 유지
+        ========================================== */
 
         @media (max-width: 800px) {
             .page {
@@ -370,10 +565,13 @@
             .page-arrow {
                 top: 12px;
                 transform: none;
+
                 width: 88px;
                 min-height: 53px;
+
                 flex-direction: row;
                 gap: 5px;
+
                 border-radius: 13px;
             }
 
@@ -402,6 +600,7 @@
         }
     </style>
 </head>
+
 
 <body>
 

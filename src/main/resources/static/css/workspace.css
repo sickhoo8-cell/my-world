@@ -1,98 +1,225 @@
 
-/* ==================================
-   MY WORLD - FERN WORKSPACE
-================================== */
+/* ==================================================
+   MY WORLD | WORKSPACE
+   DARK MODERN PURPLE
+   Professional Groupware Dashboard
 
-* {
+   - Consistent purple accent
+   - High contrast
+   - Right-aligned action buttons
+   - No To-do styles
+================================================== */
+
+/* ================================
+   01. DESIGN TOKENS
+================================ */
+
+:root {
+    color-scheme: dark;
+
+    --bg: #101118;
+    --sidebar-bg: #171821;
+
+    --card: #1e202b;
+    --card-inner: #272a37;
+    --card-hover: #303344;
+
+    --input-bg: #171923;
+
+    --border: #373a4b;
+    --border-active: #8364ed;
+
+    --primary: #825cf0;
+    --primary-hover: #9878fa;
+    --primary-dark: #6344c6;
+    --primary-soft: #352c50;
+
+    --text: #f4f3f8;
+    --text-secondary: #c5c3d2;
+    --text-muted: #a5a3b7;
+
+    --danger: #f59aab;
+
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+/* ================================
+   02. RESET
+================================ */
+
+*,
+*::before,
+*::after {
     box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
     margin: 0;
     min-height: 100vh;
-    color: #5f4d70;
-    background: #f4edf9;
-    font-family: "Malgun Gothic", "Segoe UI", sans-serif;
+
+    background: var(--bg);
+    color: var(--text);
+
+    font-family:
+            "Pretendard",
+            "Malgun Gothic",
+            "Segoe UI",
+            sans-serif;
+
+    font-size: 14px;
+    line-height: 1.6;
 }
 
 a {
+    color: inherit;
     text-decoration: none;
 }
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+/* ================================
+   03. MAIN LAYOUT
+================================ */
 
 .workspace-layout {
     display: flex;
     min-height: 100vh;
 }
 
-/* 사이드바 */
+.workspace-main {
+    width: 100%;
+    min-width: 0;
+    max-width: 1550px;
+
+    margin: 0 auto;
+    padding: 32px;
+}
+
+/* ================================
+   04. SIDEBAR
+================================ */
 
 .sidebar {
     position: sticky;
     top: 0;
-    width: 235px;
-    height: 100vh;
-    flex-shrink: 0;
+
     display: flex;
     flex-direction: column;
-    padding: 29px 19px;
-    background: #e5d5f0;
-    border-right: 1px solid #dbc5ea;
+
+    width: 235px;
+    min-width: 235px;
+    height: 100vh;
+
+    padding: 28px 17px;
+
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border);
 }
 
 .sidebar-brand {
-    text-align: center;
-    color: #795598;
+    display: block;
+    padding: 6px 12px;
+
+    color: #ffffff;
+
     font-size: 21px;
     font-weight: 900;
+    letter-spacing: 1px;
 }
 
 .sidebar-photo {
-    width: 120px;
-    height: 120px;
-    margin: 29px auto 12px;
-    padding: 6px;
+    width: 100%;
+    height: 175px;
+
+    margin: 25px 0 13px;
+    padding: 4px;
+
     overflow: hidden;
-    background: #fff;
-    border: 4px solid #fff;
-    border-radius: 23px;
-    transform: rotate(-5deg);
-    box-shadow: 0 9px 22px rgba(93, 60, 125, .16);
+
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
 }
 
 .sidebar-photo img {
+    display: block;
+
     width: 100%;
     height: 100%;
+
     object-fit: cover;
+    object-position: center 23%;
+    border-radius: 10px;
 }
 
 .sidebar-caption {
-    margin: 5px 0 30px;
-    text-align: center;
-    color: #a084b4;
+    margin: 0 12px 26px;
+
+    color: var(--text-muted);
     font-size: 11px;
-    font-weight: bold;
+    font-weight: 700;
     letter-spacing: 2px;
 }
 
 .sidebar-menu {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 7px;
 }
 
 .sidebar-menu a {
-    padding: 14px;
-    border-radius: 12px;
-    color: #765a8d;
-    font-size: 14px;
-    font-weight: bold;
+    display: flex;
+    align-items: center;
+
+    min-height: 45px;
+    padding: 12px 14px;
+
+    color: var(--text-secondary);
+
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    font-size: 13px;
+    font-weight: 650;
+
+    transition:
+            background 0.2s,
+            color 0.2s;
 }
 
-.sidebar-menu a:hover,
+.sidebar-menu a:hover {
+    background: var(--card-inner);
+    color: white;
+}
+
 .sidebar-menu a.active {
-    background: #fffaff;
-    color: #76549a;
-    box-shadow: 0 4px 14px rgba(110, 75, 145, .09);
+    background: var(--primary-soft);
+    border-color: #594788;
+
+    color: #ded2ff;
+    font-weight: 800;
 }
 
 .logout-form {
@@ -101,299 +228,841 @@ a {
 
 .logout-form button {
     width: 100%;
-    padding: 12px;
-    background: #c5add7;
-    color: #fff;
-    border: 0;
-    border-radius: 11px;
-    font-weight: bold;
-    cursor: pointer;
+    min-height: 43px;
+
+    padding: 10px 14px;
+
+    background: var(--card);
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+    color: var(--text-secondary);
+
+    font-weight: 700;
 }
 
 .logout-form button:hover {
-    background: #a184bb;
+    background: var(--primary-soft);
+    border-color: var(--primary);
+    color: white;
 }
 
-/* 메인 */
-
-.workspace-main {
-    width: 100%;
-    min-width: 0;
-    max-width: 1500px;
-    margin: 0 auto;
-    padding: 32px;
-}
+/* ================================
+   05. WELCOME BANNER
+================================ */
 
 .welcome-banner {
     position: relative;
-    display: flex;
-    align-items: center;
-    min-height: 225px;
-    margin-bottom: 24px;
-    padding: 30px 39px;
-    overflow: hidden;
     isolation: isolate;
 
-    border: 1px solid #dfc9ec;
-    border-radius: 25px;
-    background:
-            radial-gradient(circle at 70% 45%,
-            rgba(255,255,255,.65), transparent 38%),
-            linear-gradient(120deg, #e7d6f1, #d4bce6);
+    display: flex;
+    align-items: center;
+
+    min-height: 230px;
+    margin-bottom: 24px;
+    padding: 36px 40px;
+
+    overflow: hidden;
+
+    background: linear-gradient(
+            110deg,
+            #352749 0%,
+            #282438 55%,
+            #20212c 100%
+    );
+
+    border: 1px solid #50416c;
+    border-radius: 18px;
+
+    box-shadow: var(--shadow);
 }
 
 .welcome-copy {
     position: relative;
-    z-index: 3;
+    z-index: 2;
+
     max-width: 65%;
 }
 
 .eyebrow {
-    color: #9372ac;
+    color: #c1aaff;
+
     font-size: 11px;
-    font-weight: bold;
-    letter-spacing: 2px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
 }
 
 .welcome-banner h1 {
-    margin: 15px 0 12px;
-    color: #684887;
-    font-size: clamp(23px, 3vw, 35px);
+    margin: 13px 0 10px;
+
+    color: white;
+
+    font-size: clamp(25px, 3vw, 35px);
+    font-weight: 900;
+    letter-spacing: -0.7px;
+}
+
+.welcome-banner h1 span {
+    color: #c6afff;
 }
 
 .welcome-banner p {
-    color: #9174a5;
+    margin: 0;
+
+    color: #d2cedc;
     font-size: 14px;
 }
 
 .welcome-character {
     position: absolute;
     z-index: 1;
-    right: 8%;
-    bottom: -70px;
-    width: 240px;
-    max-height: 320px;
+
+    right: 42px;
+    bottom: -18px;
+
+    width: 210px;
+    height: 215px;
+
     object-fit: cover;
-    object-position: top;
-    border: 8px solid rgba(255,255,255,.72);
-    border-radius: 22px;
-    transform: rotate(7deg);
-    box-shadow: 0 12px 26px rgba(100,67,133,.13);
+    object-position: center 24%;
+
+    border: 4px solid #5d4b78;
+    border-radius: 14px;
+
+    transform: rotate(2deg);
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
 .welcome-stamp {
-    position: absolute;
-    z-index: 4;
-    right: 18px;
-    top: 22px;
-    padding: 9px 13px;
-    border: 2px dashed #ac8bc0;
-    border-radius: 50%;
-    color: #936daf;
-    font-size: 11px;
-    font-weight: bold;
-    transform: rotate(12deg);
+    display: none;
 }
 
-/* 불규칙한 크기의 카드 */
+/* ================================
+   06. DASHBOARD GRID
+================================ */
 
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 21px;
+
+    grid-template-columns: repeat(
+        3,
+        minmax(0, 1fr)
+    );
+
+    gap: 20px;
     align-items: stretch;
 }
 
 .widget {
     position: relative;
+
     min-width: 0;
     padding: 24px;
+
     overflow: hidden;
-    background: rgba(255,255,255,.94);
-    border: 1px solid #e6d8ee;
-    border-radius: 22px;
-    box-shadow: 0 7px 25px rgba(105,75,135,.07);
+
+    background: var(--card);
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+    box-shadow: var(--shadow);
 }
 
 .widget-title {
-    position: relative;
-    z-index: 2;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 18px;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+
+    border-bottom: 1px solid var(--border);
 }
 
 .widget-title h2 {
     margin: 0;
-    color: #71538c;
+
+    color: var(--text);
+
     font-size: 18px;
+    font-weight: 850;
+    letter-spacing: -0.4px;
 }
 
 .widget-title span {
-    color: #b59ec3;
+    color: var(--text-muted);
+
     font-size: 10px;
+    font-weight: 800;
     letter-spacing: 1px;
-}
-
-/* 일정: 가로 2칸 */
-
-.calendar-widget {
-    grid-column: span 2;
-    min-height: 290px;
-    padding-right: 130px;
-}
-
-.week-days,
-.week-dates {
-    display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 7px;
-    text-align: center;
-}
-
-.week-days div {
-    color: #a48ab5;
-    font-size: 12px;
-    padding: 8px 0;
-}
-
-.week-dates div {
-    padding: 13px 0;
-    color: #806394;
-    background: #f6effa;
-    border-radius: 10px;
-    font-size: 13px;
-}
-
-.week-dates div.today {
-    color: white;
-    background: #a884c4;
-    font-weight: bold;
-}
-
-.empty-calendar {
-    margin-top: 20px;
-    padding: 13px;
-    border-radius: 11px;
-    background: #faf5fd;
-    color: #a18bae;
-    font-size: 13px;
 }
 
 .widget-note {
     position: relative;
     z-index: 2;
-    color: #aa98b7;
-    font-size: 11px;
+
+    color: var(--text-muted);
+
+    font-size: 12px;
     line-height: 1.7;
 }
 
-.calendar-sticker {
-    position: absolute;
-    right: 13px;
-    bottom: 22px;
-    width: 100px;
-    height: 125px;
-    padding: 5px;
-    background: white;
-    border-radius: 11px;
-    object-fit: cover;
-    transform: rotate(9deg);
-    box-shadow: 0 8px 19px rgba(94,59,127,.16);
+/* ================================
+   07. FORM CONTROLS
+================================ */
+
+.widget label,
+.widget label strong {
+    color: var(--text-secondary);
+    font-weight: 700;
 }
 
-/* 시계: 세로 1칸 */
+.widget input:not([type="checkbox"]):not([type="hidden"]),
+.widget select,
+.widget textarea {
+    width: 100%;
+    min-width: 0;
+
+    padding: 11px 12px;
+
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+
+    border-radius: 9px;
+    color: var(--text);
+
+    font-size: 13px;
+    outline: none;
+}
+
+.widget input::placeholder,
+.widget textarea::placeholder {
+    color: var(--text-muted);
+}
+
+.widget input:focus,
+.widget select:focus,
+.widget textarea:focus {
+    border-color: var(--border-active);
+
+    box-shadow:
+            0 0 0 3px rgba(130, 92, 240, 0.17);
+}
+
+.widget select option {
+    background: var(--card-inner);
+    color: white;
+}
+
+.widget input[type="date"],
+.widget input[type="time"] {
+    color-scheme: dark;
+}
+
+/* ================================
+   08. CALENDAR
+================================ */
+
+.calendar-widget {
+    grid-column: span 2;
+
+    min-height: 350px;
+    padding-right: 24px;
+
+    border-top: 3px solid var(--primary);
+}
+
+.calendar-widget .widget-title h2 {
+    color: #d1c1ff;
+}
+
+.week-days,
+.week-dates {
+    display: grid;
+
+    grid-template-columns: repeat(
+        7,
+        minmax(0, 1fr)
+    );
+
+    gap: 7px;
+    text-align: center;
+}
+
+.week-days div {
+    padding: 8px 0;
+
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.week-dates div {
+    padding: 12px 0;
+
+    background: var(--card-inner);
+    border-radius: 9px;
+
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.week-dates div.today {
+    background: var(--primary);
+    color: white;
+    font-weight: 800;
+}
+
+.empty-calendar {
+    margin-top: 18px;
+    padding: 14px;
+
+    border-radius: 10px;
+
+    background: var(--card-inner);
+    color: var(--text-secondary);
+}
+
+.calendar-sticker {
+    display: none;
+}
+
+/* ================================
+   09. SCHEDULE CALENDAR
+================================ */
+
+.calendar-widget .schedule-navigation {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.calendar-widget #scheduleWeekHeading {
+    margin-right: auto;
+
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.calendar-widget .schedule-navigation button {
+    padding: 8px 11px;
+
+    background: var(--card-inner);
+    border: 1px solid var(--border);
+
+    border-radius: 9px;
+    color: var(--text-secondary);
+}
+
+.calendar-widget .schedule-navigation button:hover {
+    background: var(--primary-soft);
+    color: white;
+}
+
+.calendar-widget .schedule-days-label span {
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.calendar-widget .schedule-day {
+    position: relative;
+
+    min-height: 48px;
+
+    background: var(--card-inner);
+    border: 1px solid var(--border);
+
+    border-radius: 9px;
+
+    color: var(--text);
+    font-weight: 700;
+}
+
+.calendar-widget .schedule-day:hover {
+    background: #39324f;
+}
+
+.calendar-widget .schedule-day.today {
+    border: 2px solid #ad96ff;
+}
+
+.calendar-widget .schedule-day.selected {
+    background: var(--primary);
+    border-color: var(--primary-hover);
+
+    color: white;
+}
+
+.calendar-widget .schedule-day-count {
+    background: #47346e;
+    color: #eee5ff;
+}
+
+.calendar-widget .schedule-day.selected
+.schedule-day-count {
+    background: white;
+    color: #5d3aa9;
+}
+
+/* ================================
+   10. SCHEDULE EDITOR
+================================ */
+
+.calendar-widget .schedule-editor {
+    display: grid;
+    gap: 12px;
+
+    margin: 18px 0;
+    padding: 18px;
+
+    background: var(--card-inner);
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+}
+
+.calendar-widget .schedule-editor label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.calendar-widget .schedule-editor input,
+.calendar-widget .schedule-editor textarea {
+    background: var(--input-bg);
+    border-color: var(--border);
+    color: var(--text);
+}
+
+.calendar-widget .schedule-form-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.calendar-widget .schedule-form-actions button {
+    padding: 10px 14px;
+
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.calendar-widget #scheduleSave {
+    background: var(--primary);
+    border: 1px solid var(--primary);
+
+    color: white;
+}
+
+.calendar-widget #scheduleSave:hover {
+    background: var(--primary-hover);
+}
+
+.calendar-widget #scheduleCancel {
+    background: var(--card-hover);
+    border: 1px solid var(--border);
+
+    color: var(--text-secondary);
+}
+
+.calendar-widget .schedule-selected-heading {
+    margin: 15px 0 10px;
+
+    color: #d1c1ff;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.calendar-widget .schedule-status {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.calendar-widget .schedule-status.schedule-error {
+    color: var(--danger);
+}
+
+.calendar-widget .schedule-list {
+    display: grid;
+    gap: 10px;
+}
+
+.calendar-widget .schedule-item {
+    padding: 14px;
+
+    background: var(--card-inner);
+    border: 1px solid var(--border);
+
+    border-radius: 11px;
+}
+
+.calendar-widget .schedule-item-title {
+    color: var(--text);
+    font-size: 13px;
+}
+
+.calendar-widget .schedule-item-time {
+    color: #c3aeff;
+    font-size: 11px;
+}
+
+.calendar-widget .schedule-item-description {
+    color: var(--text-secondary);
+
+    font-size: 12px;
+    line-height: 1.7;
+
+    white-space: pre-wrap;
+}
+
+.calendar-widget .schedule-empty {
+    padding: 15px;
+
+    background: var(--card-inner);
+    border: 1px dashed var(--border);
+
+    border-radius: 10px;
+    color: var(--text-muted);
+}
+
+.calendar-widget .schedule-item-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.calendar-widget .schedule-item-actions button {
+    background: var(--card-hover);
+    border: 1px solid var(--border);
+
+    border-radius: 9px;
+
+    color: var(--text-secondary);
+}
+
+.calendar-widget .schedule-item-actions
+.schedule-delete {
+    background: #3b2837;
+    border-color: #694252;
+
+    color: var(--danger);
+}
+
+/* ================================
+   11. CLOCK
+================================ */
 
 .clock-widget {
-    min-height: 290px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(150deg, #e7d8f2, #d9c6ea);
+
+    min-height: 290px;
+
+    background: linear-gradient(
+            145deg,
+            #33264c,
+            #24212f
+    );
+
+    border: 1px solid #4e406b;
+
     text-align: center;
 }
 
+.clock-widget .widget-title {
+    width: 100%;
+    justify-content: center;
+}
+
+.clock-widget .widget-title h2 {
+    color: #e7dfff;
+}
+
 .clock-time {
-    color: #674a83;
-    font-size: clamp(27px, 3vw, 40px);
+    color: #ffffff;
+
+    font-size: clamp(29px, 3vw, 43px);
     font-weight: 900;
-    font-variant-numeric: tabular-nums;
+
     letter-spacing: 1px;
+    font-variant-numeric: tabular-nums;
 }
 
 .clock-date {
-    margin-top: 12px;
-    color: #8c70a2;
+    margin-top: 11px;
+
+    color: #d0c4e8;
     font-size: 13px;
 }
 
 .clock-stamp {
-    margin-top: 25px;
-    padding: 8px 16px;
-    border: 1px dashed #b293c7;
+    margin-top: 20px;
+    padding: 8px 15px;
+
+    background: var(--primary-soft);
+    border: 1px solid #65528d;
+
     border-radius: 30px;
-    color: #8d6fa4;
+
+    color: #ddd0ff;
     font-size: 11px;
+    font-weight: 750;
 }
 
-/* 메모: 가로 2칸 */
+/* ================================
+   12. MEMO
+================================ */
 
 .memo-widget {
     grid-column: span 2;
+
     min-height: 290px;
+    border-top: 3px solid var(--primary);
 }
 
-.memo-preview {
-    position: relative;
-    max-width: 470px;
-    min-height: 155px;
-    padding: 24px;
-    background: #fff0c8;
-    border-radius: 7px;
-    transform: rotate(-1deg);
-    box-shadow: 4px 7px 15px rgba(137,110,68,.11);
+.memo-widget .widget-title h2 {
+    color: #d1c1ff;
 }
 
-.memo-preview h3 {
-    margin: 0 0 13px;
-    color: #87714e;
+.memo-widget .memo-editor {
+    display: flex;
+    flex-direction: column;
+
+    gap: 11px;
+
+    margin-top: 14px;
+    padding: 18px;
+
+    background: var(--card-inner);
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
 }
 
-.memo-preview p {
-    color: #9d8767;
-    font-size: 13px;
+.memo-widget .memo-input,
+.memo-widget .memo-textarea {
+    background: var(--input-bg);
+    border-color: var(--border);
+
+    color: var(--text);
+}
+
+.memo-widget .memo-textarea {
+    min-height: 115px;
+
+    resize: vertical;
+    line-height: 1.7;
+}
+
+.memo-widget .memo-editor-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.memo-widget .memo-editor-actions button {
+    padding: 10px 14px;
+
+    border-radius: 9px;
+
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.memo-widget .memo-save-button {
+    background: var(--primary);
+    border: 1px solid var(--primary);
+
+    color: white;
+}
+
+.memo-widget .memo-save-button:hover {
+    background: var(--primary-hover);
+}
+
+.memo-widget .memo-cancel-button {
+    background: var(--card-hover);
+    border: 1px solid var(--border);
+
+    color: var(--text-secondary);
+}
+
+.memo-widget .memo-status {
+    min-height: 18px;
+
+    margin: 9px 0;
+
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.memo-widget .memo-status.memo-error {
+    color: var(--danger);
+}
+
+.memo-widget .memo-list-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 18px 0 12px;
+    gap: 10px;
+}
+
+.memo-widget .memo-list-heading h3 {
+    margin: 0;
+
+    color: var(--text);
+    font-size: 14px;
+}
+
+.memo-widget .memo-list-heading span {
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+.memo-widget .memo-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+    max-height: 350px;
+
+    overflow-y: auto;
+}
+
+.memo-widget .saved-memo {
+    padding: 14px;
+
+    background: var(--card-inner);
+    border: 1px solid var(--border);
+
+    border-radius: 11px;
+}
+
+.memo-widget .saved-memo-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.memo-widget .saved-memo-title {
+    margin: 0;
+
+    color: var(--text);
+    font-size: 14px;
+
+    overflow-wrap: anywhere;
+}
+
+.memo-widget .saved-memo-date {
+    color: var(--text-muted);
+    font-size: 10px;
+}
+
+.memo-widget .saved-memo-content {
+    margin: 10px 0 12px;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
     line-height: 1.8;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
 }
 
-.memo-pin {
-    position: absolute;
-    top: 12px;
-    right: 16px;
+.memo-widget .saved-memo-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
 }
 
-/* 날씨: 세로 1칸 */
+.memo-widget .saved-memo-actions button {
+    padding: 8px 12px;
+
+    border-radius: 9px;
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.memo-widget .memo-edit-button {
+    background: var(--primary-soft);
+    border: 1px solid #594788;
+
+    color: #d5c5ff;
+}
+
+.memo-widget .memo-delete-button {
+    background: #3b2837;
+    border: 1px solid #694252;
+
+    color: var(--danger);
+}
+
+.memo-widget .memo-empty {
+    padding: 17px;
+
+    background: var(--card-inner);
+    border: 1px dashed var(--border);
+
+    border-radius: 10px;
+
+    color: var(--text-muted);
+    font-size: 12px;
+
+    text-align: center;
+}
+
+/* ================================
+   13. WEATHER
+================================ */
 
 .weather-widget {
     min-height: 290px;
-    background: #fcfaff;
+    border-top: 3px solid var(--primary);
+}
+
+.weather-widget .widget-title h2 {
+    color: #d1c1ff;
 }
 
 .weather-location {
     margin: 0;
-    color: #967cad;
-    font-size: 12px;
-    font-weight: bold;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+    font-weight: 750;
 }
 
 .weather-main {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 13px;
-    margin: 18px 0;
+
+    gap: 14px;
+    margin: 24px 0;
 }
 
 .weather-icon {
@@ -401,68 +1070,78 @@ a {
 }
 
 .weather-temp {
-    font-size: 33px;
+    color: white;
+
+    font-size: 37px;
     font-weight: 900;
-    color: #72518d;
 }
 
 #weatherDescription {
+    color: var(--text-secondary);
     font-size: 12px;
-    color: #9b83ae;
 }
 
 .weather-details {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+
+    gap: 9px;
 }
 
 .weather-details div {
-    padding: 11px;
+    padding: 12px;
+
+    background: var(--card-inner);
+    border: 1px solid var(--border);
+
     border-radius: 10px;
-    background: #f1e8f8;
-    color: #947daa;
-    font-size: 11px;
+
+    color: var(--text-secondary);
+    font-size: 12px;
 }
 
 .weather-details strong {
     display: block;
+
     margin-top: 6px;
-    color: #795a97;
-    font-size: 16px;
+
+    color: #e0d4ff;
+    font-size: 17px;
 }
 
 .weather-updated,
 .weather-credit {
     display: block;
+
     margin-top: 12px;
-    color: #a998b5;
-    font-size: 10px;
+
+    color: var(--text-muted);
+    font-size: 11px;
 }
 
-/* 할 일: 가로 전체 */
-
-.todo-widget {
-    grid-column: span 3;
-    min-height: 155px;
-}
-
-.widget-empty {
-    padding: 17px;
-    border-radius: 11px;
-    background: #f9f4fc;
-    color: #aa94b8;
-    font-size: 13px;
-}
-
-/* 채팅: 가로 전체 */
+/* ================================
+   14. CHAT
+================================ */
 
 .chat-widget {
     grid-column: span 3;
+
     display: flex;
     align-items: center;
-    min-height: 175px;
-    background: linear-gradient(115deg, #fffaff, #e9dcf4);
+
+    min-height: 180px;
+
+    background: linear-gradient(
+            115deg,
+            #242235,
+            #1e202b
+    );
+
+    border-top: 3px solid var(--primary);
+}
+
+.chat-widget .widget-title h2 {
+    color: #d1c1ff;
 }
 
 .chat-copy {
@@ -471,78 +1150,134 @@ a {
 }
 
 .chat-copy p {
-    color: #9079a2;
+    color: var(--text-secondary);
     font-size: 13px;
 }
 
 .coming-soon {
     display: inline-block;
-    margin-top: 13px;
-    padding: 10px 14px;
-    border-radius: 10px;
-    background: #d9c3ea;
-    color: #71518a;
+
+    margin-top: 12px;
+    padding: 9px 14px;
+
+    background: var(--primary-soft);
+    border: 1px solid #594788;
+
+    border-radius: 9px;
+
+    color: #d5c5ff;
+
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 750;
 }
 
 .chat-decoration {
-    position: absolute;
-    right: 28px;
-    top: 12px;
-    width: 125px;
-    height: 145px;
-    object-fit: cover;
-    border: 6px solid white;
-    border-radius: 15px;
-    transform: rotate(8deg);
+    display: none;
 }
 
-/* 마지막 풍경 사진 */
+/* ================================
+   15. BOTTOM PHOTO
+================================ */
 
 .bottom-photo {
     display: flex;
     align-items: center;
+
     gap: 22px;
+
     margin-top: 24px;
-    padding: 15px;
-    border: 1px solid #e5d6ed;
-    border-radius: 20px;
-    background: #fffaff;
+    padding: 16px;
+
+    background: var(--card);
+    border: 1px solid var(--border);
+
+    border-radius: 15px;
 }
 
 .bottom-photo img {
-    width: 145px;
-    height: 95px;
-    border-radius: 12px;
+    width: 165px;
+    height: 105px;
+
     object-fit: cover;
+    border-radius: 10px;
 }
 
 .bottom-photo span {
-    color: #ad93bf;
+    color: #bdaaff;
+
     font-size: 11px;
+    font-weight: 800;
     letter-spacing: 2px;
 }
 
 .bottom-photo p {
-    color: #816398;
+    margin: 6px 0 0;
+
+    color: var(--text);
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 750;
 }
+
+/* ================================
+   16. FOOTER
+================================ */
 
 .workspace-footer {
     padding: 25px;
+
+    color: var(--text-muted);
+
     text-align: center;
-    color: #ae9db9;
     font-size: 11px;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
 }
 
-/* 태블릿 */
+/* ================================
+   17. PAGE ARROWS
+================================ */
+
+.workspace-page-arrow {
+    background: var(--card) !important;
+
+    border: 1px solid var(--border) !important;
+    color: #d9caff !important;
+
+    box-shadow:
+            0 8px 25px rgba(0,0,0,.25) !important;
+}
+
+.workspace-page-arrow:hover {
+    background: var(--primary-soft) !important;
+    border-color: var(--primary) !important;
+}
+
+/* ================================
+   18. FOCUS STATES
+================================ */
+
+.widget button:focus-visible,
+.widget input:focus-visible,
+.widget textarea:focus-visible,
+.widget select:focus-visible,
+.sidebar a:focus-visible,
+.sidebar button:focus-visible {
+    outline: 2px solid #ae97ff;
+    outline-offset: 3px;
+}
+
+/* ================================
+   19. TABLET
+================================ */
 
 @media (max-width: 1100px) {
+
     .sidebar {
         width: 190px;
+        min-width: 190px;
+    }
+
+    .sidebar-photo {
+        height: 150px;
     }
 
     .workspace-main {
@@ -550,26 +1285,29 @@ a {
     }
 
     .calendar-widget {
-        padding-right: 24px;
+        padding-right: 22px;
     }
 
-    .calendar-sticker {
-        display: none;
-    }
 }
 
-/* 모바일 */
+/* ================================
+   20. MOBILE
+================================ */
 
 @media (max-width: 760px) {
+
     .workspace-layout {
         display: block;
     }
 
     .sidebar {
         position: static;
+
         width: 100%;
+        min-width: 0;
         height: auto;
-        padding: 18px;
+
+        padding: 17px;
     }
 
     .sidebar-photo,
@@ -580,16 +1318,19 @@ a {
     .sidebar-menu {
         flex-direction: row;
         flex-wrap: wrap;
-        margin-top: 18px;
+
+        margin-top: 12px;
     }
 
     .sidebar-menu a {
-        padding: 10px;
+        min-height: 40px;
+
+        padding: 9px 11px;
         font-size: 12px;
     }
 
     .logout-form {
-        margin-top: 12px;
+        margin-top: 14px;
     }
 
     .workspace-main {
@@ -597,220 +1338,82 @@ a {
     }
 
     .welcome-banner {
-        min-height: 185px;
-        padding: 23px;
+        min-height: 190px;
+        padding: 22px;
     }
 
     .welcome-copy {
-        max-width: 75%;
+        max-width: 70%;
+    }
+
+    .welcome-banner h1 {
+        font-size: 23px;
     }
 
     .welcome-character {
-        right: -15px;
-        bottom: -35px;
-        width: 125px;
-        height: 155px;
-    }
+        right: -8px;
+        bottom: -10px;
 
-    .welcome-stamp {
-        display: none;
+        width: 120px;
+        height: 145px;
     }
 
     .dashboard-grid {
         grid-template-columns: 1fr;
-        gap: 14px;
+        gap: 15px;
     }
 
     .calendar-widget,
     .clock-widget,
     .memo-widget,
     .weather-widget,
-    .todo-widget,
     .chat-widget {
         grid-column: span 1;
     }
 
     .widget {
-        padding: 20px;
+        padding: 18px;
+    }
+
+    .calendar-widget {
+        min-height: 270px;
+        padding-right: 18px;
     }
 
     .clock-widget {
         min-height: 180px;
     }
 
-    .chat-decoration {
-        width: 75px;
-        height: 100px;
-        right: 8px;
-    }
-
-    .chat-copy {
-        max-width: 75%;
-    }
-
     .bottom-photo img {
-        width: 100px;
-        height: 80px;
+        width: 110px;
+        height: 85px;
     }
+
+}
+
+@media (max-width: 420px) {
+
+    .widget-title h2 {
+        font-size: 16px;
+    }
+
+    .schedule-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .welcome-banner h1 {
+        font-size: 21px;
+    }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {
         scroll-behavior: auto !important;
-    }
-}
-
-/* ========================================
-   페른 사진 확대 및 배치 개선
-   기존 CSS 맨 아래에 추가
-======================================== */
-
-/* 1.png : 상단 환영 배너 메인 사진 확대 */
-.welcome-banner {
-    min-height: 330px;
-    padding: 40px 45px;
-}
-
-.welcome-copy {
-    max-width: 54%;
-}
-
-.welcome-character {
-    right: 5%;
-    bottom: -35px;
-
-    width: 320px;
-    height: 290px;
-    max-height: none;
-
-    object-fit: cover;
-    object-position: center 28%;
-
-    border: 8px solid white;
-    border-radius: 22px;
-    transform: rotate(5deg);
-}
-
-/* 2.png : 왼쪽 사이드바 사진 확대 */
-.sidebar-photo {
-    width: 165px;
-    height: 200px;
-    margin-top: 35px;
-    border-radius: 18px;
-}
-
-.sidebar-photo img {
-    object-fit: cover;
-    object-position: center 22%;
-}
-
-/* 3.png : 달력 옆 사진 확대 */
-.calendar-widget {
-    min-height: 350px;
-    padding-right: 175px;
-}
-
-.calendar-sticker {
-    display: block;
-    width: 145px;
-    height: 190px;
-    right: 15px;
-    bottom: 35px;
-    object-fit: cover;
-    object-position: center 20%;
-}
-
-/* 4.png : 채팅방 사진 확대 */
-.chat-widget {
-    min-height: 260px;
-    padding-right: 230px;
-}
-
-.chat-decoration {
-    width: 195px;
-    height: 225px;
-    top: 18px;
-    right: 25px;
-
-    object-fit: cover;
-    object-position: center;
-}
-
-/* 5.png : 하단 풍경 사진 확대 */
-.bottom-photo {
-    min-height: 200px;
-    padding: 18px;
-    gap: 28px;
-}
-
-.bottom-photo img {
-    width: 260px;
-    height: 165px;
-    object-fit: cover;
-    object-position: center;
-}
-
-/* 태블릿 */
-@media (max-width: 1100px) {
-    .calendar-widget {
-        padding-right: 25px;
+        transition: none !important;
     }
 
-    .calendar-sticker {
-        display: none;
-    }
-
-    .welcome-character {
-        width: 235px;
-        height: 250px;
-    }
-
-    .chat-decoration {
-        width: 155px;
-        height: 195px;
-    }
 }
-
-/* 모바일 */
-@media (max-width: 760px) {
-    .welcome-banner {
-        min-height: 230px;
-        padding: 22px;
-    }
-
-    .welcome-copy {
-        max-width: 65%;
-    }
-
-    .welcome-character {
-        right: -10px;
-        bottom: -15px;
-        width: 130px;
-        height: 190px;
-    }
-
-    .calendar-widget {
-        min-height: 270px;
-        padding-right: 20px;
-    }
-
-    .chat-widget {
-        min-height: 210px;
-        padding-right: 110px;
-    }
-
-    .chat-decoration {
-        width: 100px;
-        height: 140px;
-        right: 10px;
-        top: 30px;
-    }
-
-    .bottom-photo img {
-        width: 145px;
-        height: 115px;
-    }
-}
-
