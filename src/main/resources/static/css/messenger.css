@@ -1,0 +1,711 @@
+
+/* ==========================================
+   MY WORLD | MESSENGER
+   DARK MODERN PURPLE
+========================================== */
+
+:root {
+    color-scheme: dark;
+
+    --bg: #101118;
+    --card: #1e202b;
+    --card-inner: #272a37;
+    --input: #171923;
+
+    --border: #373a4b;
+
+    --primary: #825cf0;
+    --primary-hover: #9878fa;
+    --primary-soft: #352c50;
+
+    --text: #f4f3f8;
+    --secondary: #c5c3d2;
+    --muted: #a5a3b7;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+
+    background: var(--bg);
+    color: var(--text);
+
+    font-family:
+            "Pretendard",
+            "Malgun Gothic",
+            sans-serif;
+
+    line-height: 1.6;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.sr-only {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+    margin: -1px;
+
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+
+    white-space: nowrap;
+    border: 0;
+}
+
+/* 전체 영역 */
+
+.messenger-page {
+    max-width: 1500px;
+    min-height: 100vh;
+
+    margin: 0 auto;
+    padding: 0 32px;
+}
+
+/* 헤더 */
+
+.messenger-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    min-height: 82px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.header-brand,
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.brand-link {
+    color: #e0d5ff;
+
+    font-size: 19px;
+    font-weight: 900;
+    letter-spacing: 1px;
+
+    text-decoration: none;
+}
+
+.header-divider {
+    color: #6d687c;
+}
+
+.header-current {
+    color: var(--secondary);
+
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+}
+
+.my-name {
+    color: var(--secondary);
+    font-size: 13px;
+}
+
+.workspace-link {
+    padding: 9px 14px;
+
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    color: var(--text);
+
+    font-size: 12px;
+    font-weight: 750;
+    text-decoration: none;
+}
+
+.workspace-link:hover {
+    background: var(--primary-soft);
+    border-color: var(--primary);
+}
+
+/* 페이지 제목 */
+
+.page-intro {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 30px 0 24px;
+}
+
+.eyebrow {
+    margin: 0;
+
+    color: #bba4ff;
+
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: 1.4px;
+}
+
+.page-intro h1 {
+    margin: 8px 0;
+
+    font-size: 29px;
+    font-weight: 900;
+}
+
+.page-description {
+    margin: 0;
+
+    color: var(--secondary);
+    font-size: 13px;
+}
+
+.development-label {
+    padding: 8px 12px;
+
+    background: var(--primary-soft);
+    border: 1px solid #594788;
+    border-radius: 9px;
+
+    color: #dbccff;
+
+    font-size: 11px;
+    font-weight: 750;
+
+    white-space: nowrap;
+}
+
+/* 메신저 메인 레이아웃 */
+
+.messenger-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(270px, 340px)
+        minmax(0, 1fr);
+
+    height: min(690px, calc(100vh - 240px));
+    min-height: 490px;
+
+    overflow: hidden;
+
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 17px;
+
+    box-shadow: 0 12px 32px rgba(0, 0, 0, .16);
+}
+
+/* 직원 목록 */
+
+.employee-panel {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+    min-height: 0;
+
+    border-right: 1px solid var(--border);
+}
+
+.employee-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 12px;
+    padding: 22px 20px 15px;
+}
+
+.employee-panel-header h2 {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: 17px;
+    font-weight: 850;
+}
+
+.employee-panel-header p {
+    margin: 4px 0 0;
+
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.employee-count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 29px;
+    height: 29px;
+    padding: 0 8px;
+
+    background: var(--primary-soft);
+    border-radius: 9px;
+
+    color: #dcd0ff;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.search-area {
+    padding: 0 17px 17px;
+}
+
+.search-area input {
+    width: 100%;
+
+    padding: 12px 13px;
+
+    background: var(--input);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    color: var(--text);
+
+    font-size: 13px;
+    outline: none;
+}
+
+.search-area input::placeholder {
+    color: var(--muted);
+}
+
+.search-area input:focus {
+    border-color: var(--primary);
+
+    box-shadow:
+            0 0 0 3px rgba(130, 92, 240, .16);
+}
+
+.employee-list {
+    flex: 1;
+    min-height: 0;
+
+    padding: 3px 11px 15px;
+
+    overflow-y: auto;
+}
+
+.employee-item {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+
+    gap: 12px;
+    margin-bottom: 6px;
+    padding: 13px 11px;
+
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 11px;
+
+    color: var(--text);
+    text-align: left;
+
+    transition:
+            background .2s,
+            border-color .2s;
+}
+
+.employee-item:hover {
+    background: var(--card-inner);
+}
+
+.employee-item.selected {
+    background: var(--primary-soft);
+    border-color: #5e4b8c;
+}
+
+.employee-avatar,
+.conversation-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 42px;
+    height: 42px;
+
+    background: #4b3b73;
+    border: 1px solid #68559a;
+    border-radius: 13px;
+
+    color: #fff;
+
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.employee-info {
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+    min-width: 0;
+}
+
+.employee-info strong {
+    color: var(--text);
+
+    font-size: 13px;
+    font-weight: 800;
+
+    overflow-wrap: anywhere;
+}
+
+.employee-info small {
+    color: var(--muted);
+    font-size: 11px;
+
+    overflow-wrap: anywhere;
+}
+
+.separator {
+    margin: 0 3px;
+}
+
+.employee-chevron {
+    color: var(--muted);
+    font-size: 23px;
+}
+
+.list-empty {
+    margin: 0;
+    padding: 18px;
+
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+}
+
+.employee-panel-footer {
+    padding: 16px 19px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* 대화 영역 */
+
+.conversation-panel {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+    min-height: 0;
+}
+
+.conversation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 15px;
+
+    min-height: 91px;
+    padding: 18px 23px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.conversation-person {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+    min-width: 0;
+}
+
+.conversation-person-info {
+    min-width: 0;
+}
+
+.conversation-person-info h2 {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: 16px;
+    font-weight: 850;
+
+    overflow-wrap: anywhere;
+}
+
+.conversation-person-info p {
+    margin: 3px 0 0;
+
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.conversation-status {
+    flex-shrink: 0;
+
+    color: #cdbdff;
+
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.conversation-body {
+    display: flex;
+    flex: 1;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 0;
+    padding: 24px;
+
+    overflow-y: auto;
+
+    background:
+            radial-gradient(
+                    circle at 50% 0,
+                    #252237,
+                    transparent 60%
+            ),
+            #1b1d27;
+}
+
+.conversation-empty {
+    max-width: 420px;
+    text-align: center;
+}
+
+.empty-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 68px;
+    height: 68px;
+
+    margin: 0 auto 17px;
+
+    background: var(--primary-soft);
+    border: 1px solid #594788;
+    border-radius: 19px;
+
+    color: #c9b7ff;
+    font-size: 36px;
+}
+
+.conversation-empty h3 {
+    margin: 0 0 10px;
+
+    color: var(--text);
+
+    font-size: 17px;
+}
+
+.conversation-empty p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+/* 메시지 입력 */
+
+.conversation-composer {
+    padding: 17px 23px;
+
+    border-top: 1px solid var(--border);
+}
+
+.conversation-composer textarea {
+    display: block;
+
+    width: 100%;
+    min-height: 75px;
+
+    padding: 13px;
+
+    background: var(--input);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+
+    color: var(--text);
+
+    resize: none;
+}
+
+.conversation-composer textarea:disabled {
+    opacity: .72;
+    cursor: not-allowed;
+}
+
+.conversation-composer textarea::placeholder {
+    color: var(--muted);
+}
+
+.composer-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+    margin-top: 11px;
+}
+
+.composer-actions p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+.composer-actions button {
+    min-width: 84px;
+
+    padding: 11px 17px;
+
+    background: var(--primary);
+    border: 0;
+    border-radius: 9px;
+
+    color: #fff;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.composer-actions button:disabled {
+    opacity: .55;
+}
+
+/* 푸터 */
+
+.messenger-footer {
+    padding: 24px;
+
+    color: var(--muted);
+
+    text-align: center;
+
+    font-size: 10px;
+    letter-spacing: 1.3px;
+}
+
+/* 반응형 */
+
+@media (max-width: 850px) {
+
+    .messenger-page {
+        padding: 0 17px;
+    }
+
+    .messenger-layout {
+        grid-template-columns: 265px minmax(0, 1fr);
+    }
+
+    .conversation-header {
+        padding: 14px;
+    }
+
+    .conversation-composer {
+        padding: 14px;
+    }
+
+}
+
+@media (max-width: 650px) {
+
+    .messenger-header {
+        flex-wrap: wrap;
+        padding: 17px 0;
+    }
+
+    .page-intro {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .messenger-layout {
+        grid-template-columns: 1fr;
+
+        height: auto;
+        min-height: 0;
+    }
+
+    .employee-panel {
+        height: 320px;
+
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .conversation-panel {
+        height: 460px;
+    }
+
+    .conversation-header {
+        min-height: 80px;
+    }
+
+    .composer-actions {
+        align-items: flex-end;
+    }
+
+    .composer-actions p {
+        max-width: 65%;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+    }
+
+}
