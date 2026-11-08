@@ -11,10 +11,17 @@
 
     <title>사내 메신저 | MY WORLD</title>
 
+    <!-- 기존 메신저 디자인 -->
     <link rel="stylesheet"
           th:href="@{/css/messenger.css}"
           href="/css/messenger.css">
 
+    <!-- 실제 메시지 디자인 -->
+    <link rel="stylesheet"
+          th:href="@{/css/chat-live.css}"
+          href="/css/chat-live.css">
+
+    <!-- 채팅 기능 -->
     <script
             th:src="@{/js/messenger.js}"
             src="/js/messenger.js"
@@ -30,17 +37,21 @@
     <header class="messenger-header">
 
         <div class="header-brand">
+
             <a th:href="@{/workspace}"
                href="/workspace"
                class="brand-link">
                 MY WORLD
             </a>
 
-            <span class="header-divider">/</span>
+            <span class="header-divider">
+                /
+            </span>
 
             <span class="header-current">
                 MESSENGER
             </span>
+
         </div>
 
         <div class="header-actions">
@@ -55,14 +66,16 @@
                href="/workspace">
                 Workspace
             </a>
+
         </div>
 
     </header>
 
-    <!-- 타이틀 -->
+    <!-- 페이지 제목 -->
     <section class="page-intro">
 
         <div>
+
             <p class="eyebrow">
                 COMMUNICATION / EMPLOYEES
             </p>
@@ -70,12 +83,13 @@
             <h1>사내 메신저</h1>
 
             <p class="page-description">
-                사내 직원을 검색하고 대화 상대를 선택할 수 있습니다.
+                사내 직원과 메시지를 주고받을 수 있습니다.
             </p>
+
         </div>
 
         <span class="development-label">
-            메시지 기능 준비 중
+            1:1 채팅
         </span>
 
     </section>
@@ -83,17 +97,19 @@
     <!-- 메신저 본문 -->
     <main class="messenger-layout">
 
-        <!-- 직원 목록 영역 -->
+        <!-- 직원 목록 -->
         <aside class="employee-panel">
 
             <div class="employee-panel-header">
 
                 <div>
+
                     <h2>직원 목록</h2>
 
                     <p>
                         승인된 회원을 기준으로 표시합니다.
                     </p>
+
                 </div>
 
                 <span class="employee-count"
@@ -119,7 +135,7 @@
 
             </div>
 
-            <!-- DB에서 조회한 실제 직원 목록 -->
+            <!-- 직원 목록 -->
             <div class="employee-list"
                  id="employeeList">
 
@@ -138,12 +154,14 @@
 
                     <span class="employee-avatar"
                           aria-hidden="true">
+
                         <span
                                 th:text="${#strings.substring(
                                 employee.nickname, 0, 1
                             )}">
                             직
                         </span>
+
                     </span>
 
                     <span class="employee-info">
@@ -154,6 +172,7 @@
                         </strong>
 
                         <small>
+
                             <span
                                     th:text="${employee.departmentName}">
                                 개발팀
@@ -165,6 +184,7 @@
                                     th:text="${employee.position}">
                                 사원
                             </span>
+
                         </small>
 
                     </span>
@@ -195,10 +215,10 @@
 
         </aside>
 
-        <!-- 채팅 영역 -->
+        <!-- 채팅 내용 -->
         <section class="conversation-panel">
 
-            <!-- 채팅 상단 -->
+            <!-- 선택된 직원 정보 -->
             <div class="conversation-header">
 
                 <div class="conversation-person">
@@ -230,32 +250,31 @@
 
             </div>
 
-            <!-- 메시지 영역 -->
+            <!-- 대화 메시지 표시 영역 -->
             <div class="conversation-body"
                  id="conversationBody">
 
-                <div class="conversation-empty"
-                     id="conversationEmpty">
+                <div class="conversation-empty">
 
                     <div class="empty-icon"
                          aria-hidden="true">
                         ◇
                     </div>
 
-                    <h3 id="conversationEmptyTitle">
-                        새로운 대화를 시작해 보세요
+                    <h3>
+                        새로운 대화를 시작하세요
                     </h3>
 
-                    <p id="conversationEmptyDescription">
-                        왼쪽 직원 목록에서 상대방을 선택하면
-                        대화 화면을 확인할 수 있습니다.
+                    <p>
+                        왼쪽 직원 목록에서 상대방을
+                        선택하면 대화가 열립니다.
                     </p>
 
                 </div>
 
             </div>
 
-            <!-- 입력 영역 -->
+            <!-- 메시지 입력 -->
             <div class="conversation-composer">
 
                 <label for="messageInput"
@@ -266,14 +285,14 @@
                 <textarea
                         id="messageInput"
                         rows="2"
-                        placeholder="메시지 전송 기능은 다음 단계에서 활성화됩니다."
+                        maxlength="2000"
+                        placeholder="먼저 대화 상대를 선택하세요."
                         disabled></textarea>
 
                 <div class="composer-actions">
 
                     <p>
-                        실시간 채팅과 대화 기록 저장 기능은
-                        아직 연결되지 않았습니다.
+                        직원 목록에서 상대방을 선택하세요.
                     </p>
 
                     <button

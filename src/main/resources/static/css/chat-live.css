@@ -1,0 +1,137 @@
+
+/* ==========================================
+   MY WORLD | LIVE CHAT EXTENSION
+
+   Existing messenger.css remains unchanged.
+========================================== */
+
+.conversation-body.has-messages {
+    display: block;
+    padding: 24px;
+
+    overflow-y: auto;
+
+    background:
+            radial-gradient(
+                    circle at 50% 0,
+                    #252237,
+                    transparent 60%
+            ),
+            #1b1d27;
+}
+
+.chat-message-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+
+    width: 100%;
+    min-height: 100%;
+    padding-bottom: 8px;
+}
+
+.chat-message-row {
+    display: flex;
+    width: 100%;
+}
+
+.chat-message-row.mine {
+    justify-content: flex-end;
+}
+
+.chat-message-row.theirs {
+    justify-content: flex-start;
+}
+
+.chat-bubble {
+    max-width: min(75%, 480px);
+    padding: 12px 15px;
+
+    background: #303343;
+    border: 1px solid #434657;
+    border-radius: 14px;
+
+    color: #f4f3f8;
+
+    overflow-wrap: anywhere;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, .08);
+}
+
+.chat-message-row.mine .chat-bubble {
+    background: #674ad0;
+    border-color: #795fe3;
+    border-bottom-right-radius: 4px;
+}
+
+.chat-message-row.theirs .chat-bubble {
+    border-bottom-left-radius: 4px;
+}
+
+.chat-sender {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #d1c1ff;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.chat-content {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 13px;
+    line-height: 1.75;
+
+    white-space: pre-wrap;
+}
+
+.chat-time {
+    display: block;
+
+    margin-top: 6px;
+
+    color: #aba7bd;
+
+    font-size: 10px;
+    text-align: right;
+}
+
+.chat-message-row.mine .chat-time {
+    color: #e1d9ff;
+}
+
+.conversation-composer textarea:not(:disabled) {
+    cursor: text;
+    opacity: 1;
+}
+
+.conversation-composer textarea:not(:disabled):focus {
+    outline: none;
+
+    border-color: #825cf0;
+
+    box-shadow:
+            0 0 0 3px rgba(130, 92, 240, .16);
+}
+
+.composer-actions button:not(:disabled):hover {
+    background: #9878fa;
+}
+
+@media (max-width: 650px) {
+
+    .conversation-body.has-messages {
+        padding: 15px;
+    }
+
+    .chat-bubble {
+        max-width: 87%;
+        padding: 10px 12px;
+    }
+
+}
