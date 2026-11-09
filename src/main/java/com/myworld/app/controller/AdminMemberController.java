@@ -8,6 +8,7 @@ import com.myworld.app.service.AdminMemberService;
 
 import jakarta.servlet.http.HttpSession;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/admin/members")
@@ -30,7 +32,9 @@ public class AdminMemberController {
 
     private final AdminMemberService adminMemberService;
     private final DepartmentRepository departmentRepository;
-    private final SecureRandom secureRandom = new SecureRandom();
+
+    private final SecureRandom secureRandom =
+            new SecureRandom();
 
     public AdminMemberController(
             AdminMemberService adminMemberService,
@@ -40,9 +44,9 @@ public class AdminMemberController {
         this.departmentRepository = departmentRepository;
     }
 
-    // =========================================
-    // 관리자 회원 관리 페이지
-    // =========================================
+    // =====================================
+    // 관리자 화면
+    // =====================================
 
     @GetMapping
     public String membersPage(
@@ -83,6 +87,11 @@ public class AdminMemberController {
         );
 
         model.addAttribute(
+                "memberCount",
+                allMembers.size()
+        );
+
+        model.addAttribute(
                 "csrfToken",
                 getOrCreateCsrfToken(session)
         );
@@ -90,9 +99,98 @@ public class AdminMemberController {
         return "admin-members";
     }
 
-    // =========================================
-    // 회원 가입 승인
-    // =========================================
+    // =====================================
+    // 부서 등록
+    // =====================================
+
+    @PostMapping("/departments")
+    public String createDepartment(
+            @RequestParam String code,
+            @RequestParam String name,
+            @RequestParam String csrfToken,
+            HttpSession session,
+            RedirectAttributes redirectAttributes
+    ) {
+
+        Long adminId = getAdminId(session);
+
+        validateCsrfToken(session, csrfToken);
+
+        // 요청 처리 시점에도 관리자 재검증
+        adminMemberService.requireAdmin(adminId);
+
+        try {
+
+            String validCode = code == null
+                    ? ""
+                    : code.trim()
+                    .toUpperCase(Locale.ROOT);
+
+            String validName = name == null
+                    ? ""
+                    : name.trim();
+
+            if (!validCode.matches("[A-Z0-9_]{2,30}")) {
+                throw new IllegalArgumentException(
+                        "부서 코드는 영문 대문자, 숫자, " +
+                                "밑줄을 사용해 2~30자로 입력해주세요."
+                );
+            }
+
+            if (validName.isBlank()
+                    || validName.length() > 100) {
+
+                throw new IllegalArgumentException(
+                        "부서명은 1~100자로 입력해주세요."
+                );
+            }
+
+            if (departmentRepository.existsByCode(
+                    validCode
+            )) {
+
+                throw new IllegalArgumentException(
+                        "이미 등록된 부서 코드입니다."
+                );
+            }
+
+            Department department =
+                    new Department(
+                            validCode,
+                            validName
+                    );
+
+            departmentRepository.saveAndFlush(
+                    department
+            );
+
+            redirectAttributes.addFlashAttribute(
+                    "success",
+                    "부서가 등록되었습니다."
+            );
+
+        } catch (IllegalArgumentException e) {
+
+            redirectAttributes.addFlashAttribute(
+                    "error",
+                    e.getMessage()
+            );
+
+        } catch (DataIntegrityViolationException e) {
+
+            redirectAttributes.addFlashAttribute(
+                    "error",
+                    "부서 등록에 실패했습니다. " +
+                            "중복된 코드가 있는지 확인해주세요."
+            );
+        }
+
+        return "redirect:/admin/members";
+    }
+
+    // =====================================
+    // 회원 승인
+    // =====================================
 
     @PostMapping("/{memberId}/approve")
     public String approveMember(
@@ -105,6 +203,7 @@ public class AdminMemberController {
     ) {
 
         Long adminId = getAdminId(session);
+
         validateCsrfToken(session, csrfToken);
 
         try {
@@ -132,39 +231,43 @@ public class AdminMemberController {
         return "redirect:/admin/members";
     }
 
-    // =========================================
-    // 관리자 세션 및 권한 확인
-    // =========================================
+    // =====================================
+    // 로그인 및 관리자 권한 확인
+    // =====================================
 
     private Long getAdminId(HttpSession session) {
 
-        Object memberId =
+        Object value =
                 session.getAttribute("loginMemberId");
 
-        if (!(memberId instanceof Long)) {
+        if (!(value instanceof Long adminId)) {
+
             throw new ResponseStatusException(
                     HttpStatus.UNAUTHORIZED,
                     "로그인이 필요합니다."
             );
         }
 
-        Long adminId = (Long) memberId;
-
         try {
-            adminMemberService.requireAdmin(adminId);
+
+            adminMemberService.requireAdmin(
+                    adminId
+            );
+
         } catch (SecurityException e) {
+
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
-                    "관리자 권한이 필요합니다."
+                    "관리자 권한이 없습니다."
             );
         }
 
         return adminId;
     }
 
-    // =========================================
-    // 관리자 페이지 CSRF 토큰 생성
-    // =========================================
+    // =====================================
+    // CSRF 토큰 생성
+    // =====================================
 
     private String getOrCreateCsrfToken(
             HttpSession session
@@ -175,10 +278,12 @@ public class AdminMemberController {
 
         if (existing instanceof String token
                 && !token.isBlank()) {
+
             return token;
         }
 
         byte[] bytes = new byte[32];
+
         secureRandom.nextBytes(bytes);
 
         String token = Base64.getUrlEncoder()
@@ -193,19 +298,19 @@ public class AdminMemberController {
         return token;
     }
 
-    // =========================================
-    // 관리자 작업 요청 검증
-    // =========================================
+    // =====================================
+    // CSRF 토큰 검사
+    // =====================================
 
     private void validateCsrfToken(
             HttpSession session,
             String submittedToken
     ) {
 
-        Object expected =
+        Object value =
                 session.getAttribute(CSRF_SESSION_KEY);
 
-        if (!(expected instanceof String expectedToken)
+        if (!(value instanceof String expected)
                 || submittedToken == null) {
 
             throw new ResponseStatusException(
@@ -215,18 +320,18 @@ public class AdminMemberController {
         }
 
         byte[] expectedBytes =
-                expectedToken.getBytes(
+                expected.getBytes(
                         StandardCharsets.UTF_8
                 );
 
-        byte[] submittedBytes =
+        byte[] actualBytes =
                 submittedToken.getBytes(
                         StandardCharsets.UTF_8
                 );
 
         if (!MessageDigest.isEqual(
                 expectedBytes,
-                submittedBytes
+                actualBytes
         )) {
 
             throw new ResponseStatusException(
