@@ -566,6 +566,31 @@
                 grid-column: 1 / -1;
             }
         }
+        /* 관리자 전용 사이드바 메뉴 */
+
+        .admin-menu-link {
+            display: flex;
+            align-items: center;
+
+            margin-top: 12px;
+            padding: 12px 15px;
+
+            background: #352c50;
+            border: 1px solid #594788;
+            border-radius: 10px;
+
+            color: #d8c7ff;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+
+            transition: background 0.2s;
+        }
+
+        .admin-menu-link:hover {
+            background: #49396e;
+            color: #ffffff;
+        }
     </style>
 </head>
 
@@ -625,6 +650,17 @@
                href="/messenger">
                 사내 메신저
             </a>
+
+            <!-- 관리자 전용 메뉴 -->
+            <a th:if="${isAdmin}"
+               th:href="@{/admin/members}"
+               href="/admin/members"
+               class="admin-menu-link">
+
+                <span>관리자 페이지</span>
+
+            </a>
+
 
         </nav>
 
