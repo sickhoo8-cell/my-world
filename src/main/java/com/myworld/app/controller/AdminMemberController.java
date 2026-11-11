@@ -53,18 +53,27 @@ public class AdminMemberController {
             HttpSession session,
             Model model
     ) {
-
         Long adminId = getAdminId(session);
-
-        List<Member> pendingMembers =
-                adminMemberService.getPendingMembers(adminId);
 
         List<Member> allMembers =
                 adminMemberService.getAllMembers(adminId);
 
+        List<Member> pendingMembers =
+                allMembers.stream()
+                        .filter(Member::isPending)
+                        .toList();
+
         List<Department> departments =
                 departmentRepository
                         .findByActiveTrueOrderByNameAsc();
+
+        long activeCount = allMembers.stream()
+                .filter(Member::isApproved)
+                .count();
+
+        long suspendedCount = allMembers.stream()
+                .filter(Member::isSuspended)
+                .count();
 
         model.addAttribute(
                 "pendingMembers",
@@ -92,6 +101,21 @@ public class AdminMemberController {
         );
 
         model.addAttribute(
+                "activeCount",
+                activeCount
+        );
+
+        model.addAttribute(
+                "suspendedCount",
+                suspendedCount
+        );
+
+        model.addAttribute(
+                "loginAdminId",
+                adminId
+        );
+
+        model.addAttribute(
                 "csrfToken",
                 getOrCreateCsrfToken(session)
         );
@@ -111,16 +135,13 @@ public class AdminMemberController {
             HttpSession session,
             RedirectAttributes redirectAttributes
     ) {
-
         Long adminId = getAdminId(session);
 
         validateCsrfToken(session, csrfToken);
 
-        // 요청 처리 시점에도 관리자 재검증
         adminMemberService.requireAdmin(adminId);
 
         try {
-
             String validCode = code == null
                     ? ""
                     : code.trim()
@@ -139,7 +160,6 @@ public class AdminMemberController {
 
             if (validName.isBlank()
                     || validName.length() > 100) {
-
                 throw new IllegalArgumentException(
                         "부서명은 1~100자로 입력해주세요."
                 );
@@ -148,7 +168,6 @@ public class AdminMemberController {
             if (departmentRepository.existsByCode(
                     validCode
             )) {
-
                 throw new IllegalArgumentException(
                         "이미 등록된 부서 코드입니다."
                 );
@@ -170,14 +189,12 @@ public class AdminMemberController {
             );
 
         } catch (IllegalArgumentException e) {
-
             redirectAttributes.addFlashAttribute(
                     "error",
                     e.getMessage()
             );
 
         } catch (DataIntegrityViolationException e) {
-
             redirectAttributes.addFlashAttribute(
                     "error",
                     "부서 등록에 실패했습니다. " +
@@ -201,13 +218,11 @@ public class AdminMemberController {
             HttpSession session,
             RedirectAttributes redirectAttributes
     ) {
-
         Long adminId = getAdminId(session);
 
         validateCsrfToken(session, csrfToken);
 
         try {
-
             adminMemberService.approveMember(
                     adminId,
                     memberId,
@@ -221,7 +236,6 @@ public class AdminMemberController {
             );
 
         } catch (IllegalArgumentException e) {
-
             redirectAttributes.addFlashAttribute(
                     "error",
                     e.getMessage()
@@ -232,7 +246,79 @@ public class AdminMemberController {
     }
 
     // =====================================
-    // 로그인 및 관리자 권한 확인
+    // 신규: 회원 계정 정지
+    // =====================================
+
+    @PostMapping("/{memberId}/suspend")
+    public String suspendMember(
+            @PathVariable Long memberId,
+            @RequestParam String csrfToken,
+            HttpSession session,
+            RedirectAttributes redirectAttributes
+    ) {
+        Long adminId = getAdminId(session);
+
+        validateCsrfToken(session, csrfToken);
+
+        try {
+            adminMemberService.suspendMember(
+                    adminId,
+                    memberId
+            );
+
+            redirectAttributes.addFlashAttribute(
+                    "success",
+                    "회원 계정이 정지되었습니다."
+            );
+
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute(
+                    "error",
+                    e.getMessage()
+            );
+        }
+
+        return "redirect:/admin/members";
+    }
+
+    // =====================================
+    // 신규: 회원 계정 정지 해제
+    // =====================================
+
+    @PostMapping("/{memberId}/resume")
+    public String resumeMember(
+            @PathVariable Long memberId,
+            @RequestParam String csrfToken,
+            HttpSession session,
+            RedirectAttributes redirectAttributes
+    ) {
+        Long adminId = getAdminId(session);
+
+        validateCsrfToken(session, csrfToken);
+
+        try {
+            adminMemberService.resumeMember(
+                    adminId,
+                    memberId
+            );
+
+            redirectAttributes.addFlashAttribute(
+                    "success",
+                    "회원 계정 정지가 해제되었습니다."
+            );
+
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute(
+                    "error",
+                    e.getMessage()
+            );
+        }
+
+        return "redirect:/admin/members";
+    }
+
+    // =====================================
+    // 관리자 인증
     // =====================================
 
     private Long getAdminId(HttpSession session) {
@@ -241,7 +327,6 @@ public class AdminMemberController {
                 session.getAttribute("loginMemberId");
 
         if (!(value instanceof Long adminId)) {
-
             throw new ResponseStatusException(
                     HttpStatus.UNAUTHORIZED,
                     "로그인이 필요합니다."
@@ -249,13 +334,11 @@ public class AdminMemberController {
         }
 
         try {
-
             adminMemberService.requireAdmin(
                     adminId
             );
 
         } catch (SecurityException e) {
-
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
                     "관리자 권한이 없습니다."
@@ -272,13 +355,11 @@ public class AdminMemberController {
     private String getOrCreateCsrfToken(
             HttpSession session
     ) {
-
         Object existing =
                 session.getAttribute(CSRF_SESSION_KEY);
 
         if (existing instanceof String token
                 && !token.isBlank()) {
-
             return token;
         }
 
@@ -306,13 +387,11 @@ public class AdminMemberController {
             HttpSession session,
             String submittedToken
     ) {
-
         Object value =
                 session.getAttribute(CSRF_SESSION_KEY);
 
         if (!(value instanceof String expected)
                 || submittedToken == null) {
-
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
                     "유효하지 않은 요청입니다."
@@ -333,7 +412,6 @@ public class AdminMemberController {
                 expectedBytes,
                 actualBytes
         )) {
-
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
                     "유효하지 않은 요청입니다."

@@ -67,7 +67,6 @@ public class AdminMemberService {
     public List<Member> getPendingMembers(
             Long loginMemberId
     ) {
-
         requireAdmin(loginMemberId);
 
         return memberRepository
@@ -85,7 +84,6 @@ public class AdminMemberService {
     public List<Member> getAllMembers(
             Long loginMemberId
     ) {
-
         requireAdmin(loginMemberId);
 
         return memberRepository.findAll();
@@ -102,7 +100,6 @@ public class AdminMemberService {
             Long departmentId,
             String position
     ) {
-
         requireAdmin(loginMemberId);
 
         Member member = memberRepository
@@ -135,11 +132,7 @@ public class AdminMemberService {
 
         String validPosition = validatePosition(position);
 
-        // Member Entity에 만든 승인 메서드 사용
-        member.approve(
-                department,
-                validPosition
-        );
+        member.approve(department, validPosition);
     }
 
     // =========================================
@@ -152,7 +145,6 @@ public class AdminMemberService {
             Long memberId,
             Long departmentId
     ) {
-
         requireAdmin(loginMemberId);
 
         Member member = memberRepository
@@ -196,7 +188,6 @@ public class AdminMemberService {
             Long memberId,
             String position
     ) {
-
         requireAdmin(loginMemberId);
 
         Member member = memberRepository
@@ -227,7 +218,6 @@ public class AdminMemberService {
             Long loginMemberId,
             Long memberId
     ) {
-
         requireAdmin(loginMemberId);
 
         if (loginMemberId.equals(memberId)) {
@@ -244,7 +234,6 @@ public class AdminMemberService {
                         )
                 );
 
-        // 관리자 계정의 임의 정지 방지
         if ("ADMIN".equals(member.getRole())) {
             throw new IllegalArgumentException(
                     "관리자 계정은 이 화면에서 정지할 수 없습니다."
@@ -252,6 +241,34 @@ public class AdminMemberService {
         }
 
         member.suspend();
+    }
+
+    // =========================================
+    // 신규: 계정 정지 해제
+    // =========================================
+
+    @Transactional
+    public void resumeMember(
+            Long loginMemberId,
+            Long memberId
+    ) {
+        requireAdmin(loginMemberId);
+
+        Member member = memberRepository
+                .findById(memberId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException(
+                                "회원을 찾을 수 없습니다."
+                        )
+                );
+
+        if ("ADMIN".equals(member.getRole())) {
+            throw new IllegalArgumentException(
+                    "관리자 계정은 이 화면에서 변경할 수 없습니다."
+            );
+        }
+
+        member.resume();
     }
 
     // =========================================

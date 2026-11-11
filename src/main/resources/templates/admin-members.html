@@ -35,7 +35,6 @@
         body {
             margin: 0;
             min-height: 100vh;
-
             background: var(--bg);
             color: var(--text);
 
@@ -43,26 +42,22 @@
                     "Pretendard",
                     "Malgun Gothic",
                     sans-serif;
+
             line-height: 1.6;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
             padding: 30px 24px 70px;
         }
 
-        .topbar,
-        .heading,
-        .panel-title,
-        .summary-grid {
+        .topbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 16px;
-        }
 
-        .topbar {
             padding-bottom: 20px;
             border-bottom: 1px solid var(--border);
         }
@@ -82,8 +77,8 @@
 
             border: 1px solid var(--border);
             border-radius: 9px;
-            text-decoration: none;
 
+            text-decoration: none;
             font-size: 13px;
             font-weight: 700;
         }
@@ -99,7 +94,6 @@
 
         .eyebrow {
             margin: 0;
-
             color: #bda8ff;
             font-size: 11px;
             font-weight: 800;
@@ -118,14 +112,14 @@
         }
 
         .summary-grid {
-            justify-content: stretch;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
             margin-bottom: 22px;
         }
 
         .summary-card {
-            flex: 1;
-            padding: 23px;
-
+            padding: 22px;
             background: var(--panel);
             border: 1px solid var(--border);
             border-radius: 15px;
@@ -133,7 +127,6 @@
 
         .summary-card span {
             display: block;
-
             color: var(--muted);
             font-size: 12px;
         }
@@ -141,7 +134,6 @@
         .summary-card strong {
             display: block;
             margin-top: 8px;
-
             color: #dfd3ff;
             font-size: 30px;
             font-weight: 900;
@@ -157,6 +149,10 @@
         }
 
         .panel-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
             margin-bottom: 18px;
         }
 
@@ -170,29 +166,17 @@
             font-size: 11px;
         }
 
-        .department-form,
-        .approval-form {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .department-form {
-            justify-content: flex-start;
-        }
-
         input,
         select {
             min-height: 42px;
             padding: 10px 12px;
 
             background: var(--input);
-            border: 1px solid var(--border);
+            border: 1px solid #45495f;
             border-radius: 9px;
 
             color: var(--text);
+            font: inherit;
             font-size: 13px;
             outline: none;
         }
@@ -200,40 +184,22 @@
         input:focus,
         select:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px
-            rgba(130, 92, 240, .15);
+            box-shadow: 0 0 0 3px rgba(130, 92, 240, .15);
         }
 
         input::placeholder {
             color: var(--muted);
         }
 
-        .department-code {
-            width: 145px;
-        }
-
-        .department-name {
-            width: 230px;
-            max-width: 100%;
-        }
-
-        .position-input {
-            width: 120px;
-        }
-
-        .department-select {
-            width: 145px;
-        }
-
         button {
-            min-height: 42px;
-            padding: 10px 17px;
+            min-height: 40px;
+            padding: 9px 14px;
 
             background: var(--primary);
-            border: 0;
+            border: 1px solid var(--primary);
             border-radius: 9px;
 
-            color: white;
+            color: #fff;
             font-size: 12px;
             font-weight: 800;
             cursor: pointer;
@@ -248,6 +214,22 @@
             cursor: not-allowed;
         }
 
+        .department-form {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .department-code {
+            width: 145px;
+        }
+
+        .department-name {
+            width: 230px;
+            max-width: 100%;
+        }
+
         .department-list {
             display: flex;
             flex-wrap: wrap;
@@ -257,11 +239,9 @@
 
         .department-item {
             padding: 7px 11px;
-
             background: #352c50;
             border: 1px solid #594788;
             border-radius: 9px;
-
             color: #ddd0ff;
             font-size: 12px;
         }
@@ -285,6 +265,7 @@
         td {
             padding: 14px 11px;
             border-bottom: 1px solid var(--border);
+            font-size: 13px;
         }
 
         th {
@@ -295,11 +276,14 @@
 
         td {
             color: var(--secondary);
-            font-size: 13px;
         }
 
         td strong {
             color: var(--text);
+        }
+
+        tr:last-child td {
+            border-bottom: 0;
         }
 
         .member-username {
@@ -308,8 +292,20 @@
             font-size: 11px;
         }
 
-        tr:last-child td {
-            border-bottom: 0;
+        .approval-form {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .department-select {
+            width: 145px;
+        }
+
+        .position-input {
+            width: 120px;
         }
 
         .status {
@@ -323,6 +319,42 @@
             color: #dfd3ff;
             font-size: 11px;
             font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .status.pending {
+            background: #373348;
+        }
+
+        .status.suspended {
+            color: #f4a4b0;
+            border-color: #694252;
+            background: #3b2837;
+        }
+
+        .action-form {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .action-button {
+            background: #352c50;
+            border-color: #594788;
+            color: #d8c7ff;
+        }
+
+        .action-button:hover {
+            background: #49396e;
+        }
+
+        .action-button.suspend-button {
+            background: #3b2837;
+            border-color: #694252;
+            color: #f4a4b0;
+        }
+
+        .action-button.suspend-button:hover {
+            background: #533445;
         }
 
         .notice {
@@ -332,16 +364,22 @@
             font-size: 13px;
         }
 
-        .success {
+        .notice.success {
             color: #e5dcff;
             background: #352c50;
             border: 1px solid #67508f;
         }
 
-        .error {
+        .notice.error {
             color: #f4a4b0;
             background: #402a36;
             border: 1px solid #694252;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 370px;
+            margin-bottom: 16px;
         }
 
         .empty {
@@ -356,31 +394,23 @@
             font-size: 12px;
         }
 
-        @media (max-width: 760px) {
+        [hidden] {
+            display: none !important;
+        }
 
+        @media (max-width: 760px) {
             .container {
                 padding: 18px 13px 50px;
             }
 
-            .heading {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-
             .summary-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 10px;
             }
 
-            .summary-card {
-                padding: 17px;
-            }
-
+            .summary-card,
             .panel {
                 padding: 16px;
-            }
-
-            .approval-form {
-                min-width: 300px;
             }
 
             .department-form {
@@ -392,6 +422,14 @@
             .department-name {
                 width: 100%;
             }
+
+            .approval-form {
+                min-width: 300px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
@@ -400,35 +438,29 @@
 
 <main class="container">
 
-    <header class="topbar">
+    <!-- 상단 -->
 
-        <div class="brand">
-            MY WORLD
-        </div>
+    <header class="topbar">
+        <div class="brand">MY WORLD</div>
 
         <a class="back-link"
            th:href="@{/workspace}"
            href="/workspace">
             Workspace로 돌아가기
         </a>
-
     </header>
 
     <section class="heading">
+        <p class="eyebrow">
+            ADMINISTRATION / MEMBERS
+        </p>
 
-        <div>
-            <p class="eyebrow">
-                ADMINISTRATION / MEMBERS
-            </p>
+        <h1>회원 및 부서 관리</h1>
 
-            <h1>회원 및 부서 관리</h1>
-
-            <p class="description">
-                가입 요청을 승인하고
-                직원의 소속 부서를 관리합니다.
-            </p>
-        </div>
-
+        <p class="description">
+            가입 승인, 직원 계정 상태와
+            소속 부서를 관리합니다.
+        </p>
     </section>
 
     <!-- 처리 결과 -->
@@ -448,23 +480,23 @@
     <section class="summary-grid">
 
         <div class="summary-card">
-
             <span>전체 회원</span>
-
-            <strong th:text="${memberCount}">
-                0
-            </strong>
-
+            <strong th:text="${memberCount}">0</strong>
         </div>
 
         <div class="summary-card">
-
             <span>가입 승인 대기</span>
+            <strong th:text="${pendingCount}">0</strong>
+        </div>
 
-            <strong th:text="${pendingCount}">
-                0
-            </strong>
+        <div class="summary-card">
+            <span>활성 회원</span>
+            <strong th:text="${activeCount}">0</strong>
+        </div>
 
+        <div class="summary-card">
+            <span>정지 회원</span>
+            <strong th:text="${suspendedCount}">0</strong>
         </div>
 
     </section>
@@ -506,7 +538,6 @@
             <button type="submit">
                 부서 등록
             </button>
-
         </form>
 
         <div class="department-list">
@@ -521,7 +552,6 @@
                 <small th:text="${department.code}">
                     DEV
                 </small>
-
             </span>
 
         </div>
@@ -529,7 +559,7 @@
         <p class="help"
            th:if="${#lists.isEmpty(departments)}">
             등록된 부서가 없습니다.
-            위 입력창에서 첫 번째 부서를 등록하세요.
+            위에서 부서를 먼저 등록해주세요.
         </p>
 
     </section>
@@ -541,17 +571,13 @@
     <section class="panel">
 
         <div class="panel-title">
-
             <h2>가입 승인 대기</h2>
-
             <small>PENDING MEMBERS</small>
-
         </div>
 
         <div class="table-wrap">
 
             <table>
-
                 <thead>
                 <tr>
                     <th>회원</th>
@@ -563,8 +589,7 @@
                 <tbody>
 
                 <tr th:if="${#lists.isEmpty(pendingMembers)}">
-                    <td colspan="3"
-                        class="empty">
+                    <td colspan="3" class="empty">
                         승인 대기 중인 회원이 없습니다.
                     </td>
                 </tr>
@@ -572,9 +597,7 @@
                 <tr th:each="member : ${pendingMembers}">
 
                     <td>
-
-                        <strong
-                                th:text="${member.nickname}">
+                        <strong th:text="${member.nickname}">
                             회원명
                         </strong>
 
@@ -582,23 +605,21 @@
                               th:text="${member.username}">
                             username
                         </span>
-
                     </td>
 
-                    <td th:text="${#temporals.format(
-                        member.createdAt,
-                        'yyyy-MM-dd'
-                    )}">
+                    <td th:text="${member.createdAt == null
+                        ? '-'
+                        : #temporals.format(
+                            member.createdAt,
+                            'yyyy-MM-dd'
+                        )}">
                         -
                     </td>
 
                     <td>
-
                         <form class="approval-form"
                               method="post"
-                              th:action="@{/admin/members/{id}/approve(
-                                  id=${member.id}
-                              )}">
+                              th:action="@{/admin/members/{id}/approve(id=${member.id})}">
 
                             <input type="hidden"
                                    name="csrfToken"
@@ -607,18 +628,15 @@
                             <select class="department-select"
                                     name="departmentId"
                                     required>
-
                                 <option value="">
                                     부서 선택
                                 </option>
 
-                                <option
-                                        th:each="department : ${departments}"
+                                <option th:each="department : ${departments}"
                                         th:value="${department.id}"
                                         th:text="${department.name}">
                                     개발팀
                                 </option>
-
                             </select>
 
                             <input class="position-input"
@@ -632,39 +650,36 @@
                                     th:disabled="${#lists.isEmpty(departments)}">
                                 가입 승인
                             </button>
-
                         </form>
-
                     </td>
 
                 </tr>
 
                 </tbody>
-
             </table>
-
         </div>
-
     </section>
 
     <!-- ==================================
-         전체 회원 목록
+         전체 회원 목록 및 상태 관리
     =================================== -->
 
     <section class="panel">
 
         <div class="panel-title">
-
             <h2>전체 회원 목록</h2>
-
             <small>ALL MEMBERS</small>
-
         </div>
+
+        <input id="memberSearch"
+               class="search-input"
+               type="search"
+               placeholder="아이디 또는 닉네임 검색"
+               aria-label="회원 검색">
 
         <div class="table-wrap">
 
             <table>
-
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -672,20 +687,21 @@
                     <th>로그인 아이디</th>
                     <th>권한</th>
                     <th>계정 상태</th>
+                    <th style="text-align:right">관리</th>
                 </tr>
                 </thead>
 
                 <tbody>
 
-                <tr th:each="member : ${allMembers}">
+                <tr class="member-row"
+                    th:each="member : ${allMembers}">
 
                     <td th:text="${member.id}">
                         1
                     </td>
 
                     <td>
-                        <strong
-                                th:text="${member.nickname}">
+                        <strong th:text="${member.nickname}">
                             직원
                         </strong>
                     </td>
@@ -700,6 +716,9 @@
 
                     <td>
                         <span class="status"
+                              th:classappend="${member.isSuspended()
+                                  ? ' suspended'
+                                  : (member.isPending() ? ' pending' : '')}"
                               th:text="${member.accountStatus == null
                                   ? '기존 회원'
                                   : member.accountStatus}">
@@ -707,30 +726,124 @@
                         </span>
                     </td>
 
+                    <td>
+                        <!-- 승인 완료 일반 회원: 계정 정지 -->
+                        <form class="action-form"
+                              th:if="${member.isApproved()
+                                  and member.role != 'ADMIN'
+                                  and member.id != loginAdminId}"
+                              method="post"
+                              th:action="@{/admin/members/{id}/suspend(id=${member.id})}"
+                              onsubmit="return confirm('이 회원 계정을 정지하시겠습니까?');">
+
+                            <input type="hidden"
+                                   name="csrfToken"
+                                   th:value="${csrfToken}">
+
+                            <button type="submit"
+                                    class="action-button suspend-button">
+                                계정 정지
+                            </button>
+                        </form>
+
+                        <!-- 정지된 일반 회원: 정지 해제 -->
+                        <form class="action-form"
+                              th:if="${member.isSuspended()
+                                  and member.role != 'ADMIN'}"
+                              method="post"
+                              th:action="@{/admin/members/{id}/resume(id=${member.id})}"
+                              onsubmit="return confirm('이 회원 계정의 정지를 해제하시겠습니까?');">
+
+                            <input type="hidden"
+                                   name="csrfToken"
+                                   th:value="${csrfToken}">
+
+                            <button type="submit"
+                                    class="action-button">
+                                정지 해제
+                            </button>
+                        </form>
+
+                        <span class="help"
+                              th:if="${member.isPending()
+                                  or member.role == 'ADMIN'}">
+                            -
+                        </span>
+                    </td>
                 </tr>
 
                 <tr th:if="${#lists.isEmpty(allMembers)}">
-                    <td colspan="5"
-                        class="empty">
+                    <td colspan="6" class="empty">
                         등록된 회원이 없습니다.
                     </td>
                 </tr>
 
-                </tbody>
+                <tr id="noSearchResults" hidden>
+                    <td colspan="6" class="empty">
+                        검색 결과가 없습니다.
+                    </td>
+                </tr>
 
+                </tbody>
             </table>
 
         </div>
 
         <p class="help">
-            비밀번호는 회원 목록에 표시되지 않습니다.
-            기존 회원의 계정 상태가 비어 있으면
-            '기존 회원'로 표시합니다.
+            기존 회원의 계정 상태가 비어 있는 경우
+            '기존 회원'으로 표시하며 활성 회원으로 취급합니다.
+            관리자 계정과 승인 대기 계정은 이 화면에서 정지할 수 없습니다.
         </p>
 
     </section>
 
 </main>
+
+<script>
+    "use strict";
+
+    const searchInput =
+        document.getElementById("memberSearch");
+
+    const memberRows =
+        document.querySelectorAll(".member-row");
+
+    const noSearchResults =
+        document.getElementById("noSearchResults");
+
+    searchInput.addEventListener("input", function () {
+
+        const keyword =
+            this.value.trim().toLowerCase();
+
+        let visibleCount = 0;
+
+        memberRows.forEach(function (row) {
+
+            const cells = row.querySelectorAll("td");
+
+            const username =
+                cells[2]?.textContent.toLowerCase() || "";
+
+            const nickname =
+                cells[1]?.textContent.toLowerCase() || "";
+
+            const matched =
+                username.includes(keyword)
+                || nickname.includes(keyword);
+
+            row.hidden = !matched;
+
+            if (matched) {
+                visibleCount++;
+            }
+        });
+
+        noSearchResults.hidden =
+            visibleCount !== 0
+            || memberRows.length === 0;
+    });
+</script>
 
 </body>
 </html>
