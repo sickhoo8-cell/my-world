@@ -47,7 +47,7 @@
         }
 
         .container {
-            max-width: 1280px;
+            max-width: 1380px;
             margin: 0 auto;
             padding: 30px 24px 70px;
         }
@@ -203,6 +203,7 @@
             font-size: 12px;
             font-weight: 800;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         button:hover {
@@ -266,6 +267,7 @@
             padding: 14px 11px;
             border-bottom: 1px solid var(--border);
             font-size: 13px;
+            vertical-align: middle;
         }
 
         th {
@@ -394,13 +396,68 @@
             font-size: 12px;
         }
 
+        /* =====================================
+           신규: 직원 부서 및 직급 수정
+        ===================================== */
+
+        .member-edit-form {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            min-width: 220px;
+        }
+
+        .member-edit-form select,
+        .member-edit-form input {
+            width: 145px;
+            min-width: 0;
+            min-height: 38px;
+            padding: 8px 10px;
+            font-size: 12px;
+        }
+
+        .member-edit-form button {
+            min-height: 38px;
+            padding: 8px 12px;
+        }
+
+        .member-edit-form .edit-save {
+            background: #352c50;
+            color: #d8c7ff;
+            border-color: #594788;
+        }
+
+        .member-edit-form .edit-save:hover {
+            background: #49396e;
+        }
+
+        .member-edit-cell {
+            min-width: 235px;
+        }
+
+        .member-edit-hint {
+            display: block;
+            margin-top: 5px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .member-table {
+            min-width: 1150px;
+        }
+
         [hidden] {
             display: none !important;
         }
 
         @media (max-width: 760px) {
+
             .container {
                 padding: 18px 13px 50px;
+            }
+
+            .topbar {
+                flex-wrap: wrap;
             }
 
             .summary-grid {
@@ -438,19 +495,26 @@
 
 <main class="container">
 
-    <!-- 상단 -->
+    <!-- ==================================
+         상단
+    =================================== -->
 
     <header class="topbar">
-        <div class="brand">MY WORLD</div>
+
+        <div class="brand">
+            MY WORLD
+        </div>
 
         <a class="back-link"
            th:href="@{/workspace}"
            href="/workspace">
             Workspace로 돌아가기
         </a>
+
     </header>
 
     <section class="heading">
+
         <p class="eyebrow">
             ADMINISTRATION / MEMBERS
         </p>
@@ -458,12 +522,15 @@
         <h1>회원 및 부서 관리</h1>
 
         <p class="description">
-            가입 승인, 직원 계정 상태와
-            소속 부서를 관리합니다.
+            가입 승인, 직원 계정 상태,
+            소속 부서 및 직급을 관리합니다.
         </p>
+
     </section>
 
-    <!-- 처리 결과 -->
+    <!-- ==================================
+         처리 결과
+    =================================== -->
 
     <div class="notice success"
          th:if="${success != null}"
@@ -475,7 +542,9 @@
          th:text="${error}">
     </div>
 
-    <!-- 회원 통계 -->
+    <!-- ==================================
+         회원 통계
+    =================================== -->
 
     <section class="summary-grid">
 
@@ -502,7 +571,7 @@
     </section>
 
     <!-- ==================================
-         부서 등록
+         부서 등록 - 기존 기능
     =================================== -->
 
     <section class="panel">
@@ -538,6 +607,7 @@
             <button type="submit">
                 부서 등록
             </button>
+
         </form>
 
         <div class="department-list">
@@ -552,6 +622,7 @@
                 <small th:text="${department.code}">
                     DEV
                 </small>
+
             </span>
 
         </div>
@@ -565,7 +636,7 @@
     </section>
 
     <!-- ==================================
-         가입 승인 대기
+         가입 승인 대기 - 기존 기능
     =================================== -->
 
     <section class="panel">
@@ -578,6 +649,7 @@
         <div class="table-wrap">
 
             <table>
+
                 <thead>
                 <tr>
                     <th>회원</th>
@@ -597,6 +669,7 @@
                 <tr th:each="member : ${pendingMembers}">
 
                     <td>
+
                         <strong th:text="${member.nickname}">
                             회원명
                         </strong>
@@ -605,6 +678,7 @@
                               th:text="${member.username}">
                             username
                         </span>
+
                     </td>
 
                     <td th:text="${member.createdAt == null
@@ -617,6 +691,7 @@
                     </td>
 
                     <td>
+
                         <form class="approval-form"
                               method="post"
                               th:action="@{/admin/members/{id}/approve(id=${member.id})}">
@@ -628,6 +703,7 @@
                             <select class="department-select"
                                     name="departmentId"
                                     required>
+
                                 <option value="">
                                     부서 선택
                                 </option>
@@ -637,6 +713,7 @@
                                         th:text="${department.name}">
                                     개발팀
                                 </option>
+
                             </select>
 
                             <input class="position-input"
@@ -650,18 +727,24 @@
                                     th:disabled="${#lists.isEmpty(departments)}">
                                 가입 승인
                             </button>
+
                         </form>
+
                     </td>
 
                 </tr>
 
                 </tbody>
+
             </table>
+
         </div>
+
     </section>
 
     <!-- ==================================
-         전체 회원 목록 및 상태 관리
+         전체 회원 목록
+         기존 회원 검색 및 상태 관리 유지
     =================================== -->
 
     <section class="panel">
@@ -679,7 +762,8 @@
 
         <div class="table-wrap">
 
-            <table>
+            <table class="member-table">
+
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -687,7 +771,11 @@
                     <th>로그인 아이디</th>
                     <th>권한</th>
                     <th>계정 상태</th>
-                    <th style="text-align:right">관리</th>
+                    <th>부서 변경</th>
+                    <th>직급 변경</th>
+                    <th style="text-align:right">
+                        계정 관리
+                    </th>
                 </tr>
                 </thead>
 
@@ -715,6 +803,7 @@
                     </td>
 
                     <td>
+
                         <span class="status"
                               th:classappend="${member.isSuspended()
                                   ? ' suspended'
@@ -724,10 +813,104 @@
                                   : member.accountStatus}">
                             ACTIVE
                         </span>
+
                     </td>
 
+                    <!-- ==================================
+                         신규: 부서 수정
+                    =================================== -->
+
+                    <td class="member-edit-cell">
+
+                        <form class="member-edit-form"
+                              th:if="${member.isApproved()}"
+                              method="post"
+                              th:action="@{/admin/members/{id}/department(id=${member.id})}">
+
+                            <input type="hidden"
+                                   name="csrfToken"
+                                   th:value="${csrfToken}">
+
+                            <select name="departmentId"
+                                    aria-label="변경할 부서"
+                                    required>
+
+                                <option value="">
+                                    부서 선택
+                                </option>
+
+                                <option th:each="department : ${departments}"
+                                        th:value="${department.id}"
+                                        th:text="${department.name}">
+                                    개발팀
+                                </option>
+
+                            </select>
+
+                            <button class="edit-save"
+                                    type="submit"
+                                    th:disabled="${#lists.isEmpty(departments)}">
+                                변경
+                            </button>
+
+                        </form>
+
+                        <span class="member-edit-hint"
+                              th:if="${member.isApproved()}">
+                            변경할 부서를 선택하세요
+                        </span>
+
+                        <span class="member-edit-hint"
+                              th:unless="${member.isApproved()}">
+                            승인된 회원만 변경 가능
+                        </span>
+
+                    </td>
+
+                    <!-- ==================================
+                         신규: 직급 수정
+                    =================================== -->
+
+                    <td class="member-edit-cell">
+
+                        <form class="member-edit-form"
+                              th:if="${member.isApproved()}"
+                              method="post"
+                              th:action="@{/admin/members/{id}/position(id=${member.id})}">
+
+                            <input type="hidden"
+                                   name="csrfToken"
+                                   th:value="${csrfToken}">
+
+                            <input type="text"
+                                   name="position"
+                                   maxlength="50"
+                                   th:value="${member.position}"
+                                   placeholder="직급 입력"
+                                   aria-label="변경할 직급"
+                                   required>
+
+                            <button class="edit-save"
+                                    type="submit">
+                                저장
+                            </button>
+
+                        </form>
+
+                        <span class="member-edit-hint"
+                              th:unless="${member.isApproved()}">
+                            승인된 회원만 변경 가능
+                        </span>
+
+                    </td>
+
+                    <!-- ==================================
+                         기존: 회원 정지 및 해제
+                    =================================== -->
+
                     <td>
-                        <!-- 승인 완료 일반 회원: 계정 정지 -->
+
+                        <!-- 승인된 일반 회원: 정지 -->
                         <form class="action-form"
                               th:if="${member.isApproved()
                                   and member.role != 'ADMIN'
@@ -744,9 +927,10 @@
                                     class="action-button suspend-button">
                                 계정 정지
                             </button>
+
                         </form>
 
-                        <!-- 정지된 일반 회원: 정지 해제 -->
+                        <!-- 정지된 일반 회원: 해제 -->
                         <form class="action-form"
                               th:if="${member.isSuspended()
                                   and member.role != 'ADMIN'}"
@@ -762,6 +946,7 @@
                                     class="action-button">
                                 정지 해제
                             </button>
+
                         </form>
 
                         <span class="help"
@@ -769,30 +954,33 @@
                                   or member.role == 'ADMIN'}">
                             -
                         </span>
+
                     </td>
+
                 </tr>
 
                 <tr th:if="${#lists.isEmpty(allMembers)}">
-                    <td colspan="6" class="empty">
+                    <td colspan="8" class="empty">
                         등록된 회원이 없습니다.
                     </td>
                 </tr>
 
                 <tr id="noSearchResults" hidden>
-                    <td colspan="6" class="empty">
+                    <td colspan="8" class="empty">
                         검색 결과가 없습니다.
                     </td>
                 </tr>
 
                 </tbody>
+
             </table>
 
         </div>
 
         <p class="help">
-            기존 회원의 계정 상태가 비어 있는 경우
+            기존 회원의 계정 상태가 비어 있으면
             '기존 회원'으로 표시하며 활성 회원으로 취급합니다.
-            관리자 계정과 승인 대기 계정은 이 화면에서 정지할 수 없습니다.
+            승인 대기 회원은 가입 승인 후 부서와 직급을 변경할 수 있습니다.
         </p>
 
     </section>
@@ -801,6 +989,10 @@
 
 <script>
     "use strict";
+
+    // =====================================
+    // 회원 아이디 / 닉네임 검색
+    // =====================================
 
     const searchInput =
         document.getElementById("memberSearch");
