@@ -22,12 +22,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
     ) {
 
         registry.addInterceptor(memberStatusInterceptor)
-
                 .addPathPatterns(
                         "/workspace",
                         "/workspace/**",
                         "/messenger",
                         "/messenger/**",
+                        "/organization",
+                        "/organization/**",
                         "/admin/**",
                         "/api",
                         "/api/**"
