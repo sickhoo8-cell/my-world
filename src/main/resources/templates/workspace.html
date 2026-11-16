@@ -324,7 +324,7 @@
         }
 
         /*
-         * 신규: 메신저 이동 버튼
+         * 기존 메신저 이동 버튼
          */
         .chat-widget .chat-copy {
             width: 100%;
@@ -395,8 +395,10 @@
                 padding: 12px;
             }
         }
-        /* 사내 메신저 아이콘형 카드 */
 
+        /*
+         * 사내 메신저 아이콘형 카드
+         */
         .chat-widget {
             padding: 0;
         }
@@ -507,6 +509,7 @@
                 height: 32px;
             }
         }
+
         /* 채팅 카드를 전체 너비에서 1칸으로 변경 */
         .dashboard-grid .chat-widget {
             grid-column: span 1;
@@ -553,6 +556,7 @@
                 grid-column: span 1;
             }
         }
+
         /* 메신저 카드를 오른쪽 세 번째 칸에 배치 */
         @media (min-width: 761px) {
             .dashboard-grid .chat-widget {
@@ -566,8 +570,42 @@
                 grid-column: 1 / -1;
             }
         }
-        /* 관리자 전용 사이드바 메뉴 */
 
+        /*
+         * 신규: 사내 조직도 사이드바 메뉴
+         */
+        .organization-menu-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            margin-top: 8px;
+            padding: 12px 15px;
+
+            background: #272a37;
+            border: 1px solid #45415a;
+            border-radius: 10px;
+
+            color: #d8c7ff;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+
+            transition:
+                    background 0.2s,
+                    border-color 0.2s;
+        }
+
+        .organization-menu-link:hover,
+        .organization-menu-link:focus-visible {
+            background: #352c50;
+            border-color: #825cf0;
+            color: #ffffff;
+        }
+
+        /*
+         * 관리자 전용 사이드바 메뉴
+         */
         .admin-menu-link {
             display: flex;
             align-items: center;
@@ -645,13 +683,26 @@
                 기존 게시판
             </a>
 
-            <!-- 신규: 사내 메신저 이동 -->
+            <!-- 기존: 사내 메신저 -->
             <a th:href="@{/messenger}"
                href="/messenger">
                 사내 메신저
             </a>
 
-            <!-- 관리자 전용 메뉴 -->
+            <!-- =====================================
+                 신규: 사내 조직도 메뉴
+                 일반 회원과 관리자 모두 표시
+            ====================================== -->
+            <a th:href="@{/organization}"
+               href="/organization"
+               class="organization-menu-link">
+
+                <span aria-hidden="true">▦</span>
+                <span>사내 조직도</span>
+
+            </a>
+
+            <!-- 기존: 관리자 전용 메뉴 -->
             <a th:if="${isAdmin}"
                th:href="@{/admin/members}"
                href="/admin/members"
@@ -660,7 +711,6 @@
                 <span>관리자 페이지</span>
 
             </a>
-
 
         </nav>
 
@@ -1099,12 +1149,7 @@
 
             <!-- =============================
                  5. 사내 메신저
-                 신규 이동 기능
             ============================== -->
-
-            <!-- =================================
-                 사내 메신저
-            ================================== -->
 
             <section class="widget chat-widget">
 
@@ -1132,7 +1177,8 @@
                              8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7
                              a8.4 8.4 0 0 1-.9-3.8
                              8.5 8.5 0 0 1 4.7-7.6
-                             8.4 8.4 0 0 1 3.8-.9h.5
+                             8.4 8.4 0 0 1-.9-3.8
+                             8.5 8.5 0 0 1 3.8-.9h.5
                              a8.5 8.5 0 0 1 8 8z"/>
 
                                 <path d="M8 11h8"/>
@@ -1154,16 +1200,16 @@
 
                         <span class="messenger-card-chevron"
                               aria-hidden="true">
-                ›
-            </span>
+                            ›
+                        </span>
 
                     </div>
 
                     <div class="messenger-card-bottom">
 
-            <span>
-                MESSENGER
-            </span>
+                        <span>
+                            MESSENGER
+                        </span>
 
                         <strong>
                             채팅방으로 이동 ↗
@@ -1176,8 +1222,6 @@
             </section>
 
         </div>
-
-
 
         <footer class="workspace-footer">
             MY WORLD · PERSONAL WORKSPACE
