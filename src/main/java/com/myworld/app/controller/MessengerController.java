@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 @Controller
@@ -24,6 +25,10 @@ public class MessengerController {
 
     @GetMapping("/messenger")
     public String messengerPage(
+            @RequestParam(
+                    name = "memberId",
+                    required = false
+            ) Long selectedMemberId,
             HttpSession session,
             Model model
     ) {
@@ -38,6 +43,7 @@ public class MessengerController {
 
         try {
 
+            // 기존 직원 목록 조회 유지
             model.addAttribute(
                     "employees",
                     directoryService.getEmployees(
@@ -61,6 +67,17 @@ public class MessengerController {
                 nickname == null
                         ? "사용자"
                         : nickname.toString()
+        );
+
+        // 조직도에서 전달한 직원 ID
+        // 실제 선택 가능 여부는 메신저에서 확인해야 함
+        model.addAttribute(
+                "selectedMemberId",
+                selectedMemberId != null
+                        && selectedMemberId > 0
+                        && !selectedMemberId.equals(loginMemberId)
+                        ? selectedMemberId
+                        : null
         );
 
         return "messenger";

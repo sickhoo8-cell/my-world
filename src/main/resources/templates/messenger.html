@@ -21,7 +21,7 @@
           th:href="@{/css/chat-live.css}"
           href="/css/chat-live.css">
 
-    <!-- 채팅 기능 -->
+    <!-- 기존 채팅 기능 유지 -->
     <script
             th:src="@{/js/messenger.js}"
             src="/js/messenger.js"
@@ -31,9 +31,14 @@
 
 <body>
 
-<div class="messenger-page">
+<div class="messenger-page"
+     id="messengerPage"
+     th:attr="data-selected-member-id=${selectedMemberId}">
 
-    <!-- 상단 헤더 -->
+    <!-- =====================================
+         상단 헤더
+    ====================================== -->
+
     <header class="messenger-header">
 
         <div class="header-brand">
@@ -71,7 +76,10 @@
 
     </header>
 
-    <!-- 페이지 제목 -->
+    <!-- =====================================
+         페이지 제목
+    ====================================== -->
+
     <section class="page-intro">
 
         <div>
@@ -94,10 +102,16 @@
 
     </section>
 
-    <!-- 메신저 본문 -->
+    <!-- =====================================
+         메신저 본문
+    ====================================== -->
+
     <main class="messenger-layout">
 
-        <!-- 직원 목록 -->
+        <!-- =====================================
+             직원 목록
+        ====================================== -->
+
         <aside class="employee-panel">
 
             <div class="employee-panel-header">
@@ -215,7 +229,10 @@
 
         </aside>
 
-        <!-- 채팅 내용 -->
+        <!-- =====================================
+             채팅 내용
+        ====================================== -->
+
         <section class="conversation-panel">
 
             <!-- 선택된 직원 정보 -->
@@ -315,6 +332,78 @@
     </footer>
 
 </div>
+
+<!-- =====================================
+     신규: 조직도에서 선택한 직원 자동 열기
+
+     기존 messenger.js가 직원 버튼에
+     연결한 클릭 이벤트를 그대로 활용함.
+
+     window load 이후 실행하므로
+     defer 스크립트와 페이지 초기화 이후
+     자동 선택을 시도함.
+====================================== -->
+
+<script>
+    "use strict";
+
+    window.addEventListener("load", function () {
+
+        const messengerPage =
+            document.getElementById("messengerPage");
+
+        if (!messengerPage) {
+            return;
+        }
+
+        const selectedMemberId =
+            messengerPage.dataset.selectedMemberId;
+
+        // 조직도를 통해 전달된 직원 ID가 없으면
+        // 기존 메신저 화면을 그대로 유지
+        if (!selectedMemberId) {
+            return;
+        }
+
+        // 직원 ID는 양의 정수만 허용
+        if (!/^[1-9]\d*$/.test(selectedMemberId)) {
+            return;
+        }
+
+        const employeeButtons =
+            document.querySelectorAll(
+                "#employeeList .employee-item"
+            );
+
+        let targetButton = null;
+
+        // 실제 직원 목록에 존재하는 회원만 선택
+        employeeButtons.forEach(function (button) {
+
+            if (
+                button.dataset.memberId === selectedMemberId
+            ) {
+                targetButton = button;
+            }
+
+        });
+
+        // 직원 목록에 없으면 아무 작업도 하지 않음
+        if (!targetButton) {
+            return;
+        }
+
+        // 기존 messenger.js의 클릭 이벤트 사용
+        targetButton.click();
+
+        // 선택된 직원이 화면에서 보이도록 이동
+        targetButton.scrollIntoView({
+            behavior: "auto",
+            block: "nearest"
+        });
+
+    });
+</script>
 
 </body>
 </html>
