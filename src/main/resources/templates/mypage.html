@@ -1,10 +1,12 @@
 
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>내 정보 | MY WORLD</title>
 
@@ -169,23 +171,112 @@
             line-height: 1.8;
         }
 
+        .edit-form {
+            margin-top: 22px;
+            padding-top: 22px;
+            border-top: 1px solid #373a4b;
+        }
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 9px;
+            color: #d5d3df;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .form-group input {
+            width: 100%;
+            min-height: 46px;
+            padding: 12px 14px;
+            background: #171923;
+            border: 1px solid #45495f;
+            border-radius: 9px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #825cf0;
+            box-shadow: 0 0 0 3px rgba(130, 92, 240, .14);
+        }
+
+        .form-group input::placeholder {
+            color: #777589;
+        }
+
+        .help {
+            margin-top: 8px;
+            color: #9694a8;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
         .actions {
             display: flex;
             justify-content: flex-end;
+            gap: 10px;
+            flex-wrap: wrap;
             margin-top: 23px;
         }
 
-        .edit-button {
-            padding: 13px 23px;
-            background: #825cf0;
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 43px;
+            padding: 12px 21px;
+            border: 0;
             border-radius: 9px;
-            color: white;
+            cursor: pointer;
             font-size: 13px;
             font-weight: 800;
         }
 
-        .edit-button:hover {
+        .primary {
+            background: #825cf0;
+            color: #ffffff;
+        }
+
+        .primary:hover {
             background: #7048df;
+        }
+
+        .secondary {
+            background: #303241;
+            color: #d5d3df;
+            border: 1px solid #45495f;
+        }
+
+        .message {
+            margin: 20px 0;
+            padding: 14px 16px;
+            border-radius: 9px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .success {
+            background: #173b32;
+            color: #8de0bb;
+            border: 1px solid #28664f;
+        }
+
+        .error {
+            background: #44252d;
+            color: #ffb6c1;
+            border: 1px solid #74404b;
+        }
+
+        .section-divider {
+            margin: 27px 0;
+            border: 0;
+            border-top: 1px solid #373a4b;
         }
 
         @media (max-width: 600px) {
@@ -198,6 +289,10 @@
             }
 
             .profile {
+                padding: 19px;
+            }
+
+            .section {
                 padding: 19px;
             }
 
@@ -239,10 +334,24 @@
         <h1>내 정보</h1>
 
         <p class="description">
-            MY WORLD에 등록된 나의 회원정보를 확인할 수 있습니다.
+            MY WORLD에 등록된 회원정보를 관리할 수 있습니다.
         </p>
 
     </section>
+
+    <!-- 성공 및 오류 메시지 -->
+
+    <div class="message success"
+         th:if="${success != null}"
+         th:text="${success}">
+        수정되었습니다.
+    </div>
+
+    <div class="message error"
+         th:if="${error != null}"
+         th:text="${error}">
+        오류가 발생했습니다.
+    </div>
 
     <!-- 프로필 -->
 
@@ -284,92 +393,212 @@
         <div class="info-grid">
 
             <div class="info-item">
-
                 <span class="info-label">로그인 아이디</span>
-
                 <span class="info-value"
                       th:text="${member.username}">
                     myworld01
                 </span>
-
             </div>
 
             <div class="info-item">
-
                 <span class="info-label">닉네임</span>
-
                 <span class="info-value"
                       th:text="${member.nickname}">
                     홍길동
                 </span>
-
             </div>
 
             <div class="info-item">
-
                 <span class="info-label">소속 부서</span>
-
                 <span class="info-value"
                       th:text="${member.department != null
                       ? member.department.name : '미배정'}">
                     개발팀
                 </span>
-
             </div>
 
             <div class="info-item">
-
                 <span class="info-label">직급</span>
-
                 <span class="info-value"
                       th:text="${member.position != null
                       ? member.position : '미배정'}">
                     사원
                 </span>
-
             </div>
 
             <div class="info-item">
-
                 <span class="info-label">지역</span>
-
                 <span class="info-value"
                       th:text="${member.region != null
                       ? member.region : '미등록'}">
                     서울특별시
                 </span>
-
             </div>
 
             <div class="info-item">
-
                 <span class="info-label">가입일</span>
-
                 <span class="info-value"
                       th:text="${#temporals.format(
                       member.createdAt, 'yyyy-MM-dd')}">
                     2026-11-23
                 </span>
-
             </div>
 
         </div>
 
         <div class="notice">
-            부서 및 직급은 관리자가 관리합니다.
-            회원은 본인의 닉네임, 비밀번호, 지역을 수정할 수 있도록
-            다음 개발 단계에서 연결할 예정입니다.
+            아이디는 변경할 수 없습니다.
+            부서와 직급은 관리자만 변경할 수 있습니다.
         </div>
 
-        <div class="actions">
+    </section>
 
-            <a href="#"
-               class="edit-button"
-               onclick="alert('회원정보 수정 기능은 다음 단계에서 연결됩니다.'); return false;">
-                내 정보 수정
-            </a>
+    <!-- =====================================
+         회원정보 수정
+    ====================================== -->
 
-        </div>
+    <section class="section">
+
+        <h2>회원정보 수정</h2>
+
+        <form th:action="@{/mypage/profile}"
+              method="post">
+
+            <input type="hidden"
+                   name="csrfToken"
+                   th:value="${csrfToken}">
+
+            <div class="form-group">
+
+                <label for="nickname">
+                    닉네임
+                </label>
+
+                <input
+                        type="text"
+                        id="nickname"
+                        name="nickname"
+                        maxlength="30"
+                        required
+                        th:value="${member.nickname}"
+                        placeholder="변경할 닉네임을 입력하세요.">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="region">
+                    거주 지역
+                </label>
+
+                <input
+                        type="text"
+                        id="region"
+                        name="region"
+                        maxlength="100"
+                        required
+                        th:value="${member.region}"
+                        placeholder="예: 서울특별시">
+
+                <p class="help">
+                    지역 정보는 날씨 및 지역 관련 기능에 활용할 수 있습니다.
+                </p>
+
+            </div>
+
+            <div class="actions">
+
+                <button type="submit"
+                        class="button primary">
+                    회원정보 저장
+                </button>
+
+            </div>
+
+        </form>
+
+        <hr class="section-divider">
+
+        <!-- =====================================
+             비밀번호 변경
+        ====================================== -->
+
+        <h2>비밀번호 변경</h2>
+
+        <form th:action="@{/mypage/password}"
+              method="post">
+
+            <input type="hidden"
+                   name="csrfToken"
+                   th:value="${csrfToken}">
+
+            <div class="form-group">
+
+                <label for="currentPassword">
+                    현재 비밀번호
+                </label>
+
+                <input
+                        type="password"
+                        id="currentPassword"
+                        name="currentPassword"
+                        maxlength="72"
+                        autocomplete="current-password"
+                        required
+                        placeholder="현재 비밀번호">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="newPassword">
+                    새 비밀번호
+                </label>
+
+                <input
+                        type="password"
+                        id="newPassword"
+                        name="newPassword"
+                        minlength="8"
+                        maxlength="72"
+                        autocomplete="new-password"
+                        required
+                        placeholder="새 비밀번호">
+
+                <p class="help">
+                    비밀번호는 8~72자로 입력해주세요.
+                </p>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="passwordConfirm">
+                    새 비밀번호 확인
+                </label>
+
+                <input
+                        type="password"
+                        id="passwordConfirm"
+                        name="passwordConfirm"
+                        minlength="8"
+                        maxlength="72"
+                        autocomplete="new-password"
+                        required
+                        placeholder="새 비밀번호 다시 입력">
+
+            </div>
+
+            <div class="actions">
+
+                <button type="submit"
+                        class="button primary">
+                    비밀번호 변경
+                </button>
+
+            </div>
+
+        </form>
 
     </section>
 
