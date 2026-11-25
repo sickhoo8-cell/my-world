@@ -25,11 +25,18 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns(
                         "/workspace",
                         "/workspace/**",
+
                         "/messenger",
                         "/messenger/**",
+
                         "/organization",
                         "/organization/**",
+
+                        "/mypage",
+                        "/mypage/**",
+
                         "/admin/**",
+
                         "/api",
                         "/api/**"
                 );

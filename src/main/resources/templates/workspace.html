@@ -572,7 +572,7 @@
         }
 
         /*
-         * 신규: 사내 조직도 사이드바 메뉴
+         * 사내 조직도 사이드바 메뉴
          */
         .organization-menu-link {
             display: flex;
@@ -598,6 +598,38 @@
 
         .organization-menu-link:hover,
         .organization-menu-link:focus-visible {
+            background: #352c50;
+            border-color: #825cf0;
+            color: #ffffff;
+        }
+
+        /*
+         * 신규: 내 정보 수정 사이드바 메뉴
+         */
+        .mypage-menu-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            margin-top: 8px;
+            padding: 12px 15px;
+
+            background: #272a37;
+            border: 1px solid #45415a;
+            border-radius: 10px;
+
+            color: #d8c7ff;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+
+            transition:
+                    background 0.2s,
+                    border-color 0.2s;
+        }
+
+        .mypage-menu-link:hover,
+        .mypage-menu-link:focus-visible {
             background: #352c50;
             border-color: #825cf0;
             color: #ffffff;
@@ -678,22 +710,18 @@
                 로또 추첨
             </a>
 
-            <!-- 마이페이지 메뉴 -->
-            <a th:href="@{/mypage}"
-               href="/mypage">
-                내 정보 수정
+            <a th:href="@{/board}"
+               href="/board">
+                기존 게시판
             </a>
 
-            <!-- 기존: 사내 메신저 -->
+            <!-- 사내 메신저 -->
             <a th:href="@{/messenger}"
                href="/messenger">
                 사내 메신저
             </a>
 
-            <!-- =====================================
-                 신규: 사내 조직도 메뉴
-                 일반 회원과 관리자 모두 표시
-            ====================================== -->
+            <!-- 사내 조직도 -->
             <a th:href="@{/organization}"
                href="/organization"
                class="organization-menu-link">
@@ -703,7 +731,17 @@
 
             </a>
 
-            <!-- 기존: 관리자 전용 메뉴 -->
+            <!-- 신규: 내 정보 수정 -->
+            <a th:href="@{/mypage}"
+               href="/mypage"
+               class="mypage-menu-link">
+
+                <span aria-hidden="true">◉</span>
+                <span>내 정보 수정</span>
+
+            </a>
+
+            <!-- 관리자 전용 메뉴 -->
             <a th:if="${isAdmin}"
                th:href="@{/admin/members}"
                href="/admin/members"
@@ -1161,7 +1199,6 @@
 
                     <div class="messenger-card-top">
 
-                        <!-- 메신저 아이콘 -->
                         <div class="messenger-card-icon">
 
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -1174,13 +1211,12 @@
                                  aria-hidden="true">
 
                                 <path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8
-                             8.5 8.5 0 0 1-7.6 4.7
-                             8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7
-                             a8.4 8.4 0 0 1-.9-3.8
-                             8.5 8.5 0 0 1 4.7-7.6
-                             8.4 8.4 0 0 1-.9-3.8
-                             8.5 8.5 0 0 1 3.8-.9h.5
-                             a8.5 8.5 0 0 1 8 8z"/>
+                                         8.5 8.5 0 0 1-7.6 4.7
+                                         8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7
+                                         a8.4 8.4 0 0 1-.9-3.8
+                                         8.5 8.5 0 0 1 4.7-7.6
+                                         8.4 8.4 0 0 1 3.8-.9h.5
+                                         a8.5 8.5 0 0 1 8 8z"/>
 
                                 <path d="M8 11h8"/>
                                 <path d="M8 14h5"/>
